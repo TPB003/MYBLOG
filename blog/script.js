@@ -1,50 +1,63 @@
-const posts = [
+﻿const posts = [
   {
-    title: "我把博客速度优化了 43%，只做了三件事",
-    excerpt: "从图片策略、字体加载到 CSS 拆分，一次完整的性能复盘。",
-    date: "2026-02-16",
+    title: "从 Framer 到原生代码：我复刻了一个流光 Hero",
+    excerpt: "拆解视觉层级、渐变字和动效节奏，用纯 HTML/CSS 做出接近设计稿的气质。",
+    date: "2026-02-22",
     category: "tech",
-    tagText: "TECH"
+    tagText: "TECH",
+    readTime: 7,
+    size: "large"
   },
   {
-    title: "凌晨四点的城市，和我新建立的晨间写作流程",
-    excerpt: "记录一个 30 天可持续的创作习惯，附可执行模板。",
+    title: "把焦虑做成看板：我的周计划系统 2.0",
+    excerpt: "用一个更轻的任务结构，兼顾长期目标推进和日常执行。",
+    date: "2026-02-19",
+    category: "life",
+    tagText: "LIFE",
+    readTime: 5,
+    size: "tall"
+  },
+  {
+    title: "Magic UI 组件灵感清单：哪些动效真的有价值",
+    excerpt: "从炫技里筛选有意义的动效，给真实产品界面留出性能预算。",
+    date: "2026-02-14",
+    category: "notes",
+    tagText: "NOTES",
+    readTime: 6,
+    size: "wide"
+  },
+  {
+    title: "我把博客首屏重构成 Bento Grid 的全过程",
+    excerpt: "不是堆卡片，而是通过节奏感和对比度讲清信息优先级。",
     date: "2026-02-10",
-    category: "life",
-    tagText: "LIFE"
-  },
-  {
-    title: "《设计心理学》读书摘记：界面为什么会让人犹豫",
-    excerpt: "把书里的原则拆成可直接用于产品设计的检查清单。",
-    date: "2026-01-28",
-    category: "notes",
-    tagText: "NOTES"
-  },
-  {
-    title: "用 CSS Grid 做杂志风首页布局",
-    excerpt: "不靠 UI 组件库，用原生 CSS 打造强视觉信息层级。",
-    date: "2026-01-18",
     category: "tech",
-    tagText: "TECH"
+    tagText: "TECH",
+    readTime: 4,
+    size: "normal"
   },
   {
-    title: "如何让输入焦虑变成可交付成果",
-    excerpt: "整理我的知识管理系统：收藏、整理、输出三段式。",
-    date: "2026-01-11",
+    title: "写作不是灵感，是可重复执行的系统",
+    excerpt: "把输入、整理、输出放进一个迭代循环，稳定地产生内容。",
+    date: "2026-02-04",
     category: "life",
-    tagText: "LIFE"
+    tagText: "LIFE",
+    readTime: 5,
+    size: "normal"
   },
   {
-    title: "我在 Notion 里维护的周复盘模板",
-    excerpt: "模板重点不是记录，而是如何让下周的计划更精准。",
-    date: "2025-12-30",
+    title: "读书笔记：好的界面是如何减少认知负担的",
+    excerpt: "把抽象原则翻译成按钮、表单、导航等可落地的界面规范。",
+    date: "2026-01-31",
     category: "notes",
-    tagText: "NOTES"
+    tagText: "NOTES",
+    readTime: 6,
+    size: "normal"
   }
 ];
 
 const postGrid = document.getElementById("postGrid");
 const chipWrap = document.getElementById("chips");
+const cursorGlow = document.getElementById("cursorGlow");
 
 function formatDate(value) {
   const date = new Date(value);
@@ -56,58 +69,81 @@ function formatDate(value) {
 }
 
 function renderPosts(filter = "all") {
+  if (!postGrid) return;
+
   postGrid.innerHTML = "";
   const list = filter === "all" ? posts : posts.filter((post) => post.category === filter);
 
   if (!list.length) {
-    postGrid.innerHTML = "<p>这个分类暂时还没有内容。</p>";
+    postGrid.innerHTML = "<p class=\"empty-state\">这个分类暂时还没有内容。</p>";
     return;
   }
 
   list.forEach((post, index) => {
     const card = document.createElement("article");
-    card.className = "post-card";
-    card.style.opacity = "0";
-    card.style.transform = "translateY(14px)";
-    card.style.transition = "opacity 0.45s ease, transform 0.45s ease";
+    card.className = `post-card shine-card ${post.size}`;
     card.innerHTML = `
-      <div class="post-meta">
-        <span class="tag">${post.tagText}</span>
-        <span class="date">${formatDate(post.date)}</span>
+      <div class="post-top">
+        <span class="badge">${post.tagText}</span>
+        <time class="date" datetime="${post.date}">${formatDate(post.date)}</time>
       </div>
-      <h3 class="post-title">${post.title}</h3>
-      <p class="post-excerpt">${post.excerpt}</p>
+      <div>
+        <h3 class="post-title">${post.title}</h3>
+        <p class="post-excerpt">${post.excerpt}</p>
+      </div>
+      <div class="post-foot">
+        <span>${post.readTime} min read</span>
+        <span class="arrow">↗</span>
+      </div>
     `;
+
     postGrid.appendChild(card);
 
     setTimeout(() => {
-      card.style.opacity = "1";
-      card.style.transform = "translateY(0)";
-    }, 70 * index);
+      card.classList.add("is-ready");
+    }, 80 * index);
   });
 }
 
-chipWrap.addEventListener("click", (event) => {
-  const button = event.target.closest(".chip");
-  if (!button) return;
+if (chipWrap) {
+  chipWrap.addEventListener("click", (event) => {
+    const button = event.target.closest(".chip");
+    if (!button) return;
 
-  document.querySelectorAll(".chip").forEach((chip) => chip.classList.remove("active"));
-  button.classList.add("active");
-  renderPosts(button.dataset.filter);
-});
+    document.querySelectorAll(".chip").forEach((chip) => chip.classList.remove("active"));
+    button.classList.add("active");
+    renderPosts(button.dataset.filter);
+  });
+}
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
       }
     });
   },
   {
-    threshold: 0.18
+    threshold: 0.15
   }
 );
 
 document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+if (cursorGlow && window.matchMedia("(pointer: fine)").matches) {
+  window.addEventListener("pointermove", (event) => {
+    document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
+    document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
+    cursorGlow.classList.add("active");
+  });
+
+  window.addEventListener("pointerleave", () => {
+    cursorGlow.classList.remove("active");
+  });
+} else if (cursorGlow) {
+  cursorGlow.remove();
+}
+
 renderPosts();

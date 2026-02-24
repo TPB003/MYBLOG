@@ -1,33 +1,75 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星轨博客 | 个人主页</title>
+  <title>TPBLOG | 酷炫个人博客</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="aurora aurora-a"></div>
-  <div class="aurora aurora-b"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="grid-beams" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-  <header class="topbar glass">
-    <a class="logo" href="#">STARLOG</a>
+  <header class="topbar glass reveal" id="top">
+    <a class="logo" href="#top">
+      <span class="logo-dot"></span>
+      TPBLOG
+    </a>
     <nav>
       <a href="#posts">文章</a>
       <a href="#about">关于</a>
       <a href="#contact">联系</a>
     </nav>
+    <a class="mini-cta" href="#posts">阅读</a>
   </header>
 
   <main>
     <section class="hero reveal">
-      <p class="kicker">PERSONAL BLOG / 2026</p>
-      <h1>把日常写成一颗颗会发光的星。</h1>
-      <p class="lead">这里记录我的技术实验、读书笔记和生活灵感。页面简洁，但不平淡。</p>
-      <a class="cta" href="#posts">开始阅读</a>
+      <p class="hero-kicker">FRAMER x MAGIC UI INSPIRED</p>
+      <h1>
+        把灵感写进页面，
+        <span>让每篇文章都在发光。</span>
+      </h1>
+      <p class="hero-lead">这是我的个人博客实验场。我在这里记录产品思考、技术实践和生活灵感，风格上追求速度、层次与未来感。</p>
+      <div class="hero-actions">
+        <a class="btn shimmer" href="#posts"><span>开始探索</span></a>
+        <a class="btn ghost" href="#about">关于作者</a>
+      </div>
+      <div class="hero-metrics">
+        <article class="metric shine-card">
+          <p class="metric-label">累计文章</p>
+          <p class="metric-value">36</p>
+        </article>
+        <article class="metric shine-card">
+          <p class="metric-label">本月更新</p>
+          <p class="metric-value">8</p>
+        </article>
+        <article class="metric shine-card">
+          <p class="metric-label">阅读时长</p>
+          <p class="metric-value">120h</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ticker reveal" aria-label="Blog topics">
+      <div class="ticker-track">
+        <span>Design Systems</span>
+        <span>Frontend Craft</span>
+        <span>Motion Design</span>
+        <span>Product Writing</span>
+        <span>Creator Workflow</span>
+        <span>Life Logs</span>
+        <span>Design Systems</span>
+        <span>Frontend Craft</span>
+        <span>Motion Design</span>
+        <span>Product Writing</span>
+        <span>Creator Workflow</span>
+        <span>Life Logs</span>
+      </div>
     </section>
 
     <section id="posts" class="section reveal">
@@ -40,27 +82,30 @@
           <button class="chip" data-filter="notes">笔记</button>
         </div>
       </div>
-      <div class="post-grid" id="postGrid"></div>
+      <div class="bento-grid" id="postGrid"></div>
     </section>
 
-    <section id="about" class="section about reveal">
-      <h2>关于我</h2>
-      <p>我是一个喜欢折腾的创作者，白天写代码，晚上写字。这个站点用于沉淀想法，也记录一路上的小作品。</p>
-      <ul>
-        <li>关注方向：Web 前端、产品设计、效率系统</li>
-        <li>更新频率：每周 1-2 篇</li>
-        <li>座右铭：做有质感的长期主义者</li>
-      </ul>
+    <section id="about" class="section reveal">
+      <article class="about-card shine-card">
+        <h2>关于我</h2>
+        <p>我是一个偏执于细节的创作者。白天做产品，晚上写博客。我喜欢把复杂想法压缩成清晰表达，再用代码把它变成真实体验。</p>
+        <ul>
+          <li>关注方向：前端工程、设计系统、个人效率</li>
+          <li>更新节奏：每周至少 2 次内容迭代</li>
+          <li>工作方式：写作驱动开发，实验驱动成长</li>
+        </ul>
+        <div class="about-links">
+          <a href="#">GitHub</a>
+          <a href="#">X</a>
+          <a href="#">Email</a>
+        </div>
+      </article>
     </section>
   </main>
 
   <footer id="contact" class="footer glass reveal">
-    <p>© 2026 STARLOG</p>
-    <div class="links">
-      <a href="#">GitHub</a>
-      <a href="#">X</a>
-      <a href="#">Email</a>
-    </div>
+    <p>© 2026 TPBLOG. Built with motion-first UI taste.</p>
+    <a href="#top">回到顶部</a>
   </footer>
 
   <script src="./script.js"></script>
