@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -e
+
+node scripts/sync-readme.mjs
+git add README.md blog/README.md
