@@ -3,77 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TPBLOG | 酷炫个人博客</title>
+  <title>TPBLOG | 数字创作博客</title>
+  <meta name="description" content="TPBLOG 的个人博客：技术、创作、阅读与生活。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="grid-beams" aria-hidden="true"></div>
-  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-
-  <header class="topbar glass reveal" id="top">
-    <a class="logo" href="#top">
-      <span class="logo-dot"></span>
-      TPBLOG
-    </a>
-    <nav>
-      <a href="#posts">文章</a>
-      <a href="#about">关于</a>
-      <a href="#contact">联系</a>
-    </nav>
-    <a class="mini-cta" href="#posts">阅读</a>
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a class="brand" href="#top">TPBLOG</a>
+        <a href="#home">主页</a>
+        <a href="#posts">文章</a>
+        <a href="#stats">统计</a>
+        <a href="#books">书单</a>
+      </nav>
+      <div class="social-links">
+        <a href="#" aria-label="GitHub">GH</a>
+        <a href="#" aria-label="Bilibili">BI</a>
+        <a href="#" aria-label="X">X</a>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section class="hero reveal">
-      <p class="hero-kicker">FRAMER x MAGIC UI INSPIRED</p>
-      <h1>
-        把灵感写进页面，
-        <span>让每篇文章都在发光。</span>
-      </h1>
-      <p class="hero-lead">这是我的个人博客实验场。我在这里记录产品思考、技术实践和生活灵感，风格上追求速度、层次与未来感。</p>
-      <div class="hero-actions">
-        <a class="btn shimmer" href="#posts"><span>开始探索</span></a>
-        <a class="btn ghost" href="#about">关于作者</a>
+  <main class="page-shell">
+    <section id="home" class="section hero reveal">
+      <div class="hero-card">
+        <p class="hero-kicker">My Name Is</p>
+        <h1 class="hero-title">TPBLOG</h1>
+        <div class="hero-role">
+          <p>我是一个：</p>
+          <ul>
+            <li>前端开发者</li>
+            <li>创作型博主</li>
+            <li>产品设计爱好者</li>
+            <li>终身学习实践者</li>
+          </ul>
+        </div>
+        <p class="hero-text">我在这里发布关于 Web 开发、内容创作和生活实验的长期记录。灵感很多，交付更重要。</p>
       </div>
-      <div class="hero-metrics">
-        <article class="metric shine-card">
-          <p class="metric-label">累计文章</p>
-          <p class="metric-value">36</p>
-        </article>
-        <article class="metric shine-card">
-          <p class="metric-label">本月更新</p>
-          <p class="metric-value">8</p>
-        </article>
-        <article class="metric shine-card">
-          <p class="metric-label">阅读时长</p>
-          <p class="metric-value">120h</p>
-        </article>
+
+      <div class="orbit-area" aria-hidden="true">
+        <div class="orbit-rings ring-a">
+          <div class="orbit-item chip-edge">CSS</div>
+        </div>
+        <div class="orbit-rings ring-b">
+          <div class="orbit-item chip-chrome">WEB</div>
+        </div>
+        <div class="orbit-rings ring-c">
+          <div class="orbit-item chip-note">NOTE</div>
+        </div>
+        <div class="orbit-center">
+          <div class="avatar-core">TP</div>
+        </div>
       </div>
     </section>
 
-    <section class="ticker reveal" aria-label="Blog topics">
-      <div class="ticker-track">
-        <span>Design Systems</span>
-        <span>Frontend Craft</span>
-        <span>Motion Design</span>
-        <span>Product Writing</span>
-        <span>Creator Workflow</span>
-        <span>Life Logs</span>
-        <span>Design Systems</span>
-        <span>Frontend Craft</span>
-        <span>Motion Design</span>
-        <span>Product Writing</span>
-        <span>Creator Workflow</span>
-        <span>Life Logs</span>
+    <section class="section reveal">
+      <p class="intro-line">
+        我分享 #编程 #写作 #产品 #生活。<br>
+        这些内容累计吸引了 <strong id="countUp">0</strong> 次阅读。
+      </p>
+      <div class="marquee-wrap">
+        <ul class="marquee-track">
+          <li>Web Engineering</li>
+          <li>Design System</li>
+          <li>React + Performance</li>
+          <li>Content Strategy</li>
+          <li>Product Thinking</li>
+          <li>Digital Notes</li>
+          <li>Web Engineering</li>
+          <li>Design System</li>
+          <li>React + Performance</li>
+          <li>Content Strategy</li>
+        </ul>
       </div>
     </section>
 
     <section id="posts" class="section reveal">
-      <div class="section-head">
+      <div class="section-heading">
         <h2>精选文章</h2>
         <div class="chips" id="chips">
           <button class="chip active" data-filter="all">全部</button>
@@ -82,30 +92,73 @@
           <button class="chip" data-filter="notes">笔记</button>
         </div>
       </div>
-      <div class="bento-grid" id="postGrid"></div>
+      <div class="post-grid" id="postGrid"></div>
     </section>
 
-    <section id="about" class="section reveal">
-      <article class="about-card shine-card">
-        <h2>关于我</h2>
-        <p>我是一个偏执于细节的创作者。白天做产品，晚上写博客。我喜欢把复杂想法压缩成清晰表达，再用代码把它变成真实体验。</p>
-        <ul>
-          <li>关注方向：前端工程、设计系统、个人效率</li>
-          <li>更新节奏：每周至少 2 次内容迭代</li>
-          <li>工作方式：写作驱动开发，实验驱动成长</li>
-        </ul>
-        <div class="about-links">
-          <a href="#">GitHub</a>
-          <a href="#">X</a>
-          <a href="#">Email</a>
-        </div>
-      </article>
+    <section id="stats" class="section reveal">
+      <div class="stats-layout">
+        <article class="card light-card">
+          <h3>时间分配</h3>
+          <p>最近 90 天我的精力分配如下，主要时间依旧投入在技术与内容。</p>
+          <div class="bars">
+            <div><span>开发</span><b style="--w: 78%"></b></div>
+            <div><span>写作</span><b style="--w: 62%"></b></div>
+            <div><span>阅读</span><b style="--w: 45%"></b></div>
+            <div><span>运动</span><b style="--w: 31%"></b></div>
+          </div>
+        </article>
+
+        <article class="card dark-card">
+          <h3>足迹</h3>
+          <p>当前创作地点：Suzhou, China。</p>
+          <div class="map-mock">
+            <div class="pulse"></div>
+            <span>Suzhou</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="books" class="section reveal">
+      <div class="section-heading">
+        <h2>阅读清单</h2>
+        <p class="sub">过去几年持续阅读，以下是近期高频推荐。</p>
+      </div>
+      <div class="book-grid">
+        <article class="book-card">
+          <h4>《设计中的设计》</h4>
+          <p>建立了我对“留白、节奏、秩序”的审美底层。</p>
+        </article>
+        <article class="book-card">
+          <h4>《Clean Architecture》</h4>
+          <p>提醒我：代码是长期沟通，而不是短期交付。</p>
+        </article>
+        <article class="book-card">
+          <h4>《金字塔原理》</h4>
+          <p>帮助我把输出从“堆内容”变成“可读结构”。</p>
+        </article>
+        <article class="book-card">
+          <h4>《纳瓦尔宝典》</h4>
+          <p>关于长期主义、杠杆和自我选择的实践手册。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact reveal">
+      <p>
+        我愿意和不同领域的人一起做有意思的项目。<br>
+        如果你也在做长期内容或产品，欢迎联系我。
+      </p>
     </section>
   </main>
 
-  <footer id="contact" class="footer glass reveal">
-    <p>© 2026 TPBLOG. Built with motion-first UI taste.</p>
-    <a href="#top">回到顶部</a>
+  <footer class="site-footer reveal" id="contact">
+    <div>TPBLOG | 数字创作博客</div>
+    <div class="footer-links">
+      <a href="#">GitHub</a>
+      <a href="#">Bilibili</a>
+      <a href="#">Email</a>
+    </div>
   </footer>
 
   <script src="./script.js"></script>
