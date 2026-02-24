@@ -1,0 +1,137 @@
+﻿* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1100px 620px at 8% -12%, #fff4e7, transparent 60%),
+    radial-gradient(980px 560px at 95% 0%, #e9efff, transparent 62%),
+    var(--bg);
+  overflow-x: hidden;
+}
+
+.background-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -3;
+  background-image:
+    linear-gradient(rgba(99, 113, 146, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 113, 146, 0.1) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 20%, transparent 78%);
+}
+
+.background-mesh::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: linear-gradient(120deg, transparent 36%, rgba(240, 147, 75, 0.24) 50%, transparent 64%);
+  animation: meshSweep 14s linear infinite;
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  opacity: 0.06;
+  background-image:
+    repeating-radial-gradient(circle at 0 0, transparent 0, rgba(255, 255, 255, 0.65) 1px, transparent 2px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 4px);
+  background-size: 160px 160px, 200px 200px;
+}
+
+.spotlight {
+  position: fixed;
+  left: var(--spot-x, 50%);
+  top: var(--spot-y, 50%);
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(241, 145, 73, 0.18), rgba(241, 145, 73, 0));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spotlight.active {
+  opacity: 1;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.page-shell {
+  padding: 0 1rem;
+}
+
+.section {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.light-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(237, 241, 247, 0.9));
+}
+
+.dark-card {
+  background: linear-gradient(150deg, #4a5569, #414b5e);
+  color: #f7faff;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.section-heading .sub {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transition: opacity 0.66s ease, transform 0.66s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}

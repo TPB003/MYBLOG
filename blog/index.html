@@ -3,96 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TPBLOG | 数字创作博客</title>
-  <meta name="description" content="TPBLOG 的个人博客：技术、创作、阅读与生活。">
+  <title>TPBLOG | Personal Knowledge & Ideas Hub</title>
+  <meta name="description" content="TPBLOG 的个人博客与知识库，记录技术、创作、生活与实时天气。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
+  <div class="background-mesh" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
   <header class="site-header" id="top">
     <div class="header-inner">
       <nav class="main-nav">
         <a class="brand" href="#top">TPBLOG</a>
-        <a href="#home">主页</a>
-        <a href="#posts">文章</a>
-        <a href="#knowledge">知识库</a>
-        <a href="#ideas">想法</a>
-        <a href="#weather">天气</a>
-        <a href="#stats">统计</a>
-        <a href="#books">书单</a>
+        <a href="#home" data-i18n="nav.home">主页</a>
+        <a href="#posts" data-i18n="nav.posts">文章</a>
+        <a href="#knowledge" data-i18n="nav.knowledge">知识库</a>
+        <a href="#ideas" data-i18n="nav.ideas">想法</a>
+        <a href="#weather" data-i18n="nav.weather">天气</a>
+        <a href="#stats" data-i18n="nav.stats">统计</a>
+        <a href="#books" data-i18n="nav.books">书单</a>
       </nav>
-      <div class="social-links">
-        <a href="#" aria-label="GitHub">GH</a>
-        <a href="#" aria-label="Bilibili">BI</a>
-        <a href="#" aria-label="X">X</a>
+      <div class="header-actions">
+        <button id="localeToggle" class="locale-toggle" type="button" data-i18n-aria="locale.switchToEn">EN</button>
+        <div class="social-links">
+          <a href="#" aria-label="GitHub">GH</a>
+          <a href="#" aria-label="Bilibili">BI</a>
+          <a href="#" aria-label="X">X</a>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="page-shell">
     <section id="home" class="section hero reveal">
-      <div class="hero-card">
-        <p class="hero-kicker">My Name Is</p>
+      <div class="hero-card card light-card interactive-tilt">
+        <p class="hero-kicker" data-i18n="hero.kicker">My Name Is</p>
         <h1 class="hero-title">TPBLOG</h1>
-        <div class="hero-role">
-          <p>我是一个：</p>
-          <ul>
-            <li>前端开发者</li>
-            <li>创作型博主</li>
-            <li>产品设计爱好者</li>
-            <li>终身学习实践者</li>
-          </ul>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Build, write, learn, repeat.</p>
+        <p class="hero-role-label" data-i18n="hero.roleLabel">我是一个：</p>
+        <ul id="heroRoleList" class="role-list"></ul>
+        <p class="hero-text" data-i18n="hero.text">我在这里发布关于 Web 开发、内容创作和生活实验的长期记录。灵感很多，交付更重要。</p>
+        <div class="hero-actions">
+          <a class="action-pill action-primary" href="#knowledge" data-i18n="hero.actionPrimary">打开知识库</a>
+          <a class="action-pill action-ghost" href="#ideas" data-i18n="hero.actionSecondary">发送想法</a>
         </div>
-        <p class="hero-text">我在这里发布关于 Web 开发、内容创作和生活实验的长期记录。灵感很多，交付更重要。</p>
       </div>
 
       <div class="orbit-area" aria-hidden="true">
-        <div class="orbit-rings ring-a">
-          <div class="orbit-item chip-edge">CSS</div>
+        <div class="orbit-ring ring-a">
+          <div class="orbit-chip" data-i18n="orbit.code">CODE</div>
         </div>
-        <div class="orbit-rings ring-b">
-          <div class="orbit-item chip-chrome">WEB</div>
+        <div class="orbit-ring ring-b">
+          <div class="orbit-chip" data-i18n="orbit.learn">LEARN</div>
         </div>
-        <div class="orbit-rings ring-c">
-          <div class="orbit-item chip-note">NOTE</div>
+        <div class="orbit-ring ring-c">
+          <div class="orbit-chip" data-i18n="orbit.write">WRITE</div>
         </div>
-        <div class="orbit-center">
-          <div class="avatar-core">TP</div>
-        </div>
+        <div class="orbit-core">TP</div>
       </div>
     </section>
 
-    <section class="section reveal">
-      <p class="intro-line">
-        我分享 #编程 #写作 #产品 #生活。<br>
-        这些内容累计吸引了 <strong id="countUp">0</strong> 次阅读。
-      </p>
+    <section class="section intro reveal">
+      <p id="introLine" class="intro-line"></p>
       <div class="marquee-wrap">
-        <ul class="marquee-track">
-          <li>Web Engineering</li>
-          <li>Design System</li>
-          <li>React + Performance</li>
-          <li>Content Strategy</li>
-          <li>Product Thinking</li>
-          <li>Digital Notes</li>
-          <li>Web Engineering</li>
-          <li>Design System</li>
-          <li>React + Performance</li>
-          <li>Content Strategy</li>
-        </ul>
+        <ul id="topicTrack" class="marquee-track"></ul>
       </div>
     </section>
 
     <section id="posts" class="section reveal">
       <div class="section-heading">
-        <h2>精选文章</h2>
+        <h2 data-i18n="posts.title">精选文章</h2>
         <div class="chips" id="chips">
-          <button class="chip active" data-filter="all">全部</button>
-          <button class="chip" data-filter="tech">技术</button>
-          <button class="chip" data-filter="life">生活</button>
-          <button class="chip" data-filter="notes">笔记</button>
+          <button class="chip active" data-filter="all" data-i18n="filter.all">全部</button>
+          <button class="chip" data-filter="tech" data-i18n="filter.tech">技术</button>
+          <button class="chip" data-filter="life" data-i18n="filter.life">生活</button>
+          <button class="chip" data-filter="notes" data-i18n="filter.notes">笔记</button>
         </div>
       </div>
       <div class="post-grid" id="postGrid"></div>
@@ -100,46 +89,50 @@
 
     <section id="knowledge" class="section reveal">
       <div class="section-heading">
-        <h2>知识库</h2>
-        <p class="sub">沉淀概念、方法、模板，支持检索和标签筛选。</p>
+        <h2 data-i18n="knowledge.title">知识库</h2>
+        <p class="sub" data-i18n="knowledge.sub">沉淀概念、方法、模板，支持检索和标签筛选。</p>
       </div>
       <div class="knowledge-tools">
         <label class="knowledge-search" for="knowledgeSearch">
-          <span>搜索</span>
-          <input id="knowledgeSearch" type="search" placeholder="输入关键词：比如 SSR、复盘、写作模板">
+          <span data-i18n="knowledge.searchLabel">搜索</span>
+          <input id="knowledgeSearch" type="search" data-i18n-placeholder="knowledge.searchPlaceholder" placeholder="输入关键词">
         </label>
         <div class="knowledge-tags" id="knowledgeTags"></div>
       </div>
-      <p class="knowledge-count">共 <strong id="knowledgeCount">0</strong> 条知识卡</p>
+      <p class="knowledge-count">
+        <span data-i18n="knowledge.countPrefix">共</span>
+        <strong id="knowledgeCount">0</strong>
+        <span data-i18n="knowledge.countSuffix">条知识卡</span>
+      </p>
       <div class="knowledge-grid" id="knowledgeGrid"></div>
     </section>
 
     <section id="ideas" class="section reveal">
       <div class="section-heading">
-        <h2>想法发布台</h2>
-        <p class="sub">记录并发送你的即时想法，自动保存到浏览器本地。</p>
+        <h2 data-i18n="ideas.title">想法发布台</h2>
+        <p class="sub" data-i18n="ideas.sub">记录并发送你的即时想法，自动保存到浏览器本地。</p>
       </div>
       <div class="ideas-layout">
-        <form id="ideaForm" class="card light-card idea-form">
-          <h3>发送一个想法</h3>
-          <label for="ideaInput">内容</label>
-          <textarea id="ideaInput" rows="5" maxlength="280" placeholder="写下今天的灵感、观察或结论..."></textarea>
+        <form id="ideaForm" class="card light-card idea-form interactive-tilt">
+          <h3 data-i18n="ideas.formTitle">发送一个想法</h3>
+          <label for="ideaInput" data-i18n="ideas.contentLabel">内容</label>
+          <textarea id="ideaInput" rows="5" maxlength="280" data-i18n-placeholder="ideas.contentPlaceholder" placeholder="写下今天的灵感..."></textarea>
           <div class="idea-form-row">
-            <label for="ideaMood">标签</label>
+            <label for="ideaMood" data-i18n="ideas.moodLabel">标签</label>
             <select id="ideaMood">
-              <option value="思考">思考</option>
-              <option value="灵感">灵感</option>
-              <option value="记录">记录</option>
+              <option value="thinking" data-i18n="mood.thinking">思考</option>
+              <option value="inspiration" data-i18n="mood.inspiration">灵感</option>
+              <option value="log" data-i18n="mood.log">记录</option>
             </select>
           </div>
-          <button type="submit" class="idea-submit">发送到想法流</button>
-          <p class="idea-tip">说明：想法会保存在当前浏览器，不会上传服务器。</p>
+          <button type="submit" class="idea-submit" data-i18n="ideas.submit">发送到想法流</button>
+          <p class="idea-tip" data-i18n="ideas.tip">想法会保存在当前浏览器，不会上传服务器。</p>
         </form>
 
         <article class="card dark-card idea-feed">
           <div class="idea-feed-head">
-            <h3>实时想法流</h3>
-            <button id="clearIdeas" type="button">清空本地</button>
+            <h3 data-i18n="ideas.feedTitle">实时想法流</h3>
+            <button id="clearIdeas" type="button" data-i18n="ideas.clear">清空本地</button>
           </div>
           <ul id="ideaList" class="idea-list"></ul>
         </article>
@@ -148,30 +141,31 @@
 
     <section id="weather" class="section reveal">
       <div class="section-heading">
-        <h2>每日天气</h2>
-        <p class="sub">自动定位 + 实时天气 + 每日预报（7 天）。</p>
+        <h2 data-i18n="weather.title">每日天气</h2>
+        <p class="sub" data-i18n="weather.sub">自动定位 + 实时天气 + 每日预报（7 天）。</p>
       </div>
       <div class="weather-layout">
-        <article class="card dark-card weather-current">
+        <article class="card dark-card weather-current interactive-tilt">
           <div class="weather-head">
             <div>
-              <p class="weather-loc" id="weatherLocation">定位中...</p>
-              <p class="weather-desc" id="weatherDesc">正在读取实时天气</p>
+              <p class="weather-loc" id="weatherLocation" data-i18n="weather.loadingLocation">定位中...</p>
+              <p class="weather-desc" id="weatherDesc" data-i18n="weather.loadingDesc">正在读取实时天气</p>
             </div>
-            <button id="refreshWeather" type="button" class="weather-refresh">刷新</button>
+            <button id="refreshWeather" type="button" class="weather-refresh" data-i18n="weather.refresh">刷新</button>
           </div>
           <div class="weather-main">
             <p class="weather-temp"><span id="weatherTemp">--</span><small>°C</small></p>
+            <p class="weather-symbol" id="weatherSymbol">⛅</p>
             <div class="weather-meta">
-              <p>湿度 <strong id="weatherHumidity">--</strong>%</p>
-              <p>风速 <strong id="weatherWind">--</strong> km/h</p>
-              <p>更新时间 <strong id="weatherUpdated">--</strong></p>
+              <p><span data-i18n="weather.humidity">湿度</span> <strong id="weatherHumidity">--</strong>%</p>
+              <p><span data-i18n="weather.wind">风速</span> <strong id="weatherWind">--</strong> km/h</p>
+              <p><span data-i18n="weather.updated">更新时间</span> <strong id="weatherUpdated">--</strong></p>
             </div>
           </div>
         </article>
 
         <article class="card light-card weather-forecast">
-          <h3>未来 7 天</h3>
+          <h3 data-i18n="weather.forecastTitle">未来 7 天</h3>
           <div class="forecast-grid" id="forecastGrid"></div>
         </article>
       </div>
@@ -179,23 +173,18 @@
 
     <section id="stats" class="section reveal">
       <div class="stats-layout">
-        <article class="card light-card">
-          <h3>时间分配</h3>
-          <p>最近 90 天我的精力分配如下，主要时间依旧投入在技术与内容。</p>
-          <div class="bars">
-            <div><span>开发</span><b style="--w: 78%"></b></div>
-            <div><span>写作</span><b style="--w: 62%"></b></div>
-            <div><span>阅读</span><b style="--w: 45%"></b></div>
-            <div><span>运动</span><b style="--w: 31%"></b></div>
-          </div>
+        <article class="card light-card interactive-tilt">
+          <h3 data-i18n="stats.timeTitle">时间分配</h3>
+          <p data-i18n="stats.timeDesc">最近 90 天我的精力分配如下，主要时间依旧投入在技术与内容。</p>
+          <div class="bars" id="statsBars"></div>
         </article>
 
         <article class="card dark-card">
-          <h3>足迹</h3>
-          <p>当前创作地点：Suzhou, China。</p>
+          <h3 data-i18n="stats.spaceTitle">足迹</h3>
+          <p data-i18n="stats.spaceDesc">当前创作地点：Suzhou, China。</p>
           <div class="map-mock">
             <div class="pulse"></div>
-            <span>Suzhou</span>
+            <span id="statsLocationLabel">Suzhou</span>
           </div>
         </article>
       </div>
@@ -203,46 +192,26 @@
 
     <section id="books" class="section reveal">
       <div class="section-heading">
-        <h2>阅读清单</h2>
-        <p class="sub">过去几年持续阅读，以下是近期高频推荐。</p>
+        <h2 data-i18n="books.title">阅读清单</h2>
+        <p class="sub" data-i18n="books.sub">过去几年持续阅读，以下是近期高频推荐。</p>
       </div>
-      <div class="book-grid">
-        <article class="book-card">
-          <h4>《设计中的设计》</h4>
-          <p>建立了我对“留白、节奏、秩序”的审美底层。</p>
-        </article>
-        <article class="book-card">
-          <h4>《Clean Architecture》</h4>
-          <p>提醒我：代码是长期沟通，而不是短期交付。</p>
-        </article>
-        <article class="book-card">
-          <h4>《金字塔原理》</h4>
-          <p>帮助我把输出从“堆内容”变成“可读结构”。</p>
-        </article>
-        <article class="book-card">
-          <h4>《纳瓦尔宝典》</h4>
-          <p>关于长期主义、杠杆和自我选择的实践手册。</p>
-        </article>
-      </div>
+      <div class="book-grid" id="bookGrid"></div>
     </section>
 
     <section class="section contact reveal">
-      <p>
-        我愿意和不同领域的人一起做有意思的项目。<br>
-        如果你也在做长期内容或产品，欢迎联系我。
-      </p>
+      <p data-i18n-html="contact.text">我愿意和不同领域的人一起做有意思的项目。<br>如果你也在做长期内容或产品，欢迎联系我。</p>
     </section>
   </main>
 
   <footer class="site-footer reveal" id="contact">
-    <div>TPBLOG | 数字创作博客</div>
+    <div data-i18n="footer.title">TPBLOG | 数字创作博客</div>
     <div class="footer-links">
-      <a href="#">GitHub</a>
-      <a href="#">Bilibili</a>
-      <a href="#">Email</a>
+      <a href="#" data-i18n="footer.github">GitHub</a>
+      <a href="#" data-i18n="footer.bilibili">Bilibili</a>
+      <a href="#" data-i18n="footer.email">Email</a>
     </div>
   </footer>
 
-  <script src="./script.js"></script>
+  <script type="module" src="./assets/js/main.js"></script>
 </body>
 </html>

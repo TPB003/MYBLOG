@@ -1,0 +1,28 @@
+﻿:root {
+  --font-display: "Sora", "Noto Sans SC", sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  --bg: #f2f4f8;
+  --bg-soft: #f8fafc;
+  --text: #2d3342;
+  --text-soft: #5f687d;
+
+  --line: #d9deea;
+  --line-strong: #c4ccdc;
+
+  --card-light: #edf1f7;
+  --card-white: #ffffff;
+  --card-dark: #4a5569;
+
+  --accent: #f0934b;
+  --accent-deep: #d66d2f;
+  --accent-cool: #4f79ff;
+  --accent-mint: #34c9aa;
+
+  --radius-lg: 1.35rem;
+  --radius-md: 1rem;
+  --radius-sm: 0.75rem;
+
+  --shadow-sm: 0 8px 20px rgba(28, 39, 62, 0.07);
+  --shadow-md: 0 14px 32px rgba(26, 35, 58, 0.12);
+}
