@@ -17,6 +17,9 @@
         <a class="brand" href="#top">TPBLOG</a>
         <a href="#home">主页</a>
         <a href="#posts">文章</a>
+        <a href="#knowledge">知识库</a>
+        <a href="#ideas">想法</a>
+        <a href="#weather">天气</a>
         <a href="#stats">统计</a>
         <a href="#books">书单</a>
       </nav>
@@ -93,6 +96,85 @@
         </div>
       </div>
       <div class="post-grid" id="postGrid"></div>
+    </section>
+
+    <section id="knowledge" class="section reveal">
+      <div class="section-heading">
+        <h2>知识库</h2>
+        <p class="sub">沉淀概念、方法、模板，支持检索和标签筛选。</p>
+      </div>
+      <div class="knowledge-tools">
+        <label class="knowledge-search" for="knowledgeSearch">
+          <span>搜索</span>
+          <input id="knowledgeSearch" type="search" placeholder="输入关键词：比如 SSR、复盘、写作模板">
+        </label>
+        <div class="knowledge-tags" id="knowledgeTags"></div>
+      </div>
+      <p class="knowledge-count">共 <strong id="knowledgeCount">0</strong> 条知识卡</p>
+      <div class="knowledge-grid" id="knowledgeGrid"></div>
+    </section>
+
+    <section id="ideas" class="section reveal">
+      <div class="section-heading">
+        <h2>想法发布台</h2>
+        <p class="sub">记录并发送你的即时想法，自动保存到浏览器本地。</p>
+      </div>
+      <div class="ideas-layout">
+        <form id="ideaForm" class="card light-card idea-form">
+          <h3>发送一个想法</h3>
+          <label for="ideaInput">内容</label>
+          <textarea id="ideaInput" rows="5" maxlength="280" placeholder="写下今天的灵感、观察或结论..."></textarea>
+          <div class="idea-form-row">
+            <label for="ideaMood">标签</label>
+            <select id="ideaMood">
+              <option value="思考">思考</option>
+              <option value="灵感">灵感</option>
+              <option value="记录">记录</option>
+            </select>
+          </div>
+          <button type="submit" class="idea-submit">发送到想法流</button>
+          <p class="idea-tip">说明：想法会保存在当前浏览器，不会上传服务器。</p>
+        </form>
+
+        <article class="card dark-card idea-feed">
+          <div class="idea-feed-head">
+            <h3>实时想法流</h3>
+            <button id="clearIdeas" type="button">清空本地</button>
+          </div>
+          <ul id="ideaList" class="idea-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="weather" class="section reveal">
+      <div class="section-heading">
+        <h2>每日天气</h2>
+        <p class="sub">自动定位 + 实时天气 + 每日预报（7 天）。</p>
+      </div>
+      <div class="weather-layout">
+        <article class="card dark-card weather-current">
+          <div class="weather-head">
+            <div>
+              <p class="weather-loc" id="weatherLocation">定位中...</p>
+              <p class="weather-desc" id="weatherDesc">正在读取实时天气</p>
+            </div>
+            <button id="refreshWeather" type="button" class="weather-refresh">刷新</button>
+          </div>
+          <div class="weather-main">
+            <p class="weather-temp"><span id="weatherTemp">--</span><small>°C</small></p>
+            <div class="weather-meta">
+              <p>湿度 <strong id="weatherHumidity">--</strong>%</p>
+              <p>风速 <strong id="weatherWind">--</strong> km/h</p>
+              <p>更新时间 <strong id="weatherUpdated">--</strong></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card light-card weather-forecast">
+          <h3>未来 7 天</h3>
+          <div class="forecast-grid" id="forecastGrid"></div>
+        </article>
+      </div>
     </section>
 
     <section id="stats" class="section reveal">

@@ -431,6 +431,364 @@ body {
   color: var(--muted);
 }
 
+#knowledge,
+#ideas,
+#weather {
+  padding-top: 2.8rem;
+}
+
+.knowledge-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.knowledge-search {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.knowledge-search input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.72rem 0.85rem;
+  font-size: 0.94rem;
+  color: var(--text);
+}
+
+.knowledge-search input:focus {
+  outline: 2px solid #ffd1a8;
+  outline-offset: 1px;
+  border-color: #f4a05a;
+}
+
+.knowledge-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.k-tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: #40485a;
+  padding: 0.34rem 0.72rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.k-tag.active,
+.k-tag:hover {
+  background: #fff0e2;
+  border-color: #f2a367;
+  color: #b8571e;
+}
+
+.knowledge-count {
+  margin: 0.8rem 0 1rem;
+  color: var(--muted);
+}
+
+.knowledge-count strong {
+  font-family: "Sora", sans-serif;
+  color: #b8571e;
+}
+
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.kb-card {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #fff;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.72rem;
+}
+
+.kb-card h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.kb-summary {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.72;
+}
+
+.kb-meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.kb-meta time {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.kb-badges {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.kb-badge {
+  border-radius: 999px;
+  border: 1px solid #dfd3c6;
+  background: #fff5ec;
+  color: #9c5a2b;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+}
+
+.kb-empty {
+  grid-column: 1 / -1;
+  border: 1px dashed var(--line);
+  border-radius: 1rem;
+  color: var(--muted);
+  padding: 1rem;
+}
+
+.ideas-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.idea-form h3,
+.idea-feed h3,
+.weather-forecast h3 {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: 1.38rem;
+}
+
+.idea-form label {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.idea-form textarea,
+.idea-form select {
+  margin-top: 0.35rem;
+  width: 100%;
+  border-radius: 0.8rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  padding: 0.7rem;
+  font-family: inherit;
+  font-size: 0.94rem;
+}
+
+.idea-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.idea-form-row {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.idea-submit {
+  margin-top: 0.95rem;
+  border: 1px solid #dd8342;
+  background: linear-gradient(130deg, #f9b878, #f08a4b);
+  color: #2f2218;
+  border-radius: 0.85rem;
+  padding: 0.7rem 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.idea-tip {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.idea-feed-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.85rem;
+}
+
+.idea-feed-head button {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: #f4f7ff;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.idea-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.idea-item {
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.72rem;
+}
+
+.idea-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.idea-item-tag {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0.12rem 0.5rem;
+  font-size: 0.72rem;
+}
+
+.idea-item-time {
+  font-size: 0.76rem;
+  color: #e1e7f4;
+}
+
+.idea-item p {
+  margin: 0.55rem 0 0;
+  line-height: 1.7;
+  color: #f5f8ff;
+}
+
+.idea-empty {
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  color: #e9eef8;
+}
+
+.weather-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1rem;
+}
+
+.weather-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.weather-loc {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+.weather-desc {
+  margin: 0.4rem 0 0;
+  color: #e4e9f3;
+}
+
+.weather-refresh {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  color: #f4f7ff;
+  padding: 0.35rem 0.72rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.weather-main {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+}
+
+.weather-temp {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1;
+}
+
+.weather-temp small {
+  font-size: 0.4em;
+}
+
+.weather-meta p {
+  margin: 0.28rem 0;
+  color: #e4e9f3;
+  font-size: 0.9rem;
+}
+
+.forecast-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(86px, 1fr));
+  gap: 0.55rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.forecast-item {
+  min-width: 86px;
+  border-radius: 0.8rem;
+  border: 1px solid #d6dbe4;
+  background: #fff;
+  padding: 0.5rem 0.45rem;
+  text-align: center;
+}
+
+.forecast-day {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #4d5669;
+}
+
+.forecast-code {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: #7b8393;
+}
+
+.forecast-range {
+  margin: 0.3rem 0 0;
+  font-family: "Sora", sans-serif;
+  font-size: 0.8rem;
+}
+
 #stats {
   padding-top: 2.8rem;
 }
@@ -673,6 +1031,24 @@ body {
     grid-column: span 6;
   }
 
+  .knowledge-tools,
+  .ideas-layout,
+  .weather-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-tags {
+    justify-content: flex-start;
+  }
+
+  .knowledge-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(4, minmax(86px, 1fr));
+  }
+
   .book-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -743,6 +1119,20 @@ body {
   .post-card.small,
   .post-card.wide {
     grid-column: auto;
+  }
+
+  .knowledge-grid,
+  .forecast-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-main {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .stats-layout,
