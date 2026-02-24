@@ -1,28 +1,35 @@
 # GitHub Pages One-Click Deploy
 
-## 1) First deployment
+## Linux terminal (recommended)
 
-1. Create an empty GitHub repo (do not add README/license in GitHub UI).
-2. In `d:\stud`, run:
+### 1) First deployment
 
-```powershell
-.\deploy-blog-pages.ps1 -RepoUrl https://github.com/<your-user>/<your-repo>.git
+1. Create an empty GitHub repo.
+2. In project root, run:
+
+```bash
+chmod +x ./deploy-blog-pages.sh
+./deploy-blog-pages.sh --repo-url https://github.com/<your-user>/<your-repo>.git
 ```
 
-3. Open GitHub repo Settings -> Pages, set Source to `GitHub Actions` (one-time setup).
+3. Open GitHub repo `Settings -> Pages`, set Source to `GitHub Actions` (one-time setup).
 4. Wait for workflow `Deploy Blog to GitHub Pages` to finish.
-5. Your site URL will be:
+5. Site URL:
 
 ```text
 https://<your-user>.github.io/<your-repo>/
 ```
 
-## 2) Update after editing
+### 2) Deploy updates
 
-After modifying files in `blog/`, run:
+After editing files in `blog/`, run:
 
-```powershell
-.\deploy-blog-pages.ps1
+```bash
+./deploy-blog-pages.sh
 ```
 
-This will commit + push and trigger deployment again.
+## PowerShell alternative
+
+```powershell
+.\deploy-blog-pages.ps1 -RepoUrl https://github.com/<your-user>/<your-repo>.git
+```
