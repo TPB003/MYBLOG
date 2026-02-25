@@ -60,7 +60,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/css/tokens.css": "设计令牌：颜色、字体、圆角、阴影变量",
   "blog/assets/css/base.css": "基础样式：重置、全局、通用类",
   "blog/assets/css/layout.css": "布局样式：导航、页面骨架、footer",
-  "blog/assets/css/sections.css": "分区样式：hero/posts/knowledge/ideas/weather/stats/books",
+  "blog/assets/css/sections.css": "分区样式：hero/posts/knowledge/ideas/stats/books",
   "blog/assets/css/effects.css": "动画与动效样式：轨道、扫描、倾斜、过渡",
   "blog/assets/css/responsive.css": "响应式断点与移动端适配",
 
@@ -80,7 +80,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/js/features/posts.js": "文章列表渲染与分类筛选",
   "blog/assets/js/features/knowledge.js": "知识库搜索、标签筛选与卡片渲染",
   "blog/assets/js/features/ideas.js": "想法发布流与本地持久化",
-  "blog/assets/js/features/weather.js": "实时天气与 7 天预报",
+  "blog/assets/js/features/footprint.js": "足迹路线模块：城市追加、持久化与连线渲染",
   "blog/assets/js/features/effects.js": "视觉动效与交互效果（reveal/tilt/spotlight 等）"
 };
 
@@ -231,14 +231,14 @@ function ensureRootReadmeTemplate() {
   const template = [
     "# MYBLOG",
     "",
-    "TPBLOG 是一个个人博客 + 知识库项目，包含文章、知识卡片、想法流和实时天气。",
+    "TPBLOG 是一个个人博客 + 知识库项目，包含文章、知识卡片、想法流和足迹路线。",
     "",
     "## 项目特性",
     "",
     "- 博客文章与分类筛选",
     "- 知识库搜索与标签过滤",
     "- 想法发布流（本地持久化）",
-    "- 实时天气与 7 天预报",
+    "- 足迹路线追加与自动连线",
     "- 中英双语切换与动效体验",
     "",
     "## 仓库结构（自动生成）",

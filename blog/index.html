@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TPBLOG | Personal Knowledge & Ideas Hub</title>
-  <meta name="description" content="TPBLOG 的个人博客与知识库，记录技术、创作、生活与实时天气。">
+  <meta name="description" content="TPBLOG 的个人博客与知识库，记录技术、创作、生活与足迹。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
         <a href="#posts" data-i18n="nav.posts">文章</a>
         <a href="#knowledge" data-i18n="nav.knowledge">知识库</a>
         <a href="#ideas" data-i18n="nav.ideas">想法</a>
-        <a href="#weather" data-i18n="nav.weather">天气</a>
         <a href="#stats" data-i18n="nav.stats">统计</a>
         <a href="#books" data-i18n="nav.books">书单</a>
       </nav>
@@ -139,38 +138,6 @@
       </div>
     </section>
 
-    <section id="weather" class="section reveal">
-      <div class="section-heading">
-        <h2 data-i18n="weather.title">每日天气</h2>
-        <p class="sub" data-i18n="weather.sub">自动定位 + 实时天气 + 每日预报（7 天）。</p>
-      </div>
-      <div class="weather-layout">
-        <article class="card dark-card weather-current interactive-tilt">
-          <div class="weather-head">
-            <div>
-              <p class="weather-loc" id="weatherLocation" data-i18n="weather.loadingLocation">定位中...</p>
-              <p class="weather-desc" id="weatherDesc" data-i18n="weather.loadingDesc">正在读取实时天气</p>
-            </div>
-            <button id="refreshWeather" type="button" class="weather-refresh" data-i18n="weather.refresh">刷新</button>
-          </div>
-          <div class="weather-main">
-            <p class="weather-temp"><span id="weatherTemp">--</span><small>°C</small></p>
-            <p class="weather-symbol" id="weatherSymbol">⛅</p>
-            <div class="weather-meta">
-              <p><span data-i18n="weather.humidity">湿度</span> <strong id="weatherHumidity">--</strong>%</p>
-              <p><span data-i18n="weather.wind">风速</span> <strong id="weatherWind">--</strong> km/h</p>
-              <p><span data-i18n="weather.updated">更新时间</span> <strong id="weatherUpdated">--</strong></p>
-            </div>
-          </div>
-        </article>
-
-        <article class="card light-card weather-forecast">
-          <h3 data-i18n="weather.forecastTitle">未来 7 天</h3>
-          <div class="forecast-grid" id="forecastGrid"></div>
-        </article>
-      </div>
-    </section>
-
     <section id="stats" class="section reveal">
       <div class="stats-layout">
         <article class="card light-card interactive-tilt">
@@ -181,15 +148,21 @@
 
         <article class="card dark-card">
           <h3 data-i18n="stats.spaceTitle">足迹</h3>
-          <p data-i18n="stats.spaceDesc">自动记录你访问过的城市，跨城时会显示连接路径。</p>
+          <p data-i18n="stats.spaceDesc">默认路线是连云港到上海，你可以持续追加新城市并自动连线。</p>
           <div class="map-mock" id="footprintMap">
             <svg class="footprint-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <polyline id="footprintPath" class="footprint-path" points=""></polyline>
               <g id="footprintDots"></g>
             </svg>
             <div class="pulse" id="footprintPulse"></div>
-            <span id="statsLocationLabel" class="map-location-chip" data-i18n="stats.locationPending">定位中...</span>
+            <span id="statsLocationLabel" class="map-location-chip" data-i18n="stats.routeEmpty">暂无路线</span>
           </div>
+          <form class="footprint-form" id="footprintForm">
+            <label for="footprintCityInput" class="sr-only" data-i18n="stats.routeInputLabel">新增城市</label>
+            <input id="footprintCityInput" type="text" data-i18n-placeholder="stats.routePlaceholder" placeholder="输入城市名，如：杭州">
+            <button type="submit" data-i18n="stats.routeAdd">添加</button>
+            <button type="button" id="footprintClear" class="ghost" data-i18n="stats.routeReset">重置路线</button>
+          </form>
           <ul class="footprint-list" id="footprintList"></ul>
         </article>
       </div>

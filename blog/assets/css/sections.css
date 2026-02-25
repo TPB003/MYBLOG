@@ -465,15 +465,12 @@
 }
 
 .idea-form,
-.idea-feed,
-.weather-current,
-.weather-forecast {
+.idea-feed {
   padding: 1.05rem;
 }
 
 .idea-form h3,
-.idea-feed h3,
-.weather-forecast h3 {
+.idea-feed h3 {
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.36rem;
@@ -584,114 +581,6 @@
   border-radius: 0.82rem;
   padding: 0.78rem;
   color: #eaf0fc;
-}
-
-.weather-layout {
-  display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  gap: 1rem;
-}
-
-.weather-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.weather-loc {
-  margin: 0;
-  font-size: 1.32rem;
-  font-family: var(--font-display);
-  color: #fff;
-  overflow-wrap: anywhere;
-}
-
-.weather-desc {
-  margin: 0.38rem 0 0;
-  color: #e5ebf8;
-}
-
-.weather-refresh {
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: transparent;
-  color: #eff4ff;
-  padding: 0.34rem 0.7rem;
-  cursor: pointer;
-}
-
-.weather-main {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 1rem;
-  align-items: end;
-}
-
-.weather-temp {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 7vw, 3.4rem);
-  line-height: 1;
-}
-
-.weather-temp small {
-  font-size: 0.42em;
-}
-
-.weather-symbol {
-  margin: 0;
-  font-size: clamp(1.6rem, 5vw, 2.5rem);
-}
-
-.weather-meta p {
-  margin: 0.26rem 0;
-  color: #e4eaf7;
-  font-size: 0.9rem;
-}
-
-.forecast-grid {
-  margin-top: 0.8rem;
-  display: grid;
-  grid-template-columns: repeat(7, minmax(90px, 1fr));
-  gap: 0.52rem;
-  overflow-x: auto;
-  padding-bottom: 0.2rem;
-}
-
-.forecast-item {
-  min-width: 90px;
-  border: 1px solid var(--line);
-  border-radius: 0.78rem;
-  background: #fff;
-  padding: 0.5rem 0.4rem;
-  text-align: center;
-}
-
-.forecast-day,
-.forecast-code,
-.forecast-range,
-.forecast-icon {
-  margin: 0.18rem 0;
-}
-
-.forecast-day {
-  color: #4d5670;
-  font-size: 0.8rem;
-}
-
-.forecast-icon {
-  font-size: 1.12rem;
-}
-
-.forecast-code {
-  color: #7a8396;
-  font-size: 0.78rem;
-}
-
-.forecast-range {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
 }
 
 .stats-layout {
@@ -822,6 +711,38 @@
   padding: 0.33rem 0.68rem;
   font-size: 0.82rem;
   z-index: 4;
+}
+
+.footprint-form {
+  margin-top: 0.72rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.5rem;
+}
+
+.footprint-form input {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.68rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #f6fbff;
+  padding: 0.42rem 0.55rem;
+}
+
+.footprint-form input::placeholder {
+  color: #d2dcee;
+}
+
+.footprint-form button {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.68rem;
+  background: rgba(255, 255, 255, 0.16);
+  color: #f6fbff;
+  padding: 0.42rem 0.7rem;
+  cursor: pointer;
+}
+
+.footprint-form button.ghost {
+  background: transparent;
 }
 
 .footprint-list {

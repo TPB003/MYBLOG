@@ -34,8 +34,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .ideas-layout,
-  .weather-layout {
+  .ideas-layout {
     grid-template-columns: 1fr;
   }
 
@@ -124,13 +123,8 @@
     justify-content: flex-start;
   }
 
-  .weather-main {
+  .footprint-form {
     grid-template-columns: 1fr;
-    align-items: start;
-  }
-
-  .forecast-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .footprint-item {

@@ -274,8 +274,19 @@ export const books = [
   }
 ];
 
-export const defaultLocation = {
-  label: { zh: "Suzhou, China", en: "Suzhou, China" },
-  latitude: 31.299,
-  longitude: 120.585
-};
+export const footprintSeedRoute = [
+  {
+    id: "fp-lianyungang",
+    label: { zh: "连云港", en: "Lianyungang" },
+    latitude: 34.5966,
+    longitude: 119.2216,
+    createdAt: "2026-02-20T09:00:00+08:00"
+  },
+  {
+    id: "fp-shanghai",
+    label: { zh: "上海", en: "Shanghai" },
+    latitude: 31.2304,
+    longitude: 121.4737,
+    createdAt: "2026-02-22T12:00:00+08:00"
+  }
+];
