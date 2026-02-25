@@ -181,11 +181,16 @@
 
         <article class="card dark-card">
           <h3 data-i18n="stats.spaceTitle">足迹</h3>
-          <p data-i18n="stats.spaceDesc">当前创作地点：Suzhou, China。</p>
-          <div class="map-mock">
-            <div class="pulse"></div>
-            <span id="statsLocationLabel">Suzhou</span>
+          <p data-i18n="stats.spaceDesc">自动记录你访问过的城市，跨城时会显示连接路径。</p>
+          <div class="map-mock" id="footprintMap">
+            <svg class="footprint-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <polyline id="footprintPath" class="footprint-path" points=""></polyline>
+              <g id="footprintDots"></g>
+            </svg>
+            <div class="pulse" id="footprintPulse"></div>
+            <span id="statsLocationLabel" class="map-location-chip" data-i18n="stats.locationPending">定位中...</span>
           </div>
+          <ul class="footprint-list" id="footprintList"></ul>
         </article>
       </div>
     </section>

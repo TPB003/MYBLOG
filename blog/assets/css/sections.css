@@ -603,6 +603,7 @@
   font-size: 1.32rem;
   font-family: var(--font-display);
   color: #fff;
+  overflow-wrap: anywhere;
 }
 
 .weather-desc {
@@ -764,19 +765,54 @@
   background-size: 34px 34px;
 }
 
+.footprint-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.footprint-path {
+  fill: none;
+  stroke: rgba(255, 205, 163, 0.8);
+  stroke-width: 1.28;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2.2 2.2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: footprintDash 8s linear infinite;
+}
+
+.footprint-dot {
+  fill: #ffd2ab;
+  stroke: #ffffff;
+  stroke-width: 0.64;
+  opacity: 0.86;
+  animation: footprintDot 2.2s ease-in-out infinite;
+}
+
+.footprint-dot.is-latest {
+  fill: #ffab65;
+  opacity: 1;
+}
+
 .pulse {
   position: absolute;
-  left: 59%;
-  top: 44%;
+  left: 50%;
+  top: 50%;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #ffb172;
   box-shadow: 0 0 0 0 rgba(255, 177, 114, 0.72);
+  transform: translate(-50%, -50%);
+  z-index: 3;
   animation: pulse 1.9s ease-out infinite;
 }
 
-.map-mock span {
+.map-location-chip {
   position: absolute;
   left: 1rem;
   bottom: 1rem;
@@ -785,6 +821,62 @@
   color: #3b4559;
   padding: 0.33rem 0.68rem;
   font-size: 0.82rem;
+  z-index: 4;
+}
+
+.footprint-list {
+  margin: 0.72rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  max-height: 160px;
+  overflow: auto;
+}
+
+.footprint-item {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0.68rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.42rem 0.58rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.72rem;
+}
+
+.footprint-city {
+  color: #f6fbff;
+  font-size: 0.82rem;
+}
+
+.footprint-time {
+  color: #d5def0;
+  font-size: 0.74rem;
+}
+
+.footprint-empty {
+  border: 1px dashed rgba(255, 255, 255, 0.26);
+  border-radius: 0.68rem;
+  color: #dce6fa;
+  padding: 0.58rem;
+  font-size: 0.82rem;
+}
+
+@keyframes footprintDash {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+@keyframes footprintDot {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .book-grid {

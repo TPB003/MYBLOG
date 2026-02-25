@@ -8,7 +8,6 @@ const topicTrack = document.getElementById("topicTrack");
 const introLine = document.getElementById("introLine");
 const statsBarsWrap = document.getElementById("statsBars");
 const bookGrid = document.getElementById("bookGrid");
-const statsLocationLabel = document.getElementById("statsLocationLabel");
 
 function renderHeroRoles(locale) {
   if (!heroRoleList) return;
@@ -71,11 +70,6 @@ function renderBooks(locale) {
     .join("");
 }
 
-function renderStatsLocation() {
-  if (!statsLocationLabel) return;
-  statsLocationLabel.textContent = t("stats.location");
-}
-
 export function initStaticSections() {
   function render() {
     const locale = getLocale();
@@ -84,7 +78,6 @@ export function initStaticSections() {
     renderIntroLine();
     renderStatsBars();
     renderBooks(locale);
-    renderStatsLocation();
   }
 
   return {

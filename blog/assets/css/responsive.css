@@ -133,6 +133,11 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .footprint-item {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
   .site-footer {
     margin-bottom: 1.45rem;
   }
