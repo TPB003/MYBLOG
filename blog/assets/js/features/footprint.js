@@ -11,6 +11,9 @@ const footprintPulse = document.getElementById("footprintPulse");
 const footprintForm = document.getElementById("footprintForm");
 const footprintCityInput = document.getElementById("footprintCityInput");
 const footprintClearButton = document.getElementById("footprintClear");
+const footprintStart = document.getElementById("footprintStart");
+const footprintEnd = document.getElementById("footprintEnd");
+const footprintCount = document.getElementById("footprintCount");
 
 const FOOTPRINT_LIMIT = 50;
 const DUPLICATE_DISTANCE_KM = 8;
@@ -151,11 +154,25 @@ function renderRoute() {
   }));
   const projected = points.map((point) => projectPoint(point));
   const latest = projected[projected.length - 1] || null;
+  const start = points[0] || null;
+  const end = points[points.length - 1] || null;
 
   if (statsLocationLabel) {
     statsLocationLabel.textContent = latest
       ? latest.displayLabel
       : t("stats.routeEmpty");
+  }
+
+  if (footprintStart) {
+    footprintStart.textContent = start ? start.displayLabel : t("stats.routeEmpty");
+  }
+
+  if (footprintEnd) {
+    footprintEnd.textContent = end ? end.displayLabel : t("stats.routeEmpty");
+  }
+
+  if (footprintCount) {
+    footprintCount.textContent = t("stats.routeCount", { count: points.length });
   }
 
   if (footprintPath) {
@@ -201,7 +218,8 @@ function renderRoute() {
       const routeIndex = points.length - index;
       return `
         <li class="footprint-item">
-          <span class="footprint-city">${routeIndex}. ${escapeHTML(point.displayLabel)}</span>
+          <span class="footprint-order">${escapeHTML(String(routeIndex).padStart(2, "0"))}</span>
+          <span class="footprint-city">${escapeHTML(point.displayLabel)}</span>
           <time class="footprint-time" datetime="${escapeHTML(point.createdAt)}">${escapeHTML(formatDateTime(point.createdAt, locale))}</time>
         </li>
       `;

@@ -127,6 +127,10 @@
     grid-template-columns: 1fr;
   }
 
+  .footprint-count {
+    margin-left: 0;
+  }
+
   .footprint-item {
     flex-wrap: wrap;
     align-items: flex-start;
