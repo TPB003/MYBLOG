@@ -1,29 +1,22 @@
-import { posts, profile } from "../data/content.js";
+import { knowledgeCards } from "../data/content.js";
 import { STORAGE_KEYS } from "../core/store.js";
 import { safeParseJSON } from "../core/utils.js";
 
 const listeners = new Set();
 const POLL_INTERVAL_MS = 60 * 1000;
 const COUNT_API_BASE = "https://api.countapi.xyz";
-const TOTAL_KEY = "reads_total";
-const SESSION_VISIT_KEY = "tpblog_visit_counted_v1";
-const SESSION_POST_KEY = "tpblog_post_reads_v1";
+const TOTAL_KEY = "knowledge_reads_total_v2";
+const KNOWLEDGE_PREFIX = "knowledge_read_";
+const SESSION_KNOWLEDGE_KEY = "tpblog_session_knowledge_reads_v2";
 
 const state = {
   total: 0,
-  posts: {}
+  knowledge: {}
 };
-
-const postBaseReads = {};
-let totalBaseReads = 0;
 
 let initialized = false;
 let pollTimerId = null;
 let namespace = "tpblog-myblog";
-
-function getPostBaseReads(post) {
-  return Number.isFinite(post.baseReads) ? Math.max(0, Math.floor(post.baseReads)) : 0;
-}
 
 function getLocaleCode(locale) {
   return locale === "zh" ? "zh-CN" : "en-US";
@@ -33,44 +26,34 @@ function resolveNamespace() {
   const host = (window.location.hostname || "local")
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-");
-  const path = (window.location.pathname || "/")
+  const pathSegments = (window.location.pathname || "/")
+    .split("/")
+    .filter(Boolean);
+  const repo = (pathSegments[0] || "root")
     .toLowerCase()
-    .replace(/[^a-z0-9-]/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/[^a-z0-9-]/g, "-");
 
-  return `tpblog-${host}${path}`.slice(0, 96);
+  return `tpblog-${host}-${repo}`.slice(0, 96);
+}
+
+function knowledgeKey(cardId) {
+  return `${KNOWLEDGE_PREFIX}${cardId}`;
 }
 
 function ensureBaseState() {
-  let postSum = 0;
-
-  posts.forEach((post) => {
-    const base = getPostBaseReads(post);
-    postBaseReads[post.id] = base;
-    state.posts[post.id] = base;
-    postSum += base;
+  state.total = 0;
+  knowledgeCards.forEach((card) => {
+    state.knowledge[card.id] = 0;
   });
-
-  const profileBase = Number.isFinite(profile.readCount) ? Math.floor(profile.readCount) : 0;
-  totalBaseReads = Math.max(profileBase, postSum);
-  state.total = totalBaseReads;
-}
-
-function normalizeRemoteValue(rawValue, baseValue) {
-  if (!Number.isFinite(rawValue)) return null;
-
-  const normalized = Math.max(0, Math.floor(rawValue));
-  // CountAPI may start counters from 0; treat values below base as incremental delta.
-  return normalized < baseValue ? baseValue + normalized : normalized;
 }
 
 function emit() {
-  const snapshot = {
-    total: state.total,
-    posts: { ...state.posts }
-  };
-
-  listeners.forEach((listener) => listener(snapshot));
+  listeners.forEach((listener) => {
+    listener({
+      total: state.total,
+      knowledge: { ...state.knowledge }
+    });
+  });
 }
 
 function saveLocalSnapshot() {
@@ -79,7 +62,7 @@ function saveLocalSnapshot() {
       STORAGE_KEYS.readMetrics,
       JSON.stringify({
         total: state.total,
-        posts: state.posts,
+        knowledge: state.knowledge,
         updatedAt: Date.now()
       })
     );
@@ -93,23 +76,23 @@ function applySnapshot(snapshot, options = {}) {
 
   let changed = false;
 
-  if (snapshot.total != null) {
-    const normalized = normalizeRemoteValue(Number(snapshot.total), totalBaseReads);
-    if (normalized != null && normalized > state.total) {
-      state.total = normalized;
+  const totalValue = Number(snapshot.total);
+  if (Number.isFinite(totalValue)) {
+    const nextTotal = Math.max(0, Math.floor(totalValue));
+    if (nextTotal !== state.total) {
+      state.total = nextTotal;
       changed = true;
     }
   }
 
-  posts.forEach((post) => {
-    const raw = snapshot.posts && snapshot.posts[post.id];
+  knowledgeCards.forEach((card) => {
+    const raw = snapshot.knowledge && snapshot.knowledge[card.id];
     const nextValue = Number(raw);
-
     if (!Number.isFinite(nextValue)) return;
 
-    const normalized = normalizeRemoteValue(nextValue, postBaseReads[post.id] || 0);
-    if (normalized != null && normalized > state.posts[post.id]) {
-      state.posts[post.id] = normalized;
+    const normalized = Math.max(0, Math.floor(nextValue));
+    if (normalized !== state.knowledge[card.id]) {
+      state.knowledge[card.id] = normalized;
       changed = true;
     }
   });
@@ -134,18 +117,18 @@ function hydrateFromLocal() {
   }
 }
 
-function readSessionPosts() {
+function readSessionKnowledge() {
   try {
-    const raw = safeParseJSON(sessionStorage.getItem(SESSION_POST_KEY), []);
+    const raw = safeParseJSON(sessionStorage.getItem(SESSION_KNOWLEDGE_KEY), []);
     return Array.isArray(raw) ? new Set(raw) : new Set();
   } catch {
     return new Set();
   }
 }
 
-function writeSessionPosts(ids) {
+function writeSessionKnowledge(ids) {
   try {
-    sessionStorage.setItem(SESSION_POST_KEY, JSON.stringify([...ids]));
+    sessionStorage.setItem(SESSION_KNOWLEDGE_KEY, JSON.stringify([...ids]));
   } catch {
     // ignore session write failure
   }
@@ -183,51 +166,29 @@ async function hitRemoteCount(key) {
   }
 }
 
-function postKey(postId) {
-  return `post_${postId}`;
-}
-
-async function refreshFromRemote() {
+export async function refreshReadMetrics() {
   const requests = [fetchRemoteCount(TOTAL_KEY)];
-  posts.forEach((post) => requests.push(fetchRemoteCount(postKey(post.id))));
+  knowledgeCards.forEach((card) => {
+    requests.push(fetchRemoteCount(knowledgeKey(card.id)));
+  });
 
   const results = await Promise.all(requests);
-  const [remoteTotal, ...remotePostValues] = results;
-  const snapshot = { total: remoteTotal, posts: {} };
+  const [totalValue, ...knowledgeValues] = results;
+  const snapshot = { total: totalValue, knowledge: {} };
 
-  posts.forEach((post, index) => {
-    snapshot.posts[post.id] = remotePostValues[index];
+  knowledgeCards.forEach((card, index) => {
+    snapshot.knowledge[card.id] = knowledgeValues[index];
   });
 
   applySnapshot(snapshot);
-}
-
-function recordVisitOncePerSession() {
-  try {
-    if (sessionStorage.getItem(SESSION_VISIT_KEY) === "1") {
-      return;
-    }
-
-    sessionStorage.setItem(SESSION_VISIT_KEY, "1");
-  } catch {
-    // If sessionStorage fails, continue with local increment.
-  }
-
-  state.total += 1;
-  saveLocalSnapshot();
-  emit();
-
-  hitRemoteCount(TOTAL_KEY).then((remoteValue) => {
-    applySnapshot({ total: remoteValue });
-  });
 }
 
 export function getTotalReads() {
   return state.total;
 }
 
-export function getPostReads(postId) {
-  return state.posts[postId] || 0;
+export function getKnowledgeReads(cardId) {
+  return state.knowledge[cardId] || 0;
 }
 
 export function formatReadCount(value, locale) {
@@ -239,32 +200,31 @@ export function onReadMetricsChange(callback) {
   return () => listeners.delete(callback);
 }
 
-export function recordPostRead(postId) {
-  if (!postId || !Object.prototype.hasOwnProperty.call(state.posts, postId)) return;
+export function recordKnowledgeRead(cardId) {
+  if (!cardId || !Object.prototype.hasOwnProperty.call(state.knowledge, cardId)) return;
 
-  const viewedPosts = readSessionPosts();
-  // Avoid duplicate increments for repeated opens in the same browser session.
-  if (viewedPosts.has(postId)) return;
+  const viewed = readSessionKnowledge();
+  if (viewed.has(cardId)) return;
 
-  viewedPosts.add(postId);
-  writeSessionPosts(viewedPosts);
+  viewed.add(cardId);
+  writeSessionKnowledge(viewed);
 
-  state.posts[postId] += 1;
+  state.knowledge[cardId] += 1;
   state.total += 1;
   saveLocalSnapshot();
   emit();
 
-  Promise.all([hitRemoteCount(postKey(postId)), hitRemoteCount(TOTAL_KEY)]).then(([postValue, totalValue]) => {
+  Promise.all([hitRemoteCount(knowledgeKey(cardId)), hitRemoteCount(TOTAL_KEY)]).then(([knowledgeValue, totalValue]) => {
     applySnapshot({
       total: totalValue,
-      posts: {
-        [postId]: postValue
+      knowledge: {
+        [cardId]: knowledgeValue
       }
     });
   });
 }
 
-export function initReadMetrics() {
+export function initReadMetrics(options = {}) {
   if (initialized) return;
   initialized = true;
   namespace = resolveNamespace();
@@ -272,11 +232,9 @@ export function initReadMetrics() {
   ensureBaseState();
   hydrateFromLocal();
   emit();
+  refreshReadMetrics();
 
-  recordVisitOncePerSession();
-  refreshFromRemote();
-
-  if (!pollTimerId) {
-    pollTimerId = window.setInterval(refreshFromRemote, POLL_INTERVAL_MS);
+  if (options.poll !== false && !pollTimerId) {
+    pollTimerId = window.setInterval(refreshReadMetrics, POLL_INTERVAL_MS);
   }
 }

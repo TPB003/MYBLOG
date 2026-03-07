@@ -1,5 +1,12 @@
 import { knowledgeCards, knowledgeTagLabels } from "../data/content.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
+import {
+  formatReadCount,
+  getKnowledgeReads,
+  initReadMetrics,
+  onReadMetricsChange,
+  recordKnowledgeRead
+} from "../features/read-metrics.js";
 
 const LOCALE_KEY = "tpblog_locale_v2";
 const THEME_KEY = "tpblog_theme_pref_v1";
@@ -9,6 +16,7 @@ const textMap = {
   zh: {
     kicker: "KNOWLEDGE ARTICLE",
     updated: "更新于",
+    reads: "阅读",
     backHome: "返回主页",
     backKnowledge: "返回知识库",
     notFoundTitle: "未找到知识文章",
@@ -22,6 +30,7 @@ const textMap = {
   en: {
     kicker: "KNOWLEDGE ARTICLE",
     updated: "Updated",
+    reads: "Reads",
     backHome: "Back Home",
     backKnowledge: "Knowledge Index",
     notFoundTitle: "Knowledge Entry Not Found",
@@ -43,6 +52,7 @@ const titleNode = document.getElementById("articleTitle");
 const summaryNode = document.getElementById("articleSummary");
 const updatedNode = document.getElementById("articleUpdated");
 const readingNode = document.getElementById("articleReading");
+const readsNode = document.getElementById("articleReads");
 const tagsNode = document.getElementById("articleTags");
 const contentNode = document.getElementById("articleContent");
 const backHomeNodes = document.querySelectorAll("[data-back-home]");
@@ -125,7 +135,7 @@ function toggleTheme() {
   renderThemeButton();
 }
 
-function cardById() {
+function getCurrentCard() {
   const cardId = body.dataset.cardId || "";
   return knowledgeCards.find((card) => card.id === cardId) || null;
 }
@@ -139,8 +149,17 @@ function renderFallback() {
   contentNode.innerHTML = "";
 }
 
+function renderReads(cardId) {
+  const card = knowledgeCards.find((item) => item.id === cardId);
+  if (!card || !readsNode) return;
+
+  const textPack = textMap[locale];
+  const count = formatReadCount(getKnowledgeReads(card.id), locale);
+  readsNode.textContent = `${textPack.reads} ${count}`;
+}
+
 function renderArticle() {
-  const card = cardById();
+  const card = getCurrentCard();
   const textPack = textMap[locale];
 
   root.lang = locale === "zh" ? "zh-CN" : "en";
@@ -164,7 +183,6 @@ function renderArticle() {
   const summary = card.summary[locale] || card.summary.zh;
   const reading = typeof card.reading === "string" ? card.reading : (card.reading?.[locale] || card.reading?.zh || "");
   const paragraphs = card.content?.[locale] || card.content?.zh || [];
-  const localeCode = locale === "zh" ? "zh-CN" : "en-US";
   const formattedDate = formatDate(card.updated, locale);
 
   if (kickerNode) kickerNode.textContent = textPack.kicker;
@@ -172,6 +190,8 @@ function renderArticle() {
   if (summaryNode) summaryNode.textContent = summary;
   if (updatedNode) updatedNode.textContent = `${textPack.updated} ${formattedDate}`;
   if (readingNode) readingNode.textContent = reading;
+  renderReads(card.id);
+
   backHomeNodes.forEach((node) => {
     node.textContent = textPack.backHome;
   });
@@ -182,8 +202,8 @@ function renderArticle() {
   if (tagsNode) {
     tagsNode.innerHTML = card.tags
       .map((tag) => {
-        const label = knowledgeTagLabels[tag];
-        const value = label ? (label[locale] || label.zh) : tag;
+        const labelPack = knowledgeTagLabels[tag];
+        const value = labelPack ? (labelPack[locale] || labelPack.zh) : tag;
         return `<span class="article-tag">${escapeHTML(value)}</span>`;
       })
       .join("");
@@ -194,7 +214,6 @@ function renderArticle() {
   }
 
   document.title = `${title} | TPBLOG`;
-  document.documentElement.dataset.localeCode = localeCode;
 }
 
 function initLocaleToggle() {
@@ -218,10 +237,22 @@ function init() {
 
   initLocaleToggle();
   initThemeToggle();
+  initReadMetrics({ poll: false });
 
   applyTheme();
   renderThemeButton();
   renderArticle();
+
+  const card = getCurrentCard();
+  if (card) {
+    recordKnowledgeRead(card.id);
+  }
+
+  onReadMetricsChange(() => {
+    const current = getCurrentCard();
+    if (!current) return;
+    renderReads(current.id);
+  });
 
   window.setInterval(() => {
     if (themePreference === "auto") {

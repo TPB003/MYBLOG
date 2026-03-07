@@ -1,7 +1,8 @@
-﻿import { knowledgeCards, knowledgeTagLabels } from "../data/content.js";
+import { knowledgeCards, knowledgeTagLabels } from "../data/content.js";
 import { store } from "../core/store.js";
 import { getLocale, t } from "../core/i18n.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
+import { formatReadCount, getKnowledgeReads, onReadMetricsChange } from "./read-metrics.js";
 
 const searchInput = document.getElementById("knowledgeSearch");
 const tagsWrap = document.getElementById("knowledgeTags");
@@ -19,14 +20,14 @@ function renderTagButtons() {
   const tags = availableTags();
 
   const html = [
-    `<button type=\"button\" class=\"k-tag ${store.knowledgeTag === "all" ? "active" : ""}\" data-tag=\"all\">${escapeHTML(t("knowledge.tagAll"))}</button>`
+    `<button type="button" class="k-tag ${store.knowledgeTag === "all" ? "active" : ""}" data-tag="all">${escapeHTML(t("knowledge.tagAll"))}</button>`
   ];
 
   tags.forEach((tag) => {
     const labelPack = knowledgeTagLabels[tag];
     const label = labelPack ? (labelPack[locale] || labelPack.zh) : tag;
     const active = store.knowledgeTag === tag ? "active" : "";
-    html.push(`<button type=\"button\" class=\"k-tag ${active}\" data-tag=\"${escapeHTML(tag)}\">${escapeHTML(label)}</button>`);
+    html.push(`<button type="button" class="k-tag ${active}" data-tag="${escapeHTML(tag)}">${escapeHTML(label)}</button>`);
   });
 
   tagsWrap.innerHTML = html.join("");
@@ -60,7 +61,7 @@ function renderKnowledge() {
   }
 
   if (!list.length) {
-    grid.innerHTML = `<p class=\"kb-empty\">${escapeHTML(t("knowledge.empty"))}</p>`;
+    grid.innerHTML = `<p class="kb-empty">${escapeHTML(t("knowledge.empty"))}</p>`;
     return;
   }
 
@@ -69,12 +70,15 @@ function renderKnowledge() {
       const title = card.title[locale] || card.title.zh;
       const summary = card.summary[locale] || card.summary.zh;
       const reading = typeof card.reading === "string" ? card.reading : (card.reading?.[locale] || card.reading?.zh || "");
+      const reads = t("knowledge.readCount", {
+        count: formatReadCount(getKnowledgeReads(card.id), locale)
+      });
       const articlePath = `./knowledge/${card.slug || card.id}.html`;
       const badges = card.tags
         .map((tag) => {
           const pack = knowledgeTagLabels[tag];
           const label = pack ? (pack[locale] || pack.zh) : tag;
-          return `<span class=\"kb-badge\">${escapeHTML(label)}</span>`;
+          return `<span class="kb-badge">${escapeHTML(label)}</span>`;
         })
         .join("");
 
@@ -86,6 +90,7 @@ function renderKnowledge() {
             <div class="kb-meta">
               <time datetime="${escapeHTML(card.updated)}">${escapeHTML(t("knowledge.updated", { date: formatDate(card.updated, locale) }))}</time>
               <span class="kb-reading">${escapeHTML(reading)}</span>
+              <span class="kb-reads">${escapeHTML(reads)}</span>
               <div class="kb-badges">${badges}</div>
             </div>
             <a class="kb-open" href="${escapeHTML(articlePath)}">${escapeHTML(t("knowledge.open"))}</a>
@@ -132,6 +137,9 @@ function bindEvents() {
 
 export function initKnowledge() {
   bindEvents();
+  onReadMetricsChange(() => {
+    renderKnowledge();
+  });
 
   return {
     render: renderKnowledge

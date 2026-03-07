@@ -468,6 +468,11 @@
   color: var(--text-soft);
 }
 
+.kb-reads {
+  font-size: 0.76rem;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text-soft));
+}
+
 .kb-badges {
   display: flex;
   flex-wrap: wrap;

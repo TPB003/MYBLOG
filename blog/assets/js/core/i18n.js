@@ -22,7 +22,7 @@ const translations = {
     "hero.roleLabel": "我正在长期专注：",
     "hero.text": "把写作、工程和学习沉淀在同一个首页，减少上下文切换，强化长期产出。",
     "hero.actionPrimary": "打开知识库",
-    "hero.actionSecondary": "浏览文章",
+    "hero.actionSecondary": "查看统计",
 
     "theme.day": "白天模式",
     "theme.night": "夜间模式",
@@ -66,6 +66,7 @@ const translations = {
     "knowledge.searchPlaceholder": "输入关键词：比如 SSR、复盘、写作模板",
     "knowledge.tagAll": "全部",
     "knowledge.open": "阅读全文",
+    "knowledge.readCount": "{count} 次阅读",
     "knowledge.countPrefix": "共",
     "knowledge.countSuffix": "条知识卡",
     "knowledge.empty": "没有找到相关知识卡，试试更短关键词或切换标签。",
@@ -113,7 +114,7 @@ const translations = {
     "hero.roleLabel": "Current long-term focus:",
     "hero.text": "Writing, engineering, and learning are now consolidated into one calm homepage.",
     "hero.actionPrimary": "Open Knowledge Base",
-    "hero.actionSecondary": "Browse Posts",
+    "hero.actionSecondary": "View Stats",
 
     "theme.day": "Day Mode",
     "theme.night": "Night Mode",
@@ -157,6 +158,7 @@ const translations = {
     "knowledge.searchPlaceholder": "Type keywords: SSR, retrospective, writing template...",
     "knowledge.tagAll": "All",
     "knowledge.open": "Read Full Page",
+    "knowledge.readCount": "{count} reads",
     "knowledge.countPrefix": "",
     "knowledge.countSuffix": "knowledge cards",
     "knowledge.empty": "No matching card found. Try shorter keywords or another tag.",
