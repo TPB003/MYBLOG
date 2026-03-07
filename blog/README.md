@@ -20,6 +20,7 @@
 | `blog/assets/css` | 目录 | 样式目录 |
 | `blog/assets/css/base.css` | 文件 | 基础样式：重置、全局、通用类 |
 | `blog/assets/css/effects.css` | 文件 | 动画与动效样式：轨道、扫描、倾斜、过渡 |
+| `blog/assets/css/knowledge-article.css` | 文件 | 样式文件 |
 | `blog/assets/css/layout.css` | 文件 | 布局样式：导航、页面骨架、footer |
 | `blog/assets/css/main.css` | 文件 | 样式入口，汇总各 CSS 模块 |
 | `blog/assets/css/responsive.css` | 文件 | 响应式断点与移动端适配 |
@@ -40,8 +41,17 @@
 | `blog/assets/js/features/static-sections.js` | 文件 | 静态区块渲染（Hero、话题、统计、书单） |
 | `blog/assets/js/features/theme.js` | 文件 | 自动日夜主题模块：时间驱动主题与主页时钟 |
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
+| `blog/assets/js/pages` | 目录 | 目录 |
+| `blog/assets/js/pages/knowledge-article.js` | 文件 | 脚本文件 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
+| `blog/knowledge` | 目录 | 目录 |
+| `blog/knowledge/frontend-performance-check.html` | 文件 | 页面文件 |
+| `blog/knowledge/knowledge-card-naming.html` | 文件 | 页面文件 |
+| `blog/knowledge/ssr-vs-ssg.html` | 文件 | 页面文件 |
+| `blog/knowledge/tech-stack-decision-checklist.html` | 文件 | 页面文件 |
+| `blog/knowledge/weekly-retrospective-template.html` | 文件 | 页面文件 |
+| `blog/knowledge/writing-workflow-3-step.html` | 文件 | 页面文件 |
 | `blog/README.md` | 文件 | 博客端详细架构文档（由脚本维护结构说明块） |
 <!-- AUTO-GENERATED:BLOG-STRUCTURE END -->
 

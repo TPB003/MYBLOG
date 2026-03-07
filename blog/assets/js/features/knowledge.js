@@ -68,6 +68,8 @@ function renderKnowledge() {
     .map((card) => {
       const title = card.title[locale] || card.title.zh;
       const summary = card.summary[locale] || card.summary.zh;
+      const reading = typeof card.reading === "string" ? card.reading : (card.reading?.[locale] || card.reading?.zh || "");
+      const articlePath = `./knowledge/${card.slug || card.id}.html`;
       const badges = card.tags
         .map((tag) => {
           const pack = knowledgeTagLabels[tag];
@@ -77,12 +79,16 @@ function renderKnowledge() {
         .join("");
 
       return `
-        <article class="kb-card interactive-tilt">
+        <article class="kb-card interactive-tilt" data-kb-href="${escapeHTML(articlePath)}" tabindex="0" role="link">
           <h3>${escapeHTML(title)}</h3>
           <p class="kb-summary">${escapeHTML(summary)}</p>
-          <div class="kb-meta">
-            <time datetime="${escapeHTML(card.updated)}">${escapeHTML(t("knowledge.updated", { date: formatDate(card.updated, locale) }))}</time>
-            <div class="kb-badges">${badges}</div>
+          <div class="kb-footer">
+            <div class="kb-meta">
+              <time datetime="${escapeHTML(card.updated)}">${escapeHTML(t("knowledge.updated", { date: formatDate(card.updated, locale) }))}</time>
+              <span class="kb-reading">${escapeHTML(reading)}</span>
+              <div class="kb-badges">${badges}</div>
+            </div>
+            <a class="kb-open" href="${escapeHTML(articlePath)}">${escapeHTML(t("knowledge.open"))}</a>
           </div>
         </article>
       `;
@@ -104,6 +110,22 @@ function bindEvents() {
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       renderKnowledge();
+    });
+  }
+
+  if (grid) {
+    grid.addEventListener("click", (event) => {
+      const card = event.target.closest(".kb-card[data-kb-href]");
+      if (!card || event.target.closest("a, button, input, textarea")) return;
+      window.location.assign(card.dataset.kbHref);
+    });
+
+    grid.addEventListener("keydown", (event) => {
+      const card = event.target.closest(".kb-card[data-kb-href]");
+      if (!card) return;
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      window.location.assign(card.dataset.kbHref);
     });
   }
 }

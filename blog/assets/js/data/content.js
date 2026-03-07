@@ -208,8 +208,10 @@ export const posts = [
 export const knowledgeCards = [
   {
     id: "kb-1",
+    slug: "ssr-vs-ssg",
     tags: ["web", "architecture", "seo"],
     updated: "2026-02-24",
+    reading: { zh: "5 分钟阅读", en: "5 min read" },
     title: {
       zh: "SSR 与 SSG 的选择原则",
       en: "Choosing between SSR and SSG"
@@ -217,12 +219,28 @@ export const knowledgeCards = [
     summary: {
       zh: "内容变化频率低、以 SEO 为主时优先 SSG；需要实时性和个性化时使用 SSR。",
       en: "Use SSG for low-change SEO pages; use SSR when freshness or personalization matters."
+    },
+    content: {
+      zh: [
+        "SSR 和 SSG 的选择本质上不是技术偏好，而是业务更新频率与响应时效的匹配问题。",
+        "当页面内容更新频率低、访问模式稳定、SEO 是核心目标时，SSG 往往是更稳妥的方案。静态文件可缓存，部署简单，首屏表现也更稳定。",
+        "当页面需要实时数据、用户个性化内容、或者有频繁变更需求时，SSR 更适合。它能在请求时返回最新结果，但需要更严谨的缓存和性能治理。",
+        "实践里推荐优先做混合架构：默认 SSG，针对关键实时页面使用 SSR，避免全站 SSR 带来的复杂度和成本。"
+      ],
+      en: [
+        "Choosing between SSR and SSG is not a style preference. It is a fit decision between update frequency and freshness requirements.",
+        "When content changes slowly and SEO is the main objective, SSG is usually the safer baseline. Static assets cache well and stay operationally simple.",
+        "When pages depend on real-time data, personalization, or frequent updates, SSR becomes more suitable. It serves fresh output per request with higher runtime cost.",
+        "In practice, a hybrid strategy works best: keep most routes on SSG and selectively use SSR for freshness-critical pages."
+      ]
     }
   },
   {
     id: "kb-2",
+    slug: "frontend-performance-check",
     tags: ["performance", "web", "debug"],
     updated: "2026-02-23",
+    reading: { zh: "6 分钟阅读", en: "6 min read" },
     title: {
       zh: "前端性能排查顺序",
       en: "Frontend performance troubleshooting order"
@@ -230,12 +248,28 @@ export const knowledgeCards = [
     summary: {
       zh: "先看关键渲染路径，再查图片体积、字体加载、第三方脚本和长任务来源。",
       en: "Check critical rendering path first, then image sizes, font loading, third-party scripts, and long tasks."
+    },
+    content: {
+      zh: [
+        "性能排查最怕“想到哪查到哪”，正确顺序能直接减少一半无效工作。",
+        "第一步看关键渲染路径：首屏 CSS 是否阻塞、关键脚本是否过大、是否有不必要的同步执行。",
+        "第二步看资源体积：图片格式与尺寸是否合适、字体是否子集化、首屏是否加载了非关键资源。",
+        "第三步检查第三方脚本与长任务来源。把最重的脚本放到延迟时机执行，能显著改善交互延迟。"
+      ],
+      en: [
+        "Performance investigations fail when debugging is random. A fixed order removes most wasted effort.",
+        "Step one is critical rendering path: blocking CSS, oversized critical JS, and synchronous execution pressure.",
+        "Step two is asset weight: image format and dimensions, font subsetting, and non-critical resources leaking into first paint.",
+        "Step three is third-party scripts and long tasks. Deferring heavy integrations often yields immediate interaction gains."
+      ]
     }
   },
   {
     id: "kb-3",
+    slug: "weekly-retrospective-template",
     tags: ["retrospective", "efficiency", "template"],
     updated: "2026-02-22",
+    reading: { zh: "4 分钟阅读", en: "4 min read" },
     title: {
       zh: "周复盘模板",
       en: "Weekly retrospective template"
@@ -243,12 +277,28 @@ export const knowledgeCards = [
     summary: {
       zh: "本周目标、关键事实、偏差原因、下周调整四段式，避免空泛总结。",
       en: "Use four blocks: goals, facts, deviations, and next-week adjustments to avoid vague summaries."
+    },
+    content: {
+      zh: [
+        "有效复盘不是“回忆本周做了什么”，而是提取可复用规律并指导下一周行动。",
+        "模板建议固定四段：目标回顾、关键事实、偏差原因、下周调整。每段只写可验证内容，避免情绪化叙述。",
+        "关键事实要尽量量化，比如发布篇数、深度工作时长、任务延期次数。没有数据的复盘很难产生可执行结论。",
+        "最后把复盘产出收敛为 1 到 3 条调整动作，下周直接执行，不再重复讨论。"
+      ],
+      en: [
+        "A useful retrospective is not a weekly diary. It is a decision tool for the next cycle.",
+        "Keep a fixed four-part template: goals, facts, deviations, and next-week adjustments.",
+        "Facts should be measurable whenever possible: shipped outputs, deep work hours, delay count, or quality indicators.",
+        "End with one to three concrete adjustments and execute directly in the next week."
+      ]
     }
   },
   {
     id: "kb-4",
+    slug: "writing-workflow-3-step",
     tags: ["writing", "content", "method"],
     updated: "2026-02-21",
+    reading: { zh: "5 分钟阅读", en: "5 min read" },
     title: {
       zh: "写作流程 3 步法",
       en: "Three-step writing workflow"
@@ -256,12 +306,28 @@ export const knowledgeCards = [
     summary: {
       zh: "先列框架，再补案例，最后压缩句子，把每篇文章控制在一个核心观点。",
       en: "Outline first, add cases second, compress language last; keep one core argument per article."
+    },
+    content: {
+      zh: [
+        "写作卡住通常不是不会写，而是没有流程。先定流程，再谈表达质量。",
+        "三步法的第一步是框架：先写标题、主结论和 3 到 4 个支撑点，确保结构成立。",
+        "第二步是案例：给每个支撑点补充真实场景、数据或反例，避免只停留在观点层。",
+        "第三步是压缩：删掉重复句、模糊词和无效修饰，提升信息密度与阅读节奏。"
+      ],
+      en: [
+        "Writer's block is often a process problem, not a language problem.",
+        "Step one is structure: define title, thesis, and three to four supporting arguments.",
+        "Step two is evidence: add real examples, numbers, or counter-cases to each argument.",
+        "Step three is compression: remove repetition and vague modifiers to increase density and readability."
+      ]
     }
   },
   {
     id: "kb-5",
+    slug: "knowledge-card-naming",
     tags: ["knowledge", "naming", "system"],
     updated: "2026-02-20",
+    reading: { zh: "4 分钟阅读", en: "4 min read" },
     title: {
       zh: "知识卡片命名规范",
       en: "Knowledge card naming convention"
@@ -269,12 +335,28 @@ export const knowledgeCards = [
     summary: {
       zh: "统一采用“主题-问题-结论”命名，提升检索与二次复用效率。",
       en: "Use `topic-question-conclusion` naming for faster search and better reuse."
+    },
+    content: {
+      zh: [
+        "命名规范的价值不是好看，而是让知识在半年后仍然可检索、可理解、可复用。",
+        "推荐格式是“主题-问题-结论”，比如“缓存策略-何时失效-按业务窗口失效”。",
+        "命名时避免抽象词和情绪词，优先使用能直接触发场景联想的关键词。",
+        "统一命名后，知识库搜索命中率会明显提升，协作时也更容易快速定位同类经验。"
+      ],
+      en: [
+        "Naming standards are about retrieval and reuse, not aesthetics.",
+        "A practical format is `topic-question-conclusion`, such as `cache-strategy-when-to-expire-business-window`.",
+        "Avoid abstract and emotional words. Prefer context-triggering terms that map to real decisions.",
+        "With consistent naming, search accuracy improves and cross-project reuse becomes much faster."
+      ]
     }
   },
   {
     id: "kb-6",
+    slug: "tech-stack-decision-checklist",
     tags: ["architecture", "decision", "team"],
     updated: "2026-02-19",
+    reading: { zh: "6 分钟阅读", en: "6 min read" },
     title: {
       zh: "技术选型检查清单",
       en: "Tech stack decision checklist"
@@ -282,6 +364,20 @@ export const knowledgeCards = [
     summary: {
       zh: "评估生态、维护成本、团队熟悉度和迁移风险，避免仅凭热度决策。",
       en: "Evaluate ecosystem, maintenance cost, team familiarity, and migration risk before selecting tools."
+    },
+    content: {
+      zh: [
+        "技术选型最常见的错误是看热度而不是看约束条件，最终让团队承担长期维护负担。",
+        "选型前至少评估四件事：生态成熟度、维护成本、团队学习曲线、未来迁移风险。",
+        "对核心业务路径优先选择稳定且可预期的方案，对实验性需求再引入新技术。",
+        "把选型过程文档化，包括假设、权衡和回滚策略，能显著降低后续争议和重构成本。"
+      ],
+      en: [
+        "The most common tech selection mistake is optimizing for trend rather than constraints.",
+        "At minimum, evaluate ecosystem maturity, maintenance cost, team familiarity, and migration risk.",
+        "For core business paths, prioritize stable and predictable tools. Use experimental stacks only in isolated scope.",
+        "Document assumptions, trade-offs, and rollback plans to reduce future rework and alignment friction."
+      ]
     }
   }
 ];

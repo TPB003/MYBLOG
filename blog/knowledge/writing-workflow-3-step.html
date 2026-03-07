@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TPBLOG Knowledge</title>
+  <meta name="description" content="TPBLOG 知识库全文页面。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css?v=20260308a">
+  <link rel="stylesheet" href="../assets/css/knowledge-article.css?v=20260308a">
+</head>
+<body data-card-id="kb-4">
+  <div class="aurora-layer" aria-hidden="true"></div>
+  <div class="noise-layer" aria-hidden="true"></div>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a class="brand" href="../index.html">TPBLOG</a>
+        <a href="../index.html" data-back-home>Back Home</a>
+        <a href="../index.html#knowledge" data-back-knowledge>Knowledge Index</a>
+      </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">AUTO</button>
+        <button id="localeToggle" class="locale-toggle" type="button">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-shell">
+    <section class="article-head">
+      <p id="articleKicker" class="article-kicker">KNOWLEDGE ARTICLE</p>
+      <h1 id="articleTitle" class="article-title"></h1>
+      <p id="articleSummary" class="article-summary"></p>
+      <div class="article-meta">
+        <span id="articleUpdated" class="meta-pill"></span>
+        <span id="articleReading" class="meta-pill"></span>
+      </div>
+      <div id="articleTags" class="article-tags"></div>
+    </section>
+
+    <section class="article-card">
+      <div id="articleFallback" class="article-empty" hidden></div>
+      <div id="articleContent" class="article-content"></div>
+      <div class="article-actions">
+        <a href="../index.html#knowledge" class="article-link primary" data-back-knowledge>Knowledge Index</a>
+        <a href="../index.html" class="article-link" data-back-home>Back Home</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../assets/js/pages/knowledge-article.js?v=20260308a"></script>
+</body>
+</html>

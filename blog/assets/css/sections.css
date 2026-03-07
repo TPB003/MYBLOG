@@ -421,11 +421,21 @@
   display: flex;
   flex-direction: column;
   gap: 0.66rem;
+  cursor: pointer;
 }
 
 .kb-card h3 {
   margin: 0;
   font-size: 1.02rem;
+}
+
+.kb-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--line-strong));
+}
+
+.kb-card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 48%, transparent);
+  outline-offset: 1px;
 }
 
 .kb-summary {
@@ -434,10 +444,15 @@
   line-height: 1.7;
 }
 
-.kb-meta {
+.kb-footer {
   margin-top: auto;
+  display: grid;
+  gap: 0.58rem;
+}
+
+.kb-meta {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 0.42rem;
   flex-wrap: wrap;
@@ -445,6 +460,11 @@
 
 .kb-meta time {
   font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+.kb-reading {
+  font-size: 0.76rem;
   color: var(--text-soft);
 }
 
@@ -461,6 +481,25 @@
   color: var(--text-soft);
   padding: 0.12rem 0.45rem;
   font-size: 0.72rem;
+}
+
+.kb-open {
+  align-self: start;
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: color-mix(in srgb, var(--accent) 82%, var(--text));
+  padding: 0.28rem 0.66rem;
+  font-size: 0.76rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.kb-open:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
 }
 
 .stats-layout {
