@@ -1,28 +1,60 @@
-﻿:root {
-  --font-display: "Sora", "Noto Sans SC", sans-serif;
-  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+:root {
+  --font-display: "Plus Jakarta Sans", "Noto Sans SC", sans-serif;
+  --font-body: "Noto Sans SC", "Plus Jakarta Sans", sans-serif;
 
-  --bg: #f2f4f8;
-  --bg-soft: #f8fafc;
-  --text: #2d3342;
-  --text-soft: #5f687d;
-
-  --line: #d9deea;
-  --line-strong: #c4ccdc;
-
-  --card-light: #edf1f7;
-  --card-white: #ffffff;
-  --card-dark: #4a5569;
-
-  --accent: #f0934b;
-  --accent-deep: #d66d2f;
-  --accent-cool: #4f79ff;
-  --accent-mint: #34c9aa;
-
+  --radius-xl: 1.8rem;
   --radius-lg: 1.35rem;
   --radius-md: 1rem;
-  --radius-sm: 0.75rem;
+  --radius-sm: 0.72rem;
 
-  --shadow-sm: 0 8px 20px rgba(28, 39, 62, 0.07);
-  --shadow-md: 0 14px 32px rgba(26, 35, 58, 0.12);
+  --shadow-soft: 0 18px 40px rgba(24, 32, 54, 0.13);
+  --shadow-card: 0 10px 28px rgba(18, 26, 44, 0.1);
+  --transition-fast: 180ms ease;
+  --transition-base: 320ms ease;
+
+  --bg: #eef2fb;
+  --bg-secondary: #e6ecfa;
+  --text: #151b2f;
+  --text-soft: #5f6b85;
+  --line: rgba(121, 138, 176, 0.26);
+  --line-strong: rgba(95, 114, 156, 0.38);
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-strong: rgba(255, 255, 255, 0.74);
+  --card-solid: #f7f9ff;
+  --accent: #2f66ff;
+  --accent-2: #00a6ff;
+  --accent-warm: #ff8f57;
+  --pill-bg: rgba(255, 255, 255, 0.65);
+}
+
+:root[data-theme="day"] {
+  --bg: #eef2fb;
+  --bg-secondary: #e6ecfa;
+  --text: #151b2f;
+  --text-soft: #5f6b85;
+  --line: rgba(121, 138, 176, 0.26);
+  --line-strong: rgba(95, 114, 156, 0.38);
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-strong: rgba(255, 255, 255, 0.74);
+  --card-solid: #f7f9ff;
+  --accent: #2f66ff;
+  --accent-2: #00a6ff;
+  --accent-warm: #ff8f57;
+  --pill-bg: rgba(255, 255, 255, 0.65);
+}
+
+:root[data-theme="night"] {
+  --bg: #080c16;
+  --bg-secondary: #111a2e;
+  --text: #eef4ff;
+  --text-soft: #a8b7d6;
+  --line: rgba(146, 166, 212, 0.22);
+  --line-strong: rgba(162, 184, 235, 0.35);
+  --glass-bg: rgba(21, 31, 56, 0.62);
+  --glass-strong: rgba(19, 28, 50, 0.75);
+  --card-solid: #121c30;
+  --accent: #6da2ff;
+  --accent-2: #42d7ff;
+  --accent-warm: #ff9d6f;
+  --pill-bg: rgba(19, 32, 58, 0.66);
 }

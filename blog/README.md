@@ -6,7 +6,7 @@
 
 - `core`：全局状态、国际化、工具函数
 - `data`：结构化内容数据（文章、知识卡、书单、统计等）
-- `features`：业务功能模块（文章、知识库、想法流、足迹、动效）
+- `features`：业务功能模块（文章、知识库、主题、动效）
 - `assets/css`：样式系统与响应式规则
 
 ## 目录与文件作用（自动生成）
@@ -23,7 +23,7 @@
 | `blog/assets/css/layout.css` | 文件 | 布局样式：导航、页面骨架、footer |
 | `blog/assets/css/main.css` | 文件 | 样式入口，汇总各 CSS 模块 |
 | `blog/assets/css/responsive.css` | 文件 | 响应式断点与移动端适配 |
-| `blog/assets/css/sections.css` | 文件 | 分区样式：hero/posts/knowledge/ideas/stats/books |
+| `blog/assets/css/sections.css` | 文件 | 分区样式：hero/posts/knowledge/stats/books |
 | `blog/assets/css/tokens.css` | 文件 | 设计令牌：颜色、字体、圆角、阴影变量 |
 | `blog/assets/js` | 目录 | 脚本目录 |
 | `blog/assets/js/core` | 目录 | 核心层（状态、i18n、工具） |
@@ -31,14 +31,13 @@
 | `blog/assets/js/core/store.js` | 文件 | 全局状态与本地存储键 |
 | `blog/assets/js/core/utils.js` | 文件 | 通用工具函数 |
 | `blog/assets/js/data` | 目录 | 数据层（内容数据） |
-| `blog/assets/js/data/content.js` | 文件 | 文章/知识卡/想法种子/统计/书单等结构化数据 |
+| `blog/assets/js/data/content.js` | 文件 | 文章/知识卡/统计/书单等结构化数据 |
 | `blog/assets/js/features` | 目录 | 功能层（按业务模块拆分） |
 | `blog/assets/js/features/effects.js` | 文件 | 视觉动效与交互效果（reveal/tilt/spotlight 等） |
-| `blog/assets/js/features/footprint.js` | 文件 | 足迹路线模块：城市追加、持久化与连线渲染 |
-| `blog/assets/js/features/ideas.js` | 文件 | 想法发布流与本地持久化 |
 | `blog/assets/js/features/knowledge.js` | 文件 | 知识库搜索、标签筛选与卡片渲染 |
 | `blog/assets/js/features/posts.js` | 文件 | 文章列表渲染与分类筛选 |
 | `blog/assets/js/features/static-sections.js` | 文件 | 静态区块渲染（Hero、话题、统计、书单） |
+| `blog/assets/js/features/theme.js` | 文件 | 自动日夜主题模块：时间驱动主题与主页时钟 |
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |

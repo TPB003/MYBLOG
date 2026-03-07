@@ -215,27 +215,6 @@ export const knowledgeTagLabels = {
   team: { zh: "团队", en: "Team" }
 };
 
-export const seedIdeas = [
-  {
-    id: "seed-1",
-    mood: "thinking",
-    createdAt: "2026-02-24T09:30:00+08:00",
-    content: {
-      zh: "内容是长期资产，代码是内容的放大器。两者应该同步迭代。",
-      en: "Content is a long-term asset, and code is its amplifier. Both should evolve together."
-    }
-  },
-  {
-    id: "seed-2",
-    mood: "log",
-    createdAt: "2026-02-24T16:40:00+08:00",
-    content: {
-      zh: "今天给每个知识卡增加了标签体系，检索体验立刻提升。",
-      en: "I added a tag system for every knowledge card today, and retrieval quality improved instantly."
-    }
-  }
-];
-
 export const statsBars = [
   { key: "dev", value: 78 },
   { key: "writing", value: 62 },
@@ -271,22 +250,5 @@ export const books = [
       zh: "关于长期主义、杠杆和自我选择的实践手册。",
       en: "A practical playbook on compounding, leverage, and conscious choice."
     }
-  }
-];
-
-export const footprintSeedRoute = [
-  {
-    id: "fp-lianyungang",
-    label: { zh: "连云港", en: "Lianyungang" },
-    latitude: 34.5966,
-    longitude: 119.2216,
-    createdAt: "2026-02-20T09:00:00+08:00"
-  },
-  {
-    id: "fp-shanghai",
-    label: { zh: "上海", en: "Shanghai" },
-    latitude: 31.2304,
-    longitude: 121.4737,
-    createdAt: "2026-02-22T12:00:00+08:00"
   }
 ];

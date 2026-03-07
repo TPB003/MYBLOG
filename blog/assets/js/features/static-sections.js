@@ -1,4 +1,4 @@
-﻿import { books, profile, statsBars } from "../data/content.js";
+import { books, knowledgeCards, posts, profile, statsBars } from "../data/content.js";
 import { getLocale, t } from "../core/i18n.js";
 import { animateCounter } from "./effects.js";
 import { escapeHTML } from "../core/utils.js";
@@ -8,6 +8,10 @@ const topicTrack = document.getElementById("topicTrack");
 const introLine = document.getElementById("introLine");
 const statsBarsWrap = document.getElementById("statsBars");
 const bookGrid = document.getElementById("bookGrid");
+const snapshotPosts = document.getElementById("snapshotPosts");
+const snapshotKnowledge = document.getElementById("snapshotKnowledge");
+const snapshotBooks = document.getElementById("snapshotBooks");
+const snapshotReads = document.getElementById("snapshotReads");
 
 function renderHeroRoles(locale) {
   if (!heroRoleList) return;
@@ -70,6 +74,23 @@ function renderBooks(locale) {
     .join("");
 }
 
+function renderSnapshot(locale) {
+  const localeCode = locale === "zh" ? "zh-CN" : "en-US";
+
+  if (snapshotPosts) {
+    snapshotPosts.textContent = posts.length.toLocaleString(localeCode);
+  }
+  if (snapshotKnowledge) {
+    snapshotKnowledge.textContent = knowledgeCards.length.toLocaleString(localeCode);
+  }
+  if (snapshotBooks) {
+    snapshotBooks.textContent = books.length.toLocaleString(localeCode);
+  }
+  if (snapshotReads) {
+    snapshotReads.textContent = profile.readCount.toLocaleString(localeCode);
+  }
+}
+
 export function initStaticSections() {
   function render() {
     const locale = getLocale();
@@ -78,6 +99,7 @@ export function initStaticSections() {
     renderIntroLine();
     renderStatsBars();
     renderBooks(locale);
+    renderSnapshot(locale);
   }
 
   return {
