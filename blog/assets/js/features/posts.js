@@ -189,6 +189,7 @@ function bindEvents() {
 
 export function initPosts() {
   bindEvents();
+  closeModal();
 
   return {
     render: renderPosts
