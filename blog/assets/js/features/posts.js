@@ -66,6 +66,7 @@ function openModal(postId) {
   renderModal();
 
   postModal.hidden = false;
+  postModal.style.display = "grid";
   postModal.classList.add("open");
   postModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -79,6 +80,7 @@ function closeModal() {
   postModal.classList.remove("open");
   postModal.setAttribute("aria-hidden", "true");
   postModal.hidden = true;
+  postModal.style.display = "none";
   document.body.style.overflow = "";
   activePostId = null;
 }

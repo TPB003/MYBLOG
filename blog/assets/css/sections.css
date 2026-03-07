@@ -583,13 +583,17 @@
   position: fixed;
   inset: 0;
   z-index: 130;
-  display: grid;
+  display: none;
   place-items: center;
   padding: 1rem;
 }
 
+.post-modal.open {
+  display: grid;
+}
+
 .post-modal[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .post-modal-backdrop {
