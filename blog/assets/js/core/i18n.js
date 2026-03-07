@@ -22,7 +22,7 @@ const translations = {
     "hero.roleLabel": "我正在长期专注：",
     "hero.text": "把写作、工程和学习沉淀在同一个首页，减少上下文切换，强化长期产出。",
     "hero.actionPrimary": "打开知识库",
-    "hero.actionSecondary": "查看统计",
+    "hero.actionSecondary": "\u6D4F\u89C8\u6587\u7AE0",
 
     "theme.day": "白天模式",
     "theme.night": "夜间模式",
@@ -114,7 +114,7 @@ const translations = {
     "hero.roleLabel": "Current long-term focus:",
     "hero.text": "Writing, engineering, and learning are now consolidated into one calm homepage.",
     "hero.actionPrimary": "Open Knowledge Base",
-    "hero.actionSecondary": "View Stats",
+    "hero.actionSecondary": "Browse Posts",
 
     "theme.day": "Day Mode",
     "theme.night": "Night Mode",

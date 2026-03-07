@@ -6,7 +6,7 @@ import {
   initReadMetrics,
   onReadMetricsChange,
   recordKnowledgeRead
-} from "../features/read-metrics.js?v=20260308d";
+} from "../features/read-metrics.js?v=20260308f";
 
 const LOCALE_KEY = "tpblog_locale_v2";
 const THEME_KEY = "tpblog_theme_pref_v1";

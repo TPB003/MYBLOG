@@ -4,17 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TPBLOG | iOS Style Personal Hub</title>
-  <meta
-    name="description"
-    content="TPBLOG 的 iOS 风格个人主页，支持中英切换与自动日夜主题。"
-  >
+  <meta name="description" content="TPBLOG 的 iOS 风格个人主页，支持中英切换与自动日夜主题。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  >
-  <link rel="stylesheet" href="./assets/css/main.css?v=20260308e">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/main.css?v=20260308f">
 </head>
 <body>
   <div class="aurora-layer" aria-hidden="true"></div>
@@ -26,6 +20,7 @@
       <nav class="main-nav">
         <a class="brand" href="#top">TPBLOG</a>
         <a href="#home" data-i18n="nav.home">主页</a>
+        <a href="#posts" data-i18n="nav.posts">文章</a>
         <a href="#knowledge" data-i18n="nav.knowledge">知识库</a>
         <a href="#stats" data-i18n="nav.stats">统计</a>
         <a href="#books" data-i18n="nav.books">书单</a>
@@ -52,7 +47,7 @@
         </div>
         <div class="hero-actions">
           <a class="action-pill action-primary" href="#knowledge" data-i18n="hero.actionPrimary">打开知识库</a>
-          <a class="action-pill action-ghost" href="#stats" data-i18n="hero.actionSecondary">查看统计</a>
+          <a class="action-pill action-ghost" href="#posts" data-i18n="hero.actionSecondary">浏览文章</a>
         </div>
       </article>
 
@@ -85,6 +80,19 @@
       </div>
     </section>
 
+    <section id="posts" class="section reveal">
+      <div class="section-heading">
+        <h2 data-i18n="posts.title">精选文章</h2>
+        <div class="chips" id="chips">
+          <button class="chip active" data-filter="all" data-i18n="filter.all">全部</button>
+          <button class="chip" data-filter="tech" data-i18n="filter.tech">技术</button>
+          <button class="chip" data-filter="life" data-i18n="filter.life">生活</button>
+          <button class="chip" data-filter="notes" data-i18n="filter.notes">笔记</button>
+        </div>
+      </div>
+      <div class="post-grid" id="postGrid"></div>
+    </section>
+
     <section id="knowledge" class="section reveal">
       <div class="section-heading">
         <h2 data-i18n="knowledge.title">知识库</h2>
@@ -93,12 +101,7 @@
       <div class="knowledge-tools">
         <label class="knowledge-search" for="knowledgeSearch">
           <span data-i18n="knowledge.searchLabel">搜索</span>
-          <input
-            id="knowledgeSearch"
-            type="search"
-            data-i18n-placeholder="knowledge.searchPlaceholder"
-            placeholder="输入关键词"
-          >
+          <input id="knowledgeSearch" type="search" data-i18n-placeholder="knowledge.searchPlaceholder" placeholder="输入关键词">
         </label>
         <div class="knowledge-tags" id="knowledgeTags"></div>
       </div>
@@ -114,13 +117,17 @@
       <div class="stats-layout">
         <article class="card glass-card interactive-tilt">
           <h3 data-i18n="stats.timeTitle">时间分配</h3>
-          <p data-i18n="stats.timeDesc">最近 90 天我的精力分配如下，主要时间投入在技术与内容。</p>
+          <p data-i18n="stats.timeDesc">最近 90 天我的精力分配如下，主要时间依旧投入在技术与内容。</p>
           <div class="bars" id="statsBars"></div>
         </article>
         <article class="card glass-card snapshot-card">
           <h3 data-i18n="snapshot.title">系统快照</h3>
           <p data-i18n="snapshot.sub">主页内容按模块组织，轻量但可持续迭代。</p>
           <div class="snapshot-grid">
+            <div>
+              <span data-i18n="snapshot.posts">文章</span>
+              <strong id="snapshotPosts">0</strong>
+            </div>
             <div>
               <span data-i18n="snapshot.knowledge">知识卡</span>
               <strong id="snapshotKnowledge">0</strong>
@@ -147,11 +154,41 @@
     </section>
 
     <section class="section contact reveal">
-      <p data-i18n-html="contact.text">
-        我愿意和不同领域的人一起做有意思的项目。<br>如果你也在做长期内容或产品，欢迎联系我。
-      </p>
+      <p data-i18n-html="contact.text">我愿意和不同领域的人一起做有意思的项目。<br>如果你也在做长期内容或产品，欢迎联系我。</p>
     </section>
   </main>
+
+  <div
+    id="postModal"
+    class="post-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    hidden
+  >
+    <div class="post-modal-backdrop" data-post-close="true" aria-hidden="true"></div>
+    <article class="post-modal-panel card glass-card" role="document">
+      <button
+        id="postModalClose"
+        class="post-modal-close"
+        type="button"
+        data-post-close="true"
+        data-i18n="posts.close"
+      >
+        关闭
+      </button>
+      <p id="postModalTag" class="post-modal-tag"></p>
+      <h3 id="postModalTitle" class="post-modal-title"></h3>
+      <p class="post-modal-meta">
+        <time id="postModalDate"></time>
+        <span aria-hidden="true">·</span>
+        <span id="postModalReading"></span>
+        <span aria-hidden="true">·</span>
+        <span id="postModalReads"></span>
+      </p>
+      <div id="postModalContent" class="post-modal-content"></div>
+    </article>
+  </div>
 
   <footer class="site-footer reveal" id="contact">
     <div data-i18n="footer.title">TPBLOG | iOS Style Personal Hub</div>
@@ -162,6 +199,6 @@
     </div>
   </footer>
 
-  <script type="module" src="./assets/js/main.js?v=20260308e"></script>
+  <script type="module" src="./assets/js/main.js?v=20260308f"></script>
 </body>
 </html>

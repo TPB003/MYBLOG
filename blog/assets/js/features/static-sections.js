@@ -1,14 +1,15 @@
-import { books, knowledgeCards, profile, statsBars } from "../data/content.js";
+import { books, knowledgeCards, posts, profile, statsBars } from "../data/content.js";
 import { getLocale, t } from "../core/i18n.js";
 import { animateCounter } from "./effects.js";
 import { escapeHTML } from "../core/utils.js";
-import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js?v=20260308d";
+import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js?v=20260308f";
 
 const heroRoleList = document.getElementById("heroRoleList");
 const topicTrack = document.getElementById("topicTrack");
 const introLine = document.getElementById("introLine");
 const statsBarsWrap = document.getElementById("statsBars");
 const bookGrid = document.getElementById("bookGrid");
+const snapshotPosts = document.getElementById("snapshotPosts");
 const snapshotKnowledge = document.getElementById("snapshotKnowledge");
 const snapshotBooks = document.getElementById("snapshotBooks");
 const snapshotReads = document.getElementById("snapshotReads");
@@ -101,9 +102,13 @@ function renderBooks(locale) {
 
 function renderSnapshot(locale) {
   const localeCode = locale === "zh" ? "zh-CN" : "en-US";
+  const postsTotal = Array.isArray(posts) ? posts.length : 0;
   const knowledgeTotal = Array.isArray(knowledgeCards) ? knowledgeCards.length : 0;
   const booksTotal = Array.isArray(books) ? books.length : 0;
 
+  if (snapshotPosts) {
+    setSnapshotMetric(snapshotPosts, postsTotal.toLocaleString(localeCode));
+  }
   if (snapshotKnowledge) {
     setSnapshotMetric(snapshotKnowledge, knowledgeTotal.toLocaleString(localeCode));
   }

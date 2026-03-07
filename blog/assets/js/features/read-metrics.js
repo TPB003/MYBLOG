@@ -1,4 +1,4 @@
-import { knowledgeCards } from "../data/content.js";
+import { knowledgeCards, posts } from "../data/content.js";
 import { STORAGE_KEYS } from "../core/store.js";
 import { safeParseJSON } from "../core/utils.js";
 
@@ -7,10 +7,12 @@ const POLL_INTERVAL_MS = 60 * 1000;
 const COUNT_API_BASE = "https://api.countapi.xyz";
 const TOTAL_KEY = "knowledge_reads_total_v2";
 const KNOWLEDGE_PREFIX = "knowledge_read_";
+const POST_PREFIX = "post_read_";
 
 const state = {
   total: 0,
-  knowledge: {}
+  knowledge: {},
+  posts: {}
 };
 
 let initialized = false;
@@ -34,10 +36,17 @@ function knowledgeKey(cardId) {
   return `${KNOWLEDGE_PREFIX}${cardId}`;
 }
 
+function postKey(postId) {
+  return `${POST_PREFIX}${postId}`;
+}
+
 function ensureBaseState() {
   state.total = 0;
   knowledgeCards.forEach((card) => {
     state.knowledge[card.id] = 0;
+  });
+  posts.forEach((post) => {
+    state.posts[post.id] = 0;
   });
 }
 
@@ -45,7 +54,8 @@ function emit() {
   listeners.forEach((listener) => {
     listener({
       total: state.total,
-      knowledge: { ...state.knowledge }
+      knowledge: { ...state.knowledge },
+      posts: { ...state.posts }
     });
   });
 }
@@ -57,6 +67,7 @@ function saveLocalSnapshot() {
       JSON.stringify({
         total: state.total,
         knowledge: state.knowledge,
+        posts: state.posts,
         updatedAt: Date.now()
       })
     );
@@ -88,6 +99,18 @@ function applySnapshot(snapshot, options = {}) {
     const normalized = Math.max(0, Math.floor(nextValue));
     if (normalized > state.knowledge[card.id]) {
       state.knowledge[card.id] = normalized;
+      changed = true;
+    }
+  });
+
+  posts.forEach((post) => {
+    const raw = snapshot.posts && snapshot.posts[post.id];
+    const nextValue = Number(raw);
+    if (!Number.isFinite(nextValue)) return;
+
+    const normalized = Math.max(0, Math.floor(nextValue));
+    if (normalized > state.posts[post.id]) {
+      state.posts[post.id] = normalized;
       changed = true;
     }
   });
@@ -149,13 +172,21 @@ export async function refreshReadMetrics() {
   knowledgeCards.forEach((card) => {
     requests.push(fetchRemoteCount(knowledgeKey(card.id)));
   });
+  posts.forEach((post) => {
+    requests.push(fetchRemoteCount(postKey(post.id)));
+  });
 
   const results = await Promise.all(requests);
-  const [totalValue, ...knowledgeValues] = results;
-  const snapshot = { total: totalValue, knowledge: {} };
+  const [totalValue, ...allValues] = results;
+  const snapshot = { total: totalValue, knowledge: {}, posts: {} };
 
   knowledgeCards.forEach((card, index) => {
-    snapshot.knowledge[card.id] = knowledgeValues[index];
+    snapshot.knowledge[card.id] = allValues[index];
+  });
+
+  const postStartIndex = knowledgeCards.length;
+  posts.forEach((post, index) => {
+    snapshot.posts[post.id] = allValues[postStartIndex + index];
   });
 
   applySnapshot(snapshot);
@@ -167,6 +198,10 @@ export function getTotalReads() {
 
 export function getKnowledgeReads(cardId) {
   return state.knowledge[cardId] || 0;
+}
+
+export function getPostReads(postId) {
+  return state.posts[postId] || 0;
 }
 
 export function formatReadCount(value, locale) {
@@ -191,6 +226,24 @@ export function recordKnowledgeRead(cardId) {
       total: totalValue,
       knowledge: {
         [cardId]: knowledgeValue
+      }
+    });
+  });
+}
+
+export function recordPostRead(postId) {
+  if (!postId || !Object.prototype.hasOwnProperty.call(state.posts, postId)) return;
+
+  state.posts[postId] += 1;
+  state.total += 1;
+  saveLocalSnapshot();
+  emit();
+
+  Promise.all([hitRemoteCount(postKey(postId)), hitRemoteCount(TOTAL_KEY)]).then(([postValue, totalValue]) => {
+    applySnapshot({
+      total: totalValue,
+      posts: {
+        [postId]: postValue
       }
     });
   });
