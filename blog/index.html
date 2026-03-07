@@ -1,14 +1,20 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TPBLOG | iOS Style Personal Hub</title>
-  <meta name="description" content="TPBLOG 鐨?iOS 椋庢牸涓汉涓婚〉锛屾敮鎸佷腑鑻卞垏鎹笌鑷姩鏃ュ涓婚銆?>
+  <meta
+    name="description"
+    content="TPBLOG 的 iOS 风格个人主页，支持中英切换与自动日夜主题。"
+  >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/main.css?v=20260308d">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="./assets/css/main.css?v=20260308e">
 </head>
 <body>
   <div class="aurora-layer" aria-hidden="true"></div>
@@ -19,10 +25,10 @@
     <div class="header-inner">
       <nav class="main-nav">
         <a class="brand" href="#top">TPBLOG</a>
-        <a href="#home" data-i18n="nav.home">涓婚〉</a>
-        <a href="#knowledge" data-i18n="nav.knowledge">鐭ヨ瘑搴?/a>
-        <a href="#stats" data-i18n="nav.stats">缁熻</a>
-        <a href="#books" data-i18n="nav.books">涔﹀崟</a>
+        <a href="#home" data-i18n="nav.home">主页</a>
+        <a href="#knowledge" data-i18n="nav.knowledge">知识库</a>
+        <a href="#stats" data-i18n="nav.stats">统计</a>
+        <a href="#books" data-i18n="nav.books">书单</a>
       </nav>
       <div class="header-actions">
         <button id="themeToggle" class="theme-toggle" type="button">AUTO</button>
@@ -36,37 +42,37 @@
       <article class="hero-panel card glass-card interactive-tilt">
         <p class="hero-kicker" data-i18n="hero.kicker">PERSONAL HOME</p>
         <h1 class="hero-title">TPBLOG</h1>
-        <p class="hero-subtitle" data-i18n="hero.subtitle">A calm iOS-style dashboard for ideas that ship.</p>
-        <p class="hero-role-label" data-i18n="hero.roleLabel">鎴戞鍦ㄩ暱鏈熶笓娉細</p>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">一个更轻量、更克制的 iOS 风格工作台。</p>
+        <p class="hero-role-label" data-i18n="hero.roleLabel">我正在长期专注：</p>
         <ul id="heroRoleList" class="role-list"></ul>
-        <p class="hero-text" data-i18n="hero.text">鍐欎綔銆佸伐绋嬪拰绯荤粺鍖栧涔狅紝琚暣鍚堣繘涓€涓洿杞婚噺浣嗘洿绋冲畾鐨勪釜浜哄伐浣滃彴銆?/p>
+        <p class="hero-text" data-i18n="hero.text">把写作、工程和学习沉淀在同一个首页，减少上下文切换，强化长期产出。</p>
         <div class="hero-meta">
-          <span id="themeModeChip" class="glass-pill" data-i18n="theme.day">鐧藉ぉ妯″紡</span>
+          <span id="themeModeChip" class="glass-pill" data-i18n="theme.day">白天模式</span>
           <span id="liveClockChip" class="glass-pill">--:--</span>
         </div>
         <div class="hero-actions">
-          <a class="action-pill action-primary" href="#knowledge" data-i18n="hero.actionPrimary">鎵撳紑鐭ヨ瘑搴?/a>
-          <a class="action-pill action-ghost" href="#stats" data-i18n="hero.actionSecondary">鏌ョ湅缁熻</a>
+          <a class="action-pill action-primary" href="#knowledge" data-i18n="hero.actionPrimary">打开知识库</a>
+          <a class="action-pill action-ghost" href="#stats" data-i18n="hero.actionSecondary">查看统计</a>
         </div>
       </article>
 
       <aside class="hero-widgets">
         <article class="widget-card card glass-card reveal">
-          <p class="widget-label" data-i18n="dashboard.nowLabel">褰撳墠鐘舵€?/p>
+          <p class="widget-label" data-i18n="dashboard.nowLabel">当前状态</p>
           <h3 id="dashboardGreeting" class="widget-greeting">Good Morning</h3>
           <p id="dashboardDate" class="widget-date">--</p>
           <p id="dashboardScene" class="widget-scene">DAYLIGHT MODE ACTIVE</p>
         </article>
         <article class="widget-card card glass-card reveal">
-          <p class="widget-label" data-i18n="dashboard.clockLabel">鏈湴鏃堕棿</p>
+          <p class="widget-label" data-i18n="dashboard.clockLabel">本地时间</p>
           <h3 id="dashboardTime" class="widget-time">--:--</h3>
         </article>
         <article class="widget-card card glass-card reveal">
-          <p class="widget-label" data-i18n="dashboard.focusLabel">浠婃棩鐒︾偣</p>
+          <p class="widget-label" data-i18n="dashboard.focusLabel">今日焦点</p>
           <ul class="focus-list">
-            <li data-i18n="dashboard.focusA">瀹屾垚 1 绡囬珮璐ㄩ噺杈撳嚭</li>
-            <li data-i18n="dashboard.focusB">鐭ヨ瘑鍗″啀娌夋穩 3 鏉?/li>
-            <li data-i18n="dashboard.focusC">淇濇寔鑺傚锛屼笉鍋氬绾跨▼鍒嗗績</li>
+            <li data-i18n="dashboard.focusA">完成 1 篇高质量输出</li>
+            <li data-i18n="dashboard.focusB">知识卡再沉淀 3 条</li>
+            <li data-i18n="dashboard.focusC">保持节奏，不做多线程分心</li>
           </ul>
         </article>
       </aside>
@@ -81,20 +87,25 @@
 
     <section id="knowledge" class="section reveal">
       <div class="section-heading">
-        <h2 data-i18n="knowledge.title">鐭ヨ瘑搴?/h2>
-        <p class="sub" data-i18n="knowledge.sub">娌夋穩姒傚康銆佹柟娉曘€佹ā鏉匡紝鏀寔妫€绱㈠拰鏍囩绛涢€夈€?/p>
+        <h2 data-i18n="knowledge.title">知识库</h2>
+        <p class="sub" data-i18n="knowledge.sub">沉淀概念、方法、模板，支持检索和标签筛选。</p>
       </div>
       <div class="knowledge-tools">
         <label class="knowledge-search" for="knowledgeSearch">
-          <span data-i18n="knowledge.searchLabel">鎼滅储</span>
-          <input id="knowledgeSearch" type="search" data-i18n-placeholder="knowledge.searchPlaceholder" placeholder="杈撳叆鍏抽敭璇?>
+          <span data-i18n="knowledge.searchLabel">搜索</span>
+          <input
+            id="knowledgeSearch"
+            type="search"
+            data-i18n-placeholder="knowledge.searchPlaceholder"
+            placeholder="输入关键词"
+          >
         </label>
         <div class="knowledge-tags" id="knowledgeTags"></div>
       </div>
       <p class="knowledge-count">
-        <span data-i18n="knowledge.countPrefix">鍏?/span>
+        <span data-i18n="knowledge.countPrefix">共</span>
         <strong id="knowledgeCount">0</strong>
-        <span data-i18n="knowledge.countSuffix">鏉＄煡璇嗗崱</span>
+        <span data-i18n="knowledge.countSuffix">条知识卡</span>
       </p>
       <div class="knowledge-grid" id="knowledgeGrid"></div>
     </section>
@@ -102,24 +113,24 @@
     <section id="stats" class="section reveal">
       <div class="stats-layout">
         <article class="card glass-card interactive-tilt">
-          <h3 data-i18n="stats.timeTitle">鏃堕棿鍒嗛厤</h3>
-          <p data-i18n="stats.timeDesc">鏈€杩?90 澶╂垜鐨勭簿鍔涘垎閰嶅涓嬶紝涓昏鏃堕棿渚濇棫鎶曞叆鍦ㄦ妧鏈笌鍐呭銆?/p>
+          <h3 data-i18n="stats.timeTitle">时间分配</h3>
+          <p data-i18n="stats.timeDesc">最近 90 天我的精力分配如下，主要时间投入在技术与内容。</p>
           <div class="bars" id="statsBars"></div>
         </article>
         <article class="card glass-card snapshot-card">
-          <h3 data-i18n="snapshot.title">绯荤粺蹇収</h3>
-          <p data-i18n="snapshot.sub">涓婚〉鍐呭鎸夋ā鍧楃粍缁囷紝杞婚噺浣嗗彲鎸佺画杩唬銆?/p>
+          <h3 data-i18n="snapshot.title">系统快照</h3>
+          <p data-i18n="snapshot.sub">主页内容按模块组织，轻量但可持续迭代。</p>
           <div class="snapshot-grid">
             <div>
-              <span data-i18n="snapshot.knowledge">鐭ヨ瘑鍗?/span>
+              <span data-i18n="snapshot.knowledge">知识卡</span>
               <strong id="snapshotKnowledge">0</strong>
             </div>
             <div>
-              <span data-i18n="snapshot.books">涔﹀崟</span>
+              <span data-i18n="snapshot.books">书单</span>
               <strong id="snapshotBooks">0</strong>
             </div>
             <div>
-              <span data-i18n="snapshot.reads">绱闃呰</span>
+              <span data-i18n="snapshot.reads">累计阅读</span>
               <strong id="snapshotReads">0</strong>
             </div>
           </div>
@@ -129,14 +140,16 @@
 
     <section id="books" class="section reveal">
       <div class="section-heading">
-        <h2 data-i18n="books.title">闃呰娓呭崟</h2>
-        <p class="sub" data-i18n="books.sub">杩囧幓鍑犲勾鎸佺画闃呰锛屼互涓嬫槸杩戞湡楂橀鎺ㄨ崘銆?/p>
+        <h2 data-i18n="books.title">阅读清单</h2>
+        <p class="sub" data-i18n="books.sub">过去几年持续阅读，以下是近期高频推荐。</p>
       </div>
       <div class="book-grid" id="bookGrid"></div>
     </section>
 
     <section class="section contact reveal">
-      <p data-i18n-html="contact.text">鎴戞効鎰忓拰涓嶅悓棰嗗煙鐨勪汉涓€璧峰仛鏈夋剰鎬濈殑椤圭洰銆?br>濡傛灉浣犱篃鍦ㄥ仛闀挎湡鍐呭鎴栦骇鍝侊紝娆㈣繋鑱旂郴鎴戙€?/p>
+      <p data-i18n-html="contact.text">
+        我愿意和不同领域的人一起做有意思的项目。<br>如果你也在做长期内容或产品，欢迎联系我。
+      </p>
     </section>
   </main>
 
@@ -149,6 +162,6 @@
     </div>
   </footer>
 
-  <script type="module" src="./assets/js/main.js?v=20260308d"></script>
+  <script type="module" src="./assets/js/main.js?v=20260308e"></script>
 </body>
 </html>

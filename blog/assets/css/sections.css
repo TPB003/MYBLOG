@@ -598,6 +598,10 @@
   color: color-mix(in srgb, var(--text) 76%, var(--accent));
 }
 
+.snapshot-grid strong[data-value]:empty::before {
+  content: attr(data-value);
+}
+
 .book-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

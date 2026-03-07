@@ -15,6 +15,13 @@ const snapshotReads = document.getElementById("snapshotReads");
 
 let readsAnimated = false;
 
+function setSnapshotMetric(node, value) {
+  if (!node) return;
+  const formatted = String(value);
+  node.textContent = formatted;
+  node.dataset.value = formatted;
+}
+
 function renderHeroRoles(locale) {
   if (!heroRoleList) return;
 
@@ -45,7 +52,7 @@ function updateReadViews(locale) {
   }
 
   if (snapshotReads) {
-    snapshotReads.textContent = formatted;
+    setSnapshotMetric(snapshotReads, formatted);
   }
 }
 
@@ -94,12 +101,14 @@ function renderBooks(locale) {
 
 function renderSnapshot(locale) {
   const localeCode = locale === "zh" ? "zh-CN" : "en-US";
+  const knowledgeTotal = Array.isArray(knowledgeCards) ? knowledgeCards.length : 0;
+  const booksTotal = Array.isArray(books) ? books.length : 0;
 
   if (snapshotKnowledge) {
-    snapshotKnowledge.textContent = knowledgeCards.length.toLocaleString(localeCode);
+    setSnapshotMetric(snapshotKnowledge, knowledgeTotal.toLocaleString(localeCode));
   }
   if (snapshotBooks) {
-    snapshotBooks.textContent = books.length.toLocaleString(localeCode);
+    setSnapshotMetric(snapshotBooks, booksTotal.toLocaleString(localeCode));
   }
 
   updateReadViews(locale);
