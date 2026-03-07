@@ -2,6 +2,7 @@ import { books, knowledgeCards, posts, profile, statsBars } from "../data/conten
 import { getLocale, t } from "../core/i18n.js";
 import { animateCounter } from "./effects.js";
 import { escapeHTML } from "../core/utils.js";
+import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js";
 
 const heroRoleList = document.getElementById("heroRoleList");
 const topicTrack = document.getElementById("topicTrack");
@@ -12,6 +13,8 @@ const snapshotPosts = document.getElementById("snapshotPosts");
 const snapshotKnowledge = document.getElementById("snapshotKnowledge");
 const snapshotBooks = document.getElementById("snapshotBooks");
 const snapshotReads = document.getElementById("snapshotReads");
+
+let readsAnimated = false;
 
 function renderHeroRoles(locale) {
   if (!heroRoleList) return;
@@ -28,17 +31,33 @@ function renderTopicTrack(locale) {
   topicTrack.innerHTML = doubled.map((topic) => `<li>${escapeHTML(topic)}</li>`).join("");
 }
 
-function renderIntroLine() {
+function updateReadViews(locale) {
+  const totalReads = getTotalReads();
+  const formatted = formatReadCount(totalReads, locale);
+
+  const countNode = introLine ? introLine.querySelector("#countUp") : null;
+  if (countNode) {
+    if (!readsAnimated) {
+      animateCounter(countNode, totalReads, locale);
+      readsAnimated = true;
+    } else {
+      countNode.textContent = formatted;
+    }
+  }
+
+  if (snapshotReads) {
+    snapshotReads.textContent = formatted;
+  }
+}
+
+function renderIntroLine(locale) {
   if (!introLine) return;
 
   introLine.innerHTML = t("intro.line", {
     count: "<span id=\"countUp\">0</span>"
   });
 
-  const countNode = introLine.querySelector("#countUp");
-  if (countNode) {
-    animateCounter(countNode, profile.readCount, getLocale());
-  }
+  updateReadViews(locale);
 }
 
 function renderStatsBars() {
@@ -86,17 +105,20 @@ function renderSnapshot(locale) {
   if (snapshotBooks) {
     snapshotBooks.textContent = books.length.toLocaleString(localeCode);
   }
-  if (snapshotReads) {
-    snapshotReads.textContent = profile.readCount.toLocaleString(localeCode);
-  }
+
+  updateReadViews(locale);
 }
 
 export function initStaticSections() {
+  onReadMetricsChange(() => {
+    updateReadViews(getLocale());
+  });
+
   function render() {
     const locale = getLocale();
     renderHeroRoles(locale);
     renderTopicTrack(locale);
-    renderIntroLine();
+    renderIntroLine(locale);
     renderStatsBars();
     renderBooks(locale);
     renderSnapshot(locale);

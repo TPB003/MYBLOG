@@ -82,6 +82,15 @@
   .snapshot-grid {
     grid-template-columns: 1fr;
   }
+
+  .post-modal {
+    padding: 0.62rem;
+  }
+
+  .post-modal-panel {
+    max-height: 92vh;
+    padding: 0.9rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -50,6 +50,10 @@ const translations = {
 
     "posts.title": "精选文章",
     "posts.empty": "该分类暂时还没有内容。",
+    "posts.open": "阅读全文",
+    "posts.close": "关闭",
+    "posts.readCount": "{count} 次阅读",
+    "posts.modalTitle": "文章：{title}",
 
     "filter.all": "全部",
     "filter.tech": "技术",
@@ -136,6 +140,10 @@ const translations = {
 
     "posts.title": "Featured Posts",
     "posts.empty": "No content in this category yet.",
+    "posts.open": "Read Full Article",
+    "posts.close": "Close",
+    "posts.readCount": "{count} reads",
+    "posts.modalTitle": "Article: {title}",
 
     "filter.all": "All",
     "filter.tech": "Tech",
