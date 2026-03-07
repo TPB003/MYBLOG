@@ -2,7 +2,7 @@ import { books, knowledgeCards, profile, statsBars } from "../data/content.js";
 import { getLocale, t } from "../core/i18n.js";
 import { animateCounter } from "./effects.js";
 import { escapeHTML } from "../core/utils.js";
-import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js";
+import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js?v=20260308d";
 
 const heroRoleList = document.getElementById("heroRoleList");
 const topicTrack = document.getElementById("topicTrack");

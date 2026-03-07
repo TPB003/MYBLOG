@@ -1,7 +1,7 @@
 import { applyI18n, initI18n, onLocaleChange } from "./core/i18n.js";
 import { bindTiltCards, initReveal, initSpotlight } from "./features/effects.js";
 import { initKnowledge } from "./features/knowledge.js";
-import { initReadMetrics } from "./features/read-metrics.js";
+import { initReadMetrics } from "./features/read-metrics.js?v=20260308d";
 import { initStaticSections } from "./features/static-sections.js";
 import { initTheme } from "./features/theme.js";
 

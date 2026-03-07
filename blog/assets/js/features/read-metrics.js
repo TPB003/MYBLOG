@@ -7,7 +7,6 @@ const POLL_INTERVAL_MS = 60 * 1000;
 const COUNT_API_BASE = "https://api.countapi.xyz";
 const TOTAL_KEY = "knowledge_reads_total_v2";
 const KNOWLEDGE_PREFIX = "knowledge_read_";
-const SESSION_KNOWLEDGE_KEY = "tpblog_session_knowledge_reads_v2";
 
 const state = {
   total: 0,
@@ -26,14 +25,9 @@ function resolveNamespace() {
   const host = (window.location.hostname || "local")
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-");
-  const pathSegments = (window.location.pathname || "/")
-    .split("/")
-    .filter(Boolean);
-  const repo = (pathSegments[0] || "root")
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, "-");
 
-  return `tpblog-${host}-${repo}`.slice(0, 96);
+  // Use a fixed project namespace so all pages share one counter bucket.
+  return `tpblog-${host}-myblog`.slice(0, 96);
 }
 
 function knowledgeKey(cardId) {
@@ -79,7 +73,8 @@ function applySnapshot(snapshot, options = {}) {
   const totalValue = Number(snapshot.total);
   if (Number.isFinite(totalValue)) {
     const nextTotal = Math.max(0, Math.floor(totalValue));
-    if (nextTotal !== state.total) {
+    // Keep counters monotonic to avoid stale remote values resetting local data.
+    if (nextTotal > state.total) {
       state.total = nextTotal;
       changed = true;
     }
@@ -91,7 +86,7 @@ function applySnapshot(snapshot, options = {}) {
     if (!Number.isFinite(nextValue)) return;
 
     const normalized = Math.max(0, Math.floor(nextValue));
-    if (normalized !== state.knowledge[card.id]) {
+    if (normalized > state.knowledge[card.id]) {
       state.knowledge[card.id] = normalized;
       changed = true;
     }
@@ -114,23 +109,6 @@ function hydrateFromLocal() {
     applySnapshot(cached, { emit: false });
   } catch {
     // ignore storage read failure
-  }
-}
-
-function readSessionKnowledge() {
-  try {
-    const raw = safeParseJSON(sessionStorage.getItem(SESSION_KNOWLEDGE_KEY), []);
-    return Array.isArray(raw) ? new Set(raw) : new Set();
-  } catch {
-    return new Set();
-  }
-}
-
-function writeSessionKnowledge(ids) {
-  try {
-    sessionStorage.setItem(SESSION_KNOWLEDGE_KEY, JSON.stringify([...ids]));
-  } catch {
-    // ignore session write failure
   }
 }
 
@@ -202,12 +180,6 @@ export function onReadMetricsChange(callback) {
 
 export function recordKnowledgeRead(cardId) {
   if (!cardId || !Object.prototype.hasOwnProperty.call(state.knowledge, cardId)) return;
-
-  const viewed = readSessionKnowledge();
-  if (viewed.has(cardId)) return;
-
-  viewed.add(cardId);
-  writeSessionKnowledge(viewed);
 
   state.knowledge[cardId] += 1;
   state.total += 1;
