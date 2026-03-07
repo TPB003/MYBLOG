@@ -6,13 +6,14 @@ import { initStaticSections } from "./features/static-sections.js";
 import { initTheme } from "./features/theme.js";
 
 const localeToggleButton = document.getElementById("localeToggle");
+const themeToggleButton = document.getElementById("themeToggle");
 
 initI18n(localeToggleButton);
 
 const staticSections = initStaticSections();
 const posts = initPosts();
 const knowledge = initKnowledge();
-const theme = initTheme();
+const theme = initTheme(themeToggleButton);
 
 function renderAll() {
   applyI18n();

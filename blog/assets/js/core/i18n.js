@@ -26,6 +26,12 @@ const translations = {
 
     "theme.day": "白天模式",
     "theme.night": "夜间模式",
+    "theme.autoShort": "自动",
+    "theme.dayShort": "白天",
+    "theme.nightShort": "黑夜",
+    "theme.toggleHintAuto": "当前自动模式，点击切换到白天模式",
+    "theme.toggleHintDay": "当前白天模式，点击切换到黑夜模式",
+    "theme.toggleHintNight": "当前黑夜模式，点击恢复自动模式",
 
     "dashboard.nowLabel": "当前状态",
     "dashboard.clockLabel": "本地时间",
@@ -106,6 +112,12 @@ const translations = {
 
     "theme.day": "Day Mode",
     "theme.night": "Night Mode",
+    "theme.autoShort": "AUTO",
+    "theme.dayShort": "DAY",
+    "theme.nightShort": "NIGHT",
+    "theme.toggleHintAuto": "Auto mode on. Click to switch to day mode.",
+    "theme.toggleHintDay": "Day mode on. Click to switch to night mode.",
+    "theme.toggleHintNight": "Night mode on. Click to switch back to auto mode.",
 
     "dashboard.nowLabel": "Current State",
     "dashboard.clockLabel": "Local Time",
