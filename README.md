@@ -1,4 +1,4 @@
-﻿# MYBLOG
+# MYBLOG
 
 TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看板」项目，使用纯前端架构部署到 GitHub Pages。
 
@@ -6,10 +6,21 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 
 - 博客文章：分类筛选、个性化布局、动效呈现
 - 知识库：关键词搜索 + 标签过滤
+- Markdown 驱动知识卡：上传 `.md` 后自动生成卡片和全文页
 - 自动日夜主题：按本地时间切换 Day/Night 风格
 - iOS 风格 UI：玻璃拟态、卡片分层、移动端适配
 - 中英双语：运行时切换（CN/EN）
 - 动效系统：轨道动画、卡片倾斜、聚光跟随、滚动显现
+
+## Markdown 自动生成知识卡
+
+1. 把 Markdown 文件放到 `blog/content/knowledge/` 目录（可复制 `_template.md`）。
+2. `git push` 后，GitHub Actions 会自动运行 `scripts/generate-knowledge-from-md.mjs`。
+3. 前端会自动展示新知识卡，并生成对应全文页。
+
+支持两种添加方式：
+- 本地文件夹：直接新增 `.md` 后提交推送。
+- GitHub 网页界面：在仓库网页里上传 `.md` 到 `blog/content/knowledge/` 后提交。
 
 ## 仓库结构（自动生成）
 
@@ -41,6 +52,8 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/assets/js/core/utils.js` | 文件 | 通用工具函数 |
 | `blog/assets/js/data` | 目录 | 数据层（内容数据） |
 | `blog/assets/js/data/content.js` | 文件 | 文章/知识卡/统计/书单等结构化数据 |
+| `blog/assets/js/data/knowledge-generated.js` | 文件 | 自动生成的数据文件：由 Markdown 构建出的知识卡与标签 |
+| `blog/assets/js/data/knowledge-index.js` | 文件 | 知识卡聚合入口：合并手写数据与 Markdown 生成数据 |
 | `blog/assets/js/features` | 目录 | 功能层（按业务模块拆分） |
 | `blog/assets/js/features/effects.js` | 文件 | 视觉动效与交互效果（reveal/tilt/spotlight 等） |
 | `blog/assets/js/features/knowledge.js` | 文件 | 知识库搜索、标签筛选与卡片渲染 |
@@ -51,6 +64,10 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
 | `blog/assets/js/pages` | 目录 | 目录 |
 | `blog/assets/js/pages/knowledge-article.js` | 文件 | 脚本文件 |
+| `blog/content` | 目录 | Markdown 内容源目录（用于自动生成知识卡） |
+| `blog/content/knowledge` | 目录 | 知识卡 Markdown 目录（新增 .md 后自动生成） |
+| `blog/content/knowledge/_template.md` | 文件 | 知识卡 Markdown 模板（含 front matter 示例） |
+| `blog/content/knowledge/.gitkeep` | 文件 | 占位文件，确保目录可被 Git 跟踪 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
 | `blog/knowledge` | 目录 | 目录 |
@@ -65,6 +82,7 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `deploy-blog-pages.sh` | 文件 | Linux 一键部署脚本：提交并推送到 GitHub Pages |
 | `README.md` | 文件 | 仓库总览文档（项目介绍、目录说明、自动同步说明） |
 | `scripts` | 目录 | 自动化脚本目录 |
+| `scripts/generate-knowledge-from-md.mjs` | 文件 | 知识卡生成脚本：将 Markdown 自动转换为知识卡数据与全文页 |
 | `scripts/sync-readme.mjs` | 文件 | README 结构同步脚本（扫描目录并更新文档块） |
 <!-- AUTO-GENERATED:ROOT-STRUCTURE END -->
 

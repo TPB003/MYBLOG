@@ -1,4 +1,4 @@
-import { knowledgeCards, knowledgeTagLabels } from "../data/content.js";
+import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
 import {
   formatReadCount,
@@ -6,7 +6,7 @@ import {
   initReadMetrics,
   onReadMetricsChange,
   recordKnowledgeRead
-} from "../features/read-metrics.js?v=20260308f";
+} from "../features/read-metrics.js?v=20260308g";
 
 const LOCALE_KEY = "tpblog_locale_v2";
 const THEME_KEY = "tpblog_theme_pref_v1";

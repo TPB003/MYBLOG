@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
+node scripts/generate-knowledge-from-md.mjs
 node scripts/sync-readme.mjs
+git add -A blog/assets/js/data/knowledge-generated.js blog/knowledge/generated-*.html 2>/dev/null || true
 git add README.md blog/README.md

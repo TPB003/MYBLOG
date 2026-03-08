@@ -1,8 +1,8 @@
-import { knowledgeCards, knowledgeTagLabels } from "../data/content.js";
+import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 import { store } from "../core/store.js";
 import { getLocale, t } from "../core/i18n.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
-import { formatReadCount, getKnowledgeReads, onReadMetricsChange } from "./read-metrics.js?v=20260308f";
+import { formatReadCount, getKnowledgeReads, onReadMetricsChange } from "./read-metrics.js?v=20260308g";
 
 const searchInput = document.getElementById("knowledgeSearch");
 const tagsWrap = document.getElementById("knowledgeTags");
@@ -73,7 +73,7 @@ function renderKnowledge() {
       const reads = t("knowledge.readCount", {
         count: formatReadCount(getKnowledgeReads(card.id), locale)
       });
-      const articlePath = `./knowledge/${card.slug || card.id}.html`;
+      const articlePath = card.page || `./knowledge/${card.slug || card.id}.html`;
       const badges = card.tags
         .map((tag) => {
           const pack = knowledgeTagLabels[tag];

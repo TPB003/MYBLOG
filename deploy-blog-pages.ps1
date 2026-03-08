@@ -20,6 +20,10 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
   throw "git is not installed or not in PATH."
 }
 
+if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
+  throw "node is not installed or not in PATH."
+}
+
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $scriptDir
 
@@ -51,6 +55,12 @@ if ([string]::IsNullOrWhiteSpace($originUrl)) {
     throw "No origin remote found. Use -RepoUrl https://github.com/<user>/<repo>.git"
   }
   Run-Git -GitArgs @("remote", "add", "origin", $RepoUrl)
+}
+
+Write-Host ">> generating knowledge cards from markdown"
+& node scripts/generate-knowledge-from-md.mjs
+if ($LASTEXITCODE -ne 0) {
+  throw "failed to generate knowledge cards from markdown"
 }
 
 Run-Git -GitArgs @("add", "blog", ".github/workflows/deploy-pages.yml")

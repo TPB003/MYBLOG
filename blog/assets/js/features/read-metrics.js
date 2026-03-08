@@ -1,4 +1,5 @@
-import { knowledgeCards, posts } from "../data/content.js";
+import { posts } from "../data/content.js";
+import { knowledgeCards } from "../data/knowledge-index.js";
 import { STORAGE_KEYS } from "../core/store.js";
 import { safeParseJSON } from "../core/utils.js";
 

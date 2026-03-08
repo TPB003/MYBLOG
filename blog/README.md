@@ -1,4 +1,4 @@
-﻿# TPBLOG Frontend
+# TPBLOG Frontend
 
 博客前端采用模块化目录结构，按 `core / data / features` 分层组织脚本，样式按 `tokens / base / layout / sections / effects / responsive` 组织。
 
@@ -8,6 +8,14 @@
 - `data`：结构化内容数据（文章、知识卡、书单、统计等）
 - `features`：业务功能模块（文章、知识库、主题、动效）
 - `assets/css`：样式系统与响应式规则
+
+## Markdown 内容流
+
+1. 在 `blog/content/knowledge/` 新建 `.md` 文件（可参考 `_template.md`）。
+2. 执行 `node ../scripts/generate-knowledge-from-md.mjs`（本地）或直接 push（CI 自动执行）。
+3. 脚本会自动生成：
+- `blog/assets/js/data/knowledge-generated.js`（卡片数据）
+- `blog/knowledge/generated-*.html`（全文页）
 
 ## 目录与文件作用（自动生成）
 
@@ -33,6 +41,8 @@
 | `blog/assets/js/core/utils.js` | 文件 | 通用工具函数 |
 | `blog/assets/js/data` | 目录 | 数据层（内容数据） |
 | `blog/assets/js/data/content.js` | 文件 | 文章/知识卡/统计/书单等结构化数据 |
+| `blog/assets/js/data/knowledge-generated.js` | 文件 | 自动生成的数据文件：由 Markdown 构建出的知识卡与标签 |
+| `blog/assets/js/data/knowledge-index.js` | 文件 | 知识卡聚合入口：合并手写数据与 Markdown 生成数据 |
 | `blog/assets/js/features` | 目录 | 功能层（按业务模块拆分） |
 | `blog/assets/js/features/effects.js` | 文件 | 视觉动效与交互效果（reveal/tilt/spotlight 等） |
 | `blog/assets/js/features/knowledge.js` | 文件 | 知识库搜索、标签筛选与卡片渲染 |
@@ -43,6 +53,10 @@
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
 | `blog/assets/js/pages` | 目录 | 目录 |
 | `blog/assets/js/pages/knowledge-article.js` | 文件 | 脚本文件 |
+| `blog/content` | 目录 | Markdown 内容源目录（用于自动生成知识卡） |
+| `blog/content/knowledge` | 目录 | 知识卡 Markdown 目录（新增 .md 后自动生成） |
+| `blog/content/knowledge/_template.md` | 文件 | 知识卡 Markdown 模板（含 front matter 示例） |
+| `blog/content/knowledge/.gitkeep` | 文件 | 占位文件，确保目录可被 Git 跟踪 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
 | `blog/knowledge` | 目录 | 目录 |

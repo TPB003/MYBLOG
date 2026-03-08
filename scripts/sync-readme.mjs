@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -43,6 +43,7 @@ const EXPLICIT_DESCRIPTIONS = {
   ".github/workflows/readme-sync.yml": "README 自动同步工作流（代码变更后自动更新文档）",
 
   "scripts": "自动化脚本目录",
+  "scripts/generate-knowledge-from-md.mjs": "知识卡生成脚本：将 Markdown 自动转换为知识卡数据与全文页",
   "scripts/sync-readme.mjs": "README 结构同步脚本（扫描目录并更新文档块）",
 
   ".githooks": "本地 Git Hook 目录",
@@ -50,6 +51,10 @@ const EXPLICIT_DESCRIPTIONS = {
 
   "blog": "博客前端项目根目录",
   "blog/.nojekyll": "禁用 Jekyll 处理，确保静态资源按原路径发布",
+  "blog/content": "Markdown 内容源目录（用于自动生成知识卡）",
+  "blog/content/knowledge": "知识卡 Markdown 目录（新增 .md 后自动生成）",
+  "blog/content/knowledge/.gitkeep": "占位文件，确保目录可被 Git 跟踪",
+  "blog/content/knowledge/_template.md": "知识卡 Markdown 模板（含 front matter 示例）",
   "blog/DEPLOY.md": "部署步骤文档",
   "blog/README.md": "博客端详细架构文档（由脚本维护结构说明块）",
   "blog/index.html": "页面入口（语义结构与区块容器）",
@@ -74,6 +79,8 @@ const EXPLICIT_DESCRIPTIONS = {
 
   "blog/assets/js/data": "数据层（内容数据）",
   "blog/assets/js/data/content.js": "文章/知识卡/统计/书单等结构化数据",
+  "blog/assets/js/data/knowledge-generated.js": "自动生成的数据文件：由 Markdown 构建出的知识卡与标签",
+  "blog/assets/js/data/knowledge-index.js": "知识卡聚合入口：合并手写数据与 Markdown 生成数据",
 
   "blog/assets/js/features": "功能层（按业务模块拆分）",
   "blog/assets/js/features/static-sections.js": "静态区块渲染（Hero、话题、统计、书单）",

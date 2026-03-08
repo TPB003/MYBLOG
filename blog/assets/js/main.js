@@ -1,9 +1,9 @@
 import { applyI18n, initI18n, onLocaleChange } from "./core/i18n.js";
 import { bindTiltCards, initReveal, initSpotlight } from "./features/effects.js";
 import { initKnowledge } from "./features/knowledge.js";
-import { initPosts } from "./features/posts.js?v=20260308f";
-import { initReadMetrics } from "./features/read-metrics.js?v=20260308f";
-import { initStaticSections } from "./features/static-sections.js?v=20260308f";
+import { initPosts } from "./features/posts.js?v=20260308g";
+import { initReadMetrics } from "./features/read-metrics.js?v=20260308g";
+import { initStaticSections } from "./features/static-sections.js?v=20260308g";
 import { initTheme } from "./features/theme.js";
 
 const localeToggleButton = document.getElementById("localeToggle");

@@ -66,6 +66,11 @@ if [[ ! -f ".github/workflows/deploy-pages.yml" ]]; then
   exit 1
 fi
 
+if ! command -v node >/dev/null 2>&1; then
+  echo "node is not installed or not in PATH."
+  exit 1
+fi
+
 if [[ ! -d ".git" ]]; then
   run_git init
 fi
@@ -78,6 +83,9 @@ if [[ -z "$origin_url" ]]; then
   fi
   run_git remote add origin "$REPO_URL"
 fi
+
+echo ">> generating knowledge cards from markdown"
+node scripts/generate-knowledge-from-md.mjs
 
 run_git add blog .github/workflows/deploy-pages.yml
 

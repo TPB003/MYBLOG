@@ -7,6 +7,7 @@ on:
       - master
     paths:
       - blog/**
+      - scripts/generate-knowledge-from-md.mjs
       - scripts/sync-readme.mjs
       - .github/workflows/readme-sync.yml
       - README.md
@@ -31,6 +32,9 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Generate knowledge cards from markdown
+        run: node scripts/generate-knowledge-from-md.mjs
+
       - name: Sync README files
         run: node scripts/sync-readme.mjs
 
@@ -43,5 +47,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md blog/README.md
-          git commit -m "docs: sync README structure"
+          git add -A blog/assets/js/data/knowledge-generated.js blog/knowledge/generated-*.html || true
+          git commit -m "chore: sync readme and generated knowledge cards"
           git push
