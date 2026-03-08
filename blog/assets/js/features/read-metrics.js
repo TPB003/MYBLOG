@@ -43,12 +43,28 @@ function postKey(postId) {
 
 function ensureBaseState() {
   state.total = 0;
+  state.knowledge = {};
+  state.posts = {};
+}
+
+function ensureCatalogState() {
+  let changed = false;
+
   knowledgeCards.forEach((card) => {
-    state.knowledge[card.id] = 0;
+    if (!Object.prototype.hasOwnProperty.call(state.knowledge, card.id)) {
+      state.knowledge[card.id] = 0;
+      changed = true;
+    }
   });
+
   posts.forEach((post) => {
-    state.posts[post.id] = 0;
+    if (!Object.prototype.hasOwnProperty.call(state.posts, post.id)) {
+      state.posts[post.id] = 0;
+      changed = true;
+    }
   });
+
+  return changed;
 }
 
 function emit() {
@@ -256,11 +272,20 @@ export function initReadMetrics(options = {}) {
   namespace = resolveNamespace();
 
   ensureBaseState();
+  ensureCatalogState();
   hydrateFromLocal();
+  ensureCatalogState();
   emit();
   refreshReadMetrics();
 
   if (options.poll !== false && !pollTimerId) {
     pollTimerId = window.setInterval(refreshReadMetrics, POLL_INTERVAL_MS);
+  }
+}
+
+export function syncReadMetricCatalog() {
+  if (ensureCatalogState()) {
+    saveLocalSnapshot();
+    emit();
   }
 }

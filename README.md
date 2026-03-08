@@ -43,8 +43,10 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `.github/workflows/readme-sync.yml` | 文件 | README 自动同步工作流（代码变更后自动更新文档） |
 | `blog` | 目录 | 博客前端项目根目录 |
 | `blog/.nojekyll` | 文件 | 禁用 Jekyll 处理，确保静态资源按原路径发布 |
+| `blog/admin.html` | 文件 | 前端管理员页面：可视化控制模块显隐与内容覆盖配置 |
 | `blog/assets` | 目录 | 静态资源目录 |
 | `blog/assets/css` | 目录 | 样式目录 |
+| `blog/assets/css/admin.css` | 文件 | 管理员页面样式：控制台布局、表单与交互按钮 |
 | `blog/assets/css/base.css` | 文件 | 基础样式：重置、全局、通用类 |
 | `blog/assets/css/effects.css` | 文件 | 动画与动效样式：轨道、扫描、倾斜、过渡 |
 | `blog/assets/css/knowledge-article.css` | 文件 | 样式文件 |
@@ -55,6 +57,7 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/assets/css/tokens.css` | 文件 | 设计令牌：颜色、字体、圆角、阴影变量 |
 | `blog/assets/js` | 目录 | 脚本目录 |
 | `blog/assets/js/core` | 目录 | 核心层（状态、i18n、工具） |
+| `blog/assets/js/core/admin-config.js` | 文件 | 管理员配置核心：本地存储读写、数据覆盖与模块显隐应用 |
 | `blog/assets/js/core/i18n.js` | 文件 | 中英双语字典与切换逻辑 |
 | `blog/assets/js/core/markdown.js` | 文件 | Markdown 渲染器：将知识全文按标题/列表/代码块等格式渲染 |
 | `blog/assets/js/core/store.js` | 文件 | 全局状态与本地存储键 |
@@ -72,6 +75,7 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/assets/js/features/theme.js` | 文件 | 自动日夜主题模块：时间驱动主题与主页时钟 |
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
 | `blog/assets/js/pages` | 目录 | 目录 |
+| `blog/assets/js/pages/admin.js` | 文件 | 管理员页面脚本：模块开关、JSON 编辑、导入导出与即时应用 |
 | `blog/assets/js/pages/knowledge-article.js` | 文件 | 脚本文件 |
 | `blog/content` | 目录 | Markdown 内容源目录（用于自动生成知识卡） |
 | `blog/content/knowledge` | 目录 | 知识卡 Markdown 目录（新增 .md 后自动生成） |

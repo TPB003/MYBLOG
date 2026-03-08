@@ -58,6 +58,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/DEPLOY.md": "部署步骤文档",
   "blog/README.md": "博客端详细架构文档（由脚本维护结构说明块）",
   "blog/index.html": "页面入口（语义结构与区块容器）",
+  "blog/admin.html": "前端管理员页面：可视化控制模块显隐与内容覆盖配置",
 
   "blog/assets": "静态资源目录",
   "blog/assets/css": "样式目录",
@@ -68,6 +69,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/css/sections.css": "分区样式：hero/posts/knowledge/stats/books",
   "blog/assets/css/effects.css": "动画与动效样式：轨道、扫描、倾斜、过渡",
   "blog/assets/css/responsive.css": "响应式断点与移动端适配",
+  "blog/assets/css/admin.css": "管理员页面样式：控制台布局、表单与交互按钮",
 
   "blog/assets/js": "脚本目录",
   "blog/assets/js/main.js": "前端启动入口：初始化语言、模块渲染、动效绑定",
@@ -77,6 +79,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/js/core/i18n.js": "中英双语字典与切换逻辑",
   "blog/assets/js/core/utils.js": "通用工具函数",
   "blog/assets/js/core/markdown.js": "Markdown 渲染器：将知识全文按标题/列表/代码块等格式渲染",
+  "blog/assets/js/core/admin-config.js": "管理员配置核心：本地存储读写、数据覆盖与模块显隐应用",
 
   "blog/assets/js/data": "数据层（内容数据）",
   "blog/assets/js/data/content.js": "文章/知识卡/统计/书单等结构化数据",
@@ -89,6 +92,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/js/features/knowledge.js": "知识库搜索、标签筛选与卡片渲染",
   "blog/assets/js/features/theme.js": "自动日夜主题模块：时间驱动主题与主页时钟",
   "blog/assets/js/features/effects.js": "视觉动效与交互效果（reveal/tilt/spotlight 等）",
+  "blog/assets/js/pages/admin.js": "管理员页面脚本：模块开关、JSON 编辑、导入导出与即时应用",
   "blog/knowledge": "知识全文输出目录，同时支持直接放置 Markdown 源文件"
 };
 

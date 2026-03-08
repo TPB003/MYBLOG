@@ -2,7 +2,7 @@ import { posts } from "../data/content.js";
 import { store } from "../core/store.js";
 import { getLocale, t } from "../core/i18n.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
-import { formatReadCount, getPostReads, onReadMetricsChange, recordPostRead } from "./read-metrics.js?v=20260308g";
+import { formatReadCount, getPostReads, onReadMetricsChange, recordPostRead } from "./read-metrics.js?v=20260308j";
 
 const postGrid = document.getElementById("postGrid");
 const chipsWrap = document.getElementById("chips");

@@ -3,7 +3,7 @@ import { knowledgeCards } from "../data/knowledge-index.js";
 import { getLocale, t } from "../core/i18n.js";
 import { animateCounter } from "./effects.js";
 import { escapeHTML } from "../core/utils.js";
-import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js?v=20260308g";
+import { formatReadCount, getTotalReads, onReadMetricsChange } from "./read-metrics.js?v=20260308j";
 
 const heroRoleList = document.getElementById("heroRoleList");
 const topicTrack = document.getElementById("topicTrack");

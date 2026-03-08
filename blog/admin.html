@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TPBLOG | Admin Console</title>
+  <meta name="description" content="TPBLOG frontend admin console for managing section visibility and content data overrides.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/admin.css?v=20260308a">
+</head>
+<body>
+  <div class="aurora-layer" aria-hidden="true"></div>
+  <div class="noise-layer" aria-hidden="true"></div>
+
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="admin-brand-wrap">
+        <a class="admin-brand" href="./index.html">TPBLOG</a>
+        <div class="admin-headings">
+          <h1 id="adminHeaderTitle" data-copy="headerTitle">Admin Console</h1>
+          <p id="adminHeaderSub" data-copy="headerSub">Control homepage modules and content overrides in one place.</p>
+        </div>
+      </div>
+      <div class="admin-header-actions">
+        <a class="admin-home-link" href="./index.html" data-copy="backHome">Back Home</a>
+        <button id="adminLocaleToggle" class="locale-toggle" type="button" aria-label="Switch language">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <section class="card glass-card admin-card reveal visible">
+      <div class="mini-heading">
+        <h2 data-copy="visibilityTitle">Section Visibility</h2>
+        <p data-copy="visibilitySub">Toggle whether each section appears on the homepage.</p>
+      </div>
+      <div id="visibilityList" class="visibility-grid"></div>
+    </section>
+
+    <section class="card glass-card admin-card reveal visible">
+      <div class="mini-heading">
+        <h2 data-copy="editorTitle">Content Data Editors</h2>
+        <p data-copy="editorSub">Edit data in JSON format. Click save to apply immediately.</p>
+      </div>
+
+      <div class="editor-grid">
+        <label class="editor-field" for="editorProfile">
+          <span data-copy="fieldProfile">Profile</span>
+          <textarea id="editorProfile" spellcheck="false"></textarea>
+        </label>
+        <label class="editor-field" for="editorPosts">
+          <span data-copy="fieldPosts">Posts</span>
+          <textarea id="editorPosts" spellcheck="false"></textarea>
+        </label>
+        <label class="editor-field" for="editorKnowledgeCards">
+          <span data-copy="fieldKnowledgeCards">Knowledge Cards</span>
+          <textarea id="editorKnowledgeCards" spellcheck="false"></textarea>
+        </label>
+        <label class="editor-field" for="editorKnowledgeTagLabels">
+          <span data-copy="fieldKnowledgeTagLabels">Knowledge Tag Labels</span>
+          <textarea id="editorKnowledgeTagLabels" spellcheck="false"></textarea>
+        </label>
+        <label class="editor-field" for="editorBooks">
+          <span data-copy="fieldBooks">Books</span>
+          <textarea id="editorBooks" spellcheck="false"></textarea>
+        </label>
+        <label class="editor-field" for="editorStatsBars">
+          <span data-copy="fieldStatsBars">Stats Bars</span>
+          <textarea id="editorStatsBars" spellcheck="false"></textarea>
+        </label>
+      </div>
+
+      <p class="editor-hint" data-copy="editorHint">
+        Keep each block valid JSON. For arrays, use [] and for objects, use {}.
+      </p>
+    </section>
+
+    <section class="card glass-card admin-card reveal visible">
+      <div class="mini-heading">
+        <h2 data-copy="actionsTitle">Actions</h2>
+        <p data-copy="actionsSub">Save, reset, or import/export admin configuration.</p>
+      </div>
+
+      <div class="action-row">
+        <button id="adminSaveBtn" class="admin-btn primary" type="button" data-copy="actionSave">Save and Apply</button>
+        <button id="adminResetBtn" class="admin-btn" type="button" data-copy="actionReset">Reset to Defaults</button>
+        <button id="adminExportBtn" class="admin-btn" type="button" data-copy="actionExport">Export Config</button>
+        <button id="adminImportBtn" class="admin-btn" type="button" data-copy="actionImport">Import Config</button>
+      </div>
+
+      <label class="editor-field" for="configBox">
+        <span data-copy="configBoxLabel">Config JSON</span>
+        <textarea id="configBox" spellcheck="false"></textarea>
+      </label>
+
+      <p id="adminStatus" class="admin-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="./assets/js/pages/admin.js?v=20260308a"></script>
+</body>
+</html>
