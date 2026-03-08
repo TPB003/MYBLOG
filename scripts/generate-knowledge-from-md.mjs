@@ -7,7 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 
-const markdownDir = path.join(repoRoot, "blog", "content", "knowledge");
+const markdownSourceDirs = [
+  path.join(repoRoot, "blog", "content", "knowledge"),
+  path.join(repoRoot, "blog", "knowledge")
+];
 const outputModulePath = path.join(repoRoot, "blog", "assets", "js", "data", "knowledge-generated.js");
 const knowledgePageDir = path.join(repoRoot, "blog", "knowledge");
 
@@ -238,16 +241,28 @@ function buildArticleHtml(cardId, version) {
 }
 
 function main() {
-  ensureDir(markdownDir);
+  markdownSourceDirs.forEach((dir) => ensureDir(dir));
   ensureDir(path.dirname(outputModulePath));
   ensureDir(knowledgePageDir);
 
   const version = readAssetVersion();
-  const fileEntries = fs
-    .readdirSync(markdownDir, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".md"))
-    .filter((entry) => !entry.name.startsWith("_"))
-    .sort((a, b) => a.name.localeCompare(b.name, "en"));
+  const fileEntries = markdownSourceDirs
+    .flatMap((dir) => {
+      return fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".md"))
+        .filter((entry) => !entry.name.startsWith("_"))
+        .map((entry) => ({
+          absPath: path.join(dir, entry.name),
+          sourceDir: dir,
+          name: entry.name
+        }));
+    })
+    .sort((a, b) => {
+      const dirOrder = markdownSourceDirs.indexOf(a.sourceDir) - markdownSourceDirs.indexOf(b.sourceDir);
+      if (dirOrder !== 0) return dirOrder;
+      return a.name.localeCompare(b.name, "en");
+    });
 
   const cards = [];
   const tagLabels = {};
@@ -256,7 +271,7 @@ function main() {
   const generatedPageNames = new Set();
 
   for (const fileEntry of fileEntries) {
-    const absPath = path.join(markdownDir, fileEntry.name);
+    const absPath = fileEntry.absPath;
     const basename = path.basename(fileEntry.name, ".md");
     const rawText = readText(absPath);
     const { meta, body } = parseFrontMatter(rawText);
@@ -322,7 +337,7 @@ function main() {
   }
 
   const generatedModule = `// AUTO-GENERATED FILE. DO NOT EDIT.
-// Source: blog/content/knowledge/*.md
+// Source: blog/content/knowledge/*.md + blog/knowledge/*.md
 
 export const generatedKnowledgeCards = ${JSON.stringify(cards, null, 2)};
 
@@ -351,10 +366,12 @@ export const generatedKnowledgeTagLabels = ${JSON.stringify(tagLabels, null, 2)}
     writeText(pageAbsPath, html);
   });
 
-  const relativeMarkdownDir = toPosix(path.relative(repoRoot, markdownDir));
+  const relativeMarkdownDirs = markdownSourceDirs
+    .map((dir) => toPosix(path.relative(repoRoot, dir)))
+    .join(", ");
   const relativeModulePath = toPosix(path.relative(repoRoot, outputModulePath));
   console.log(
-    `[knowledge-md] generated ${cards.length} cards from ${relativeMarkdownDir} -> ${relativeModulePath}`
+    `[knowledge-md] generated ${cards.length} cards from ${relativeMarkdownDirs} -> ${relativeModulePath}`
   );
 }
 
