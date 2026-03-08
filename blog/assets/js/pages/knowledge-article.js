@@ -1,4 +1,4 @@
-﻿import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
+import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
 import { renderMarkdownToHtml } from "../core/markdown.js";
 import {
@@ -16,17 +16,17 @@ const THEME_PREFS = ["auto", "day", "night"];
 const textMap = {
   zh: {
     kicker: "KNOWLEDGE ARTICLE",
-    updated: "鏇存柊浜?,
-    reads: "闃呰",
-    backHome: "杩斿洖涓婚〉",
-    backKnowledge: "杩斿洖鐭ヨ瘑搴?,
-    notFoundTitle: "鏈壘鍒扮煡璇嗗崱",
-    notFoundBody: "褰撳墠椤甸潰瀵瑰簲鐨勭煡璇嗗崱涓嶅瓨鍦紝鍙兘宸茶閲嶅懡鍚嶆垨绉婚櫎銆?,
-    themeAuto: "鑷姩",
-    themeDay: "鐧藉ぉ",
-    themeNight: "榛戝",
+    updated: "更新于",
+    reads: "阅读",
+    backHome: "返回主页",
+    backKnowledge: "返回知识库",
+    notFoundTitle: "未找到知识卡",
+    notFoundBody: "当前页面对应的知识卡不存在，可能已被重命名或移除。",
+    themeAuto: "自动",
+    themeDay: "白天",
+    themeNight: "黑夜",
     localeToggle: "EN",
-    localeAria: "鍒囨崲鍒拌嫳鏂?
+    localeAria: "切换到英文"
   },
   en: {
     kicker: "KNOWLEDGE ARTICLE",
@@ -39,7 +39,7 @@ const textMap = {
     themeAuto: "AUTO",
     themeDay: "DAY",
     themeNight: "NIGHT",
-    localeToggle: "涓?,
+    localeToggle: "中",
     localeAria: "Switch to Chinese"
   }
 };
@@ -277,4 +277,3 @@ function init() {
 }
 
 init();
-

@@ -1,108 +1,109 @@
-﻿import { store, STORAGE_KEYS } from "./store.js";
+import { store, STORAGE_KEYS } from "./store.js";
 import { isLocale } from "./utils.js";
 
 const listeners = new Set();
 
 const translations = {
   zh: {
-    "meta.title": "TPBLOG | iOS 椋庢牸涓婚〉",
-    "meta.description": "TPBLOG 鐨?iOS 椋庢牸涓汉涓婚〉锛屾敮鎸佷腑鑻卞垏鎹笌鑷姩鏃ュ涓婚銆?,
+    "meta.title": "TPBLOG | iOS 风格主页",
+    "meta.description": "TPBLOG 的 iOS 风格个人主页，支持中英切换与自动日夜主题。",
 
-    "nav.home": "涓婚〉",
-    "nav.posts": "鏂囩珷",
-    "nav.knowledge": "鐭ヨ瘑搴?,
-    "nav.stats": "缁熻",
-    "nav.books": "涔﹀崟",
+    "nav.home": "主页",
+    "nav.posts": "文章",
+    "nav.knowledge": "知识库",
+    "nav.stats": "统计",
+    "nav.books": "书单",
 
-    "locale.switchToEn": "鍒囨崲鍒拌嫳鏂?,
+    "locale.switchToEn": "切换到英文",
     "locale.switchToZh": "Switch to Chinese",
 
     "hero.kicker": "PERSONAL HOME",
-    "hero.subtitle": "涓€涓洿杞婚噺銆佹洿鍏嬪埗鐨?iOS 椋庢牸宸ヤ綔鍙般€?,
-    "hero.roleLabel": "鎴戞鍦ㄩ暱鏈熶笓娉細",
-    "hero.text": "鎶婂啓浣溿€佸伐绋嬪拰瀛︿範娌夋穩鍦ㄥ悓涓€涓椤碉紝鍑忓皯涓婁笅鏂囧垏鎹紝寮哄寲闀挎湡浜у嚭銆?,
-    "hero.actionPrimary": "鎵撳紑鐭ヨ瘑搴?,
+    "hero.subtitle": "一个更轻量、更克制的 iOS 风格工作台。",
+    "hero.roleLabel": "我正在长期专注：",
+    "hero.text": "把写作、工程和学习沉淀在同一个首页，减少上下文切换，强化长期产出。",
+    "hero.actionPrimary": "打开知识库",
     "hero.actionSecondary": "\u6D4F\u89C8\u4E66\u5355",
 
-    "theme.day": "鐧藉ぉ妯″紡",
-    "theme.night": "澶滈棿妯″紡",
-    "theme.autoShort": "鑷姩",
-    "theme.dayShort": "鐧藉ぉ",
-    "theme.nightShort": "榛戝",
-    "theme.toggleHintAuto": "褰撳墠鑷姩妯″紡锛岀偣鍑诲垏鎹㈠埌鐧藉ぉ妯″紡",
-    "theme.toggleHintDay": "褰撳墠鐧藉ぉ妯″紡锛岀偣鍑诲垏鎹㈠埌榛戝妯″紡",
-    "theme.toggleHintNight": "褰撳墠榛戝妯″紡锛岀偣鍑绘仮澶嶈嚜鍔ㄦā寮?,
+    "theme.day": "白天模式",
+    "theme.night": "夜间模式",
+    "theme.autoShort": "自动",
+    "theme.dayShort": "白天",
+    "theme.nightShort": "黑夜",
+    "theme.toggleHintAuto": "当前自动模式，点击切换到白天模式",
+    "theme.toggleHintDay": "当前白天模式，点击切换到黑夜模式",
+    "theme.toggleHintNight": "当前黑夜模式，点击恢复自动模式",
 
-    "dashboard.nowLabel": "褰撳墠鐘舵€?,
-    "dashboard.clockLabel": "鏈湴鏃堕棿",
-    "dashboard.focusLabel": "浠婃棩鐒︾偣",
-    "dashboard.focusA": "瀹屾垚 1 绡囬珮璐ㄩ噺杈撳嚭",
-    "dashboard.focusB": "鐭ヨ瘑鍗″啀娌夋穩 3 鏉?,
-    "dashboard.focusC": "淇濇寔鑺傚锛屼笉鍋氬绾跨▼鍒嗗績",
-    "dashboard.greetMorning": "鏃╀笂濂斤紝寮€濮嬫帹杩涗富绾夸换鍔?,
-    "dashboard.greetAfternoon": "涓嬪崍濂斤紝杩涘叆娣卞害鎵ц鍖洪棿",
-    "dashboard.greetEvening": "鏅氫笂濂斤紝閫傚悎鏁寸悊涓庡鐩?,
-    "dashboard.greetNight": "澶滈棿鏃舵锛屽缓璁綆璐熻嵎鏀跺熬",
+    "dashboard.nowLabel": "当前状态",
+    "dashboard.clockLabel": "本地时间",
+    "dashboard.focusLabel": "今日焦点",
+    "dashboard.focusA": "完成 1 篇高质量输出",
+    "dashboard.focusB": "知识卡再沉淀 3 条",
+    "dashboard.focusC": "保持节奏，不做多线程分心",
+    "dashboard.greetMorning": "早上好，开始推进主线任务",
+    "dashboard.greetAfternoon": "下午好，进入深度执行区间",
+    "dashboard.greetEvening": "晚上好，适合整理与复盘",
+    "dashboard.greetNight": "夜间时段，建议低负荷收尾",
     "dashboard.sceneDay": "DAYLIGHT MODE ACTIVE",
     "dashboard.sceneNight": "NIGHT MODE ACTIVE",
 
-    "intro.line": "鎴戝垎浜?#缂栫▼ #鍐欎綔 #浜у搧 #鐢熸椿銆?br>杩欎簺鍐呭绱鍚稿紩浜?<strong>{count}</strong> 娆￠槄璇汇€?,
+    "intro.line": "我分享 #编程 #写作 #产品 #生活。<br>这些内容累计吸引了 <strong>{count}</strong> 次阅读。",
 
-    "posts.title": "绮鹃€夋枃绔?,
-    "posts.empty": "璇ュ垎绫绘殏鏃惰繕娌℃湁鍐呭銆?,
-    "posts.open": "闃呰鍏ㄦ枃",
-    "posts.close": "鍏抽棴",
-    "posts.readCount": "{count} 娆￠槄璇?,
-    "posts.modalTitle": "鏂囩珷锛歿title}",
+    "posts.title": "精选文章",
+    "posts.empty": "该分类暂时还没有内容。",
+    "posts.open": "阅读全文",
+    "posts.close": "关闭",
+    "posts.readCount": "{count} 次阅读",
+    "posts.modalTitle": "文章：{title}",
 
-    "filter.all": "鍏ㄩ儴",
-    "filter.tech": "鎶€鏈?,
-    "filter.life": "鐢熸椿",
-    "filter.notes": "绗旇",
+    "filter.all": "全部",
+    "filter.tech": "技术",
+    "filter.life": "生活",
+    "filter.notes": "笔记",
 
-    "knowledge.title": "鐭ヨ瘑搴?,
-    "knowledge.sub": "娌夋穩姒傚康銆佹柟娉曘€佹ā鏉匡紝鏀寔妫€绱㈠拰鏍囩绛涢€夈€?,
-    "knowledge.searchLabel": "鎼滅储",
-    "knowledge.searchPlaceholder": "杈撳叆鍏抽敭璇嶏細姣斿 SSR銆佸鐩樸€佸啓浣滄ā鏉?,
-    "knowledge.tagAll": "鍏ㄩ儴",
-    "knowledge.open": "闃呰鍏ㄦ枃",
-    "knowledge.readCount": "{count} 娆￠槄璇?,
-    "knowledge.countPrefix": "鍏?,
-    "knowledge.countSuffix": "鏉＄煡璇嗗崱",
-    "knowledge.empty": "娌℃湁鎵惧埌鐩稿叧鐭ヨ瘑鍗★紝璇曡瘯鏇寸煭鍏抽敭璇嶆垨鍒囨崲鏍囩銆?,
-    "knowledge.updated": "鏇存柊浜?{date}",
+    "knowledge.title": "知识库",
+    "knowledge.sub": "沉淀概念、方法、模板，支持检索和标签筛选。",
+    "knowledge.searchLabel": "搜索",
+    "knowledge.searchPlaceholder": "输入关键词：比如 SSR、复盘、写作模板",
+    "knowledge.tagAll": "全部",
+    "knowledge.open": "阅读全文",
+    "knowledge.readCount": "{count} 次阅读",
+    "knowledge.countPrefix": "共",
+    "knowledge.countSuffix": "条知识卡",
+    "knowledge.empty": "没有找到相关知识卡，试试更短关键词或切换标签。",
+    "knowledge.updated": "更新于 {date}",
 
-    "stats.timeTitle": "鏃堕棿鍒嗛厤",
-    "stats.timeDesc": "鏈€杩?90 澶╂垜鐨勭簿鍔涘垎閰嶅涓嬶紝涓昏鏃堕棿鎶曞叆鍦ㄦ妧鏈笌鍐呭銆?,
-    "stats.bar.dev": "寮€鍙?,
-    "stats.bar.writing": "鍐欎綔",
-    "stats.bar.reading": "闃呰",
-    "stats.bar.fitness": "杩愬姩",
+    "stats.timeTitle": "时间分配",
+    "stats.timeDesc": "最近 90 天我的精力分配如下，主要时间投入在技术与内容。",
+    "stats.bar.dev": "开发",
+    "stats.bar.writing": "写作",
+    "stats.bar.reading": "阅读",
+    "stats.bar.fitness": "运动",
 
-    "snapshot.title": "绯荤粺蹇収",
-    "snapshot.sub": "涓婚〉鍐呭鎸夋ā鍧楃粍缁囷紝杞婚噺浣嗗彲鎸佺画杩唬銆?,
-    "snapshot.posts": "鏂囩珷",
-    "snapshot.knowledge": "鐭ヨ瘑鍗?,
-    "snapshot.books": "涔﹀崟",
-    "snapshot.reads": "绱闃呰",
+    "snapshot.title": "系统快照",
+    "snapshot.sub": "主页内容按模块组织，轻量但可持续迭代。",
+    "snapshot.posts": "文章",
+    "snapshot.knowledge": "知识卡",
+    "snapshot.books": "书单",
+    "snapshot.reads": "累计阅读",
 
-    "books.title": "闃呰娓呭崟",
-    "books.sub": "杩囧幓鍑犲勾鎸佺画闃呰锛屼互涓嬫槸杩戞湡楂橀鎺ㄨ崘銆?,
+    "books.title": "阅读清单",
+    "books.sub": "过去几年持续阅读，以下是近期高频推荐。",
 
-    "now.title": "\u8FD1\u671F\u8FDB\u5EA6",
-    "now.sub": "\u53C2\u8003 qzq.at \u7684\u4FE1\u606F\u8282\u594F\uFF0C\u63D0\u4F9B\u5F53\u4E0B\u7684\u8F93\u51FA\u65B9\u5411\u4E0E\u5B9E\u9A8C\u8BB0\u5F55\u3002",
+    "now.title": "近期进度",
+    "now.sub": "参考 qzq.at 的信息节奏，提供当下的输出方向与实验记录。",
     "now.cardA.kicker": "BUILD",
-    "now.cardA.title": "\u4E3B\u7EBF\u5DE5\u7A0B",
-    "now.cardA.body": "\u8FED\u4EE3\u535A\u5BA2\u7684\u5185\u5BB9\u7BA1\u7EBF\u4E0E\u53EF\u89C6\u5316\u7BA1\u7406\u529F\u80FD\u3002",
+    "now.cardA.title": "主线工程",
+    "now.cardA.body": "迭代博客的内容管线与可视化管理功能。",
     "now.cardB.kicker": "RESEARCH",
-    "now.cardB.title": "\u77E5\u8BC6\u4F53\u7CFB",
-    "now.cardB.body": "\u5C06\u6BCF\u5468\u8F93\u5165\u6C89\u6DC0\u4E3A\u53EF\u68C0\u7D22\u3001\u53EF\u590D\u7528\u7684\u77E5\u8BC6\u5361\u3002",
+    "now.cardB.title": "知识体系",
+    "now.cardB.body": "将每周输入沉淀为可检索、可复用的知识卡。",
     "now.cardC.kicker": "OUTPUT",
-    "now.cardC.title": "\u53D1\u5E03\u8282\u594F",
-    "now.cardC.body": "\u4FDD\u6301\u7A33\u5B9A\u53D1\u5E03\uFF1A\u957F\u6587\u3001\u77ED\u7B14\u8BB0\u4E0E\u4E66\u5355\u540C\u6B65\u66F4\u65B0\u3002"
-    "contact.text": "鎴戞効鎰忓拰涓嶅悓棰嗗煙鐨勪汉涓€璧峰仛鏈夋剰鎬濈殑椤圭洰銆?br>濡傛灉浣犱篃鍦ㄥ仛闀挎湡鍐呭鎴栦骇鍝侊紝娆㈣繋鑱旂郴鎴戙€?,
+    "now.cardC.title": "发布节奏",
+    "now.cardC.body": "保持稳定发布：长文、短笔记与书单同步更新。",
 
-    "footer.title": "TPBLOG | iOS 椋庢牸涓汉涓婚〉",
+    "contact.text": "我愿意和不同领域的人一起做有意思的项目。<br>如果你也在做长期内容或产品，欢迎联系我。",
+
+    "footer.title": "TPBLOG | iOS 风格个人主页",
     "footer.github": "GitHub",
     "footer.bilibili": "Bilibili",
     "footer.email": "Email"
@@ -118,7 +119,7 @@ const translations = {
     "nav.books": "Books",
 
     "locale.switchToEn": "Switch to English",
-    "locale.switchToZh": "鍒囨崲鍒颁腑鏂?,
+    "locale.switchToZh": "切换到中文",
 
     "hero.kicker": "PERSONAL HOME",
     "hero.subtitle": "A cleaner iOS-style dashboard for focused work.",
@@ -202,7 +203,8 @@ const translations = {
     "now.cardB.body": "Turning weekly inputs into searchable and reusable knowledge cards.",
     "now.cardC.kicker": "OUTPUT",
     "now.cardC.title": "Publishing Rhythm",
-    "now.cardC.body": "Keeping a stable cadence across long posts, short notes, and reading logs."
+    "now.cardC.body": "Keeping a stable cadence across long posts, short notes, and reading logs.",
+
     "contact.text": "I love collaborating with people from different domains.<br>If you're building long-term content or products, feel free to reach out.",
 
     "footer.title": "TPBLOG | iOS Style Personal Home",
@@ -286,7 +288,7 @@ function updateToggleButton(button) {
     button.textContent = "EN";
     button.setAttribute("aria-label", t("locale.switchToEn"));
   } else {
-    button.textContent = "涓?;
+    button.textContent = "中";
     button.setAttribute("aria-label", t("locale.switchToZh"));
   }
 }
@@ -333,5 +335,3 @@ export function initI18n(button) {
     });
   }
 }
-
-
