@@ -15,7 +15,7 @@ const AUTH_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 const DEFAULT_ADMIN_USERNAME = "tpblog";
 const DEFAULT_PASSWORD_HASH = "99866652be121723b1bb47b910656eb4f1a6c4d65f502107571f4eda38708fff"; // TPBLOG@2026
 const DEFAULT_PASSWORD_TEXT = "TPBLOG@2026";
-const ADMIN_ENTRY_HASH = "#tp-9031";
+const ADMIN_ENTRY_HASHES = new Set(["#tpblog-admin", "#tp-9031"]);
 
 const POST_CATEGORIES = ["tech", "life", "notes"];
 const POST_TONES = ["accent-light", "accent-dark", "accent-orange"];
@@ -52,6 +52,12 @@ const copy = {
     summaryKnowledge: "知识卡",
     summaryBooks: "书单",
     summaryTags: "标签映射",
+    adminHeroKicker: "CONTROL CENTER",
+    adminHeroTitle: "以主页同风格方式管理内容系统",
+    adminHeroSub: "当前页面保留隐藏入口 + 账号口令双重验证。建议定期更新密码。",
+    adminHeroChipA: "Visual Controls",
+    adminHeroChipB: "Bilingual Editing",
+    adminHeroChipC: "Session Protected",
     visibilityTitle: "模块显示控制",
     visibilitySub: "按模块开关首页内容区。",
     profileTitle: "个人信息",
@@ -138,6 +144,12 @@ const copy = {
     summaryKnowledge: "Knowledge Cards",
     summaryBooks: "Books",
     summaryTags: "Tag Labels",
+    adminHeroKicker: "CONTROL CENTER",
+    adminHeroTitle: "Manage your content system in the same style as homepage",
+    adminHeroSub: "This page keeps a hidden entry route plus username/password verification. Update your password regularly.",
+    adminHeroChipA: "Visual Controls",
+    adminHeroChipB: "Bilingual Editing",
+    adminHeroChipC: "Session Protected",
     visibilityTitle: "Section Visibility",
     visibilitySub: "Toggle each section shown on homepage.",
     profileTitle: "Profile",
@@ -966,13 +978,19 @@ function lockUI() {
   document.body.classList.add("is-locked");
   el.adminMain.hidden = true;
   el.authGate.hidden = false;
+  el.authGate.classList.remove("is-hidden");
+  el.authGate.setAttribute("aria-hidden", "false");
+  el.authGate.style.display = "grid";
   el.logoutBtn.hidden = true;
 }
 
 function unlockUI() {
   document.body.classList.remove("is-locked");
   el.adminMain.hidden = false;
+  el.authGate.classList.add("is-hidden");
   el.authGate.hidden = true;
+  el.authGate.setAttribute("aria-hidden", "true");
+  el.authGate.style.display = "none";
   el.logoutBtn.hidden = false;
   if (!state.booted) {
     state.booted = true;
@@ -1083,7 +1101,7 @@ function bindCrossTabSync() {
 }
 
 function init() {
-  if (window.location.hash !== ADMIN_ENTRY_HASH) {
+  if (!ADMIN_ENTRY_HASHES.has(window.location.hash || "")) {
     window.location.replace("./index.html");
     return;
   }

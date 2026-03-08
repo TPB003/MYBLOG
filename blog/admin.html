@@ -6,7 +6,15 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>TPBLOG</title>
   <script>
-    location.replace('./index.html');
+    (function () {
+      const allowedHashes = new Set(["#tpblog-admin", "#tp-9031"]);
+      const hash = String(location.hash || "");
+      if (!allowedHashes.has(hash)) {
+        location.replace("./index.html");
+        return;
+      }
+      location.replace(`./control-center-9q4t.html${hash}`);
+    })();
   </script>
 </head>
 <body></body>
