@@ -13,7 +13,6 @@ const translations = {
     "nav.knowledge": "知识库",
     "nav.stats": "统计",
     "nav.books": "书单",
-    "nav.admin": "管理",
 
     "locale.switchToEn": "切换到英文",
     "locale.switchToZh": "Switch to Chinese",
@@ -106,7 +105,6 @@ const translations = {
     "nav.knowledge": "Knowledge",
     "nav.stats": "Stats",
     "nav.books": "Books",
-    "nav.admin": "Admin",
 
     "locale.switchToEn": "Switch to English",
     "locale.switchToZh": "切换到中文",

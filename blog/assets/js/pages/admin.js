@@ -13,6 +13,7 @@ const AUTH_SESSION_KEY = "tpblog_admin_session_v1";
 const AUTH_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 const DEFAULT_PASSWORD_HASH = "99866652be121723b1bb47b910656eb4f1a6c4d65f502107571f4eda38708fff"; // TPBLOG@2026
 const DEFAULT_PASSWORD_TEXT = "TPBLOG@2026";
+const ADMIN_ENTRY_HASH = "#tp-9031";
 
 const POST_CATEGORIES = ["tech", "life", "notes"];
 const POST_TONES = ["accent-light", "accent-dark", "accent-orange"];
@@ -961,6 +962,11 @@ function bindCrossTabSync() {
 }
 
 function init() {
+  if (window.location.hash !== ADMIN_ENTRY_HASH) {
+    window.location.replace("./index.html");
+    return;
+  }
+
   applyStaticCopy();
   bindAuth();
   bindLocaleToggle();

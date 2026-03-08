@@ -22,6 +22,11 @@ const IGNORE_NAMES = new Set([
   "run-logs"
 ]);
 
+const HIDDEN_PATHS = new Set([
+  "blog/admin.html",
+  "blog/control-center-9q4t.html"
+]);
+
 const ROOT_INCLUDE = [
   "README.md",
   "blog",
@@ -139,6 +144,9 @@ function walkRel(relDir, options = {}) {
       }
 
       const childRel = normalize(path.posix.join(currentRel, dirent.name));
+      if (HIDDEN_PATHS.has(childRel)) {
+        continue;
+      }
       const isDir = dirent.isDirectory();
       result.push({ path: childRel, isDir });
 

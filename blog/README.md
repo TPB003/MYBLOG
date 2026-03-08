@@ -25,7 +25,6 @@
 |---|---|---|
 | `blog` | 目录 | 博客前端项目根目录 |
 | `blog/.nojekyll` | 文件 | 禁用 Jekyll 处理，确保静态资源按原路径发布 |
-| `blog/admin.html` | 文件 | 前端管理员页面：可视化控制模块显隐与内容覆盖配置 |
 | `blog/assets` | 目录 | 静态资源目录 |
 | `blog/assets/css` | 目录 | 样式目录 |
 | `blog/assets/css/admin.css` | 文件 | 管理员页面样式：控制台布局、表单与交互按钮 |
@@ -79,6 +78,7 @@
 | `blog/knowledge/writing-workflow-3-step.html` | 文件 | 页面文件 |
 | `blog/knowledge/从猫狗去看什么是去中心化.md` | 文件 | 说明文档 |
 | `blog/README.md` | 文件 | 博客端详细架构文档（由脚本维护结构说明块） |
+| `blog/robots.txt` | 文件 | 文件 |
 <!-- AUTO-GENERATED:BLOG-STRUCTURE END -->
 
 ## 文档维护规则
