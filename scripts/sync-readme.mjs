@@ -76,6 +76,7 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/js/core/store.js": "全局状态与本地存储键",
   "blog/assets/js/core/i18n.js": "中英双语字典与切换逻辑",
   "blog/assets/js/core/utils.js": "通用工具函数",
+  "blog/assets/js/core/markdown.js": "Markdown 渲染器：将知识全文按标题/列表/代码块等格式渲染",
 
   "blog/assets/js/data": "数据层（内容数据）",
   "blog/assets/js/data/content.js": "文章/知识卡/统计/书单等结构化数据",
@@ -87,7 +88,8 @@ const EXPLICIT_DESCRIPTIONS = {
   "blog/assets/js/features/posts.js": "文章列表渲染与分类筛选",
   "blog/assets/js/features/knowledge.js": "知识库搜索、标签筛选与卡片渲染",
   "blog/assets/js/features/theme.js": "自动日夜主题模块：时间驱动主题与主页时钟",
-  "blog/assets/js/features/effects.js": "视觉动效与交互效果（reveal/tilt/spotlight 等）"
+  "blog/assets/js/features/effects.js": "视觉动效与交互效果（reveal/tilt/spotlight 等）",
+  "blog/knowledge": "知识全文输出目录，同时支持直接放置 Markdown 源文件"
 };
 
 function normalize(value) {

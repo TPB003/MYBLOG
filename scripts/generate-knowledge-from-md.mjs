@@ -16,6 +16,12 @@ const knowledgePageDir = path.join(repoRoot, "blog", "knowledge");
 
 const GENERATED_PAGE_PREFIX = "generated-";
 const GENERATED_PAGE_MARKER = "AUTO-GENERATED:MD-KNOWLEDGE";
+const TRANSLATE_ENDPOINT = "https://translate.googleapis.com/translate_a/single";
+const TRANSLATE_CHUNK_LIMIT = 1200;
+const AUTO_TRANSLATE_ENABLED = process.env.TPBLOG_AUTO_TRANSLATE !== "0";
+
+const translationCache = new Map();
+const translationWarnedPairs = new Set();
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -34,7 +40,7 @@ function writeText(filePath, value) {
 }
 
 function normalizeNewline(value) {
-  return value.replace(/\r\n/g, "\n");
+  return String(value || "").replace(/\r\n/g, "\n");
 }
 
 function parseFrontMatter(raw) {
@@ -63,6 +69,15 @@ function parseFrontMatter(raw) {
   });
 
   return { meta, body };
+}
+
+function pickMeta(meta, keys) {
+  for (const key of keys) {
+    if (!Object.prototype.hasOwnProperty.call(meta, key)) continue;
+    const value = String(meta[key] ?? "").trim();
+    if (value) return value;
+  }
+  return "";
 }
 
 function normalizeDate(value, fallbackDate) {
@@ -131,9 +146,9 @@ function inferSummary(paragraphs, fallback) {
 
 function splitMarkdownByLocale(body) {
   const parts = normalizeNewline(body).split(/\n<!--\s*EN\s*-->\s*\n/i);
-  const zhPart = (parts[0] || "").trim();
+  const primaryPart = (parts[0] || "").trim();
   const enPart = (parts[1] || "").trim();
-  return { zhPart, enPart };
+  return { primaryPart, enPart };
 }
 
 function parseTags(rawTags) {
@@ -158,6 +173,190 @@ function titleCase(value) {
 function inferTagLabel(tag) {
   if (/[\u4e00-\u9fff]/.test(tag)) return tag;
   return titleCase(tag);
+}
+
+function normalizeLocale(value) {
+  const source = String(value || "").trim().toLowerCase();
+  if (!source) return "";
+  if (source.startsWith("zh")) return "zh";
+  if (source.startsWith("en")) return "en";
+  return "";
+}
+
+function detectLocaleFromText(value) {
+  const source = String(value || "");
+  const zhCount = (source.match(/[\u4e00-\u9fff]/g) || []).length;
+  const latinCount = (source.match(/[a-zA-Z]/g) || []).length;
+
+  if (zhCount > 0 && latinCount === 0) return "zh";
+  if (latinCount > 0 && zhCount === 0) return "en";
+  if (zhCount >= latinCount) return "zh";
+  return "en";
+}
+
+function splitTextForTranslate(value, maxChars = TRANSLATE_CHUNK_LIMIT) {
+  const source = normalizeNewline(value);
+  if (!source) return [];
+  if (source.length <= maxChars) return [source];
+
+  const units = source.split(/(\n\s*\n)/);
+  const chunks = [];
+  let current = "";
+
+  const pushCurrent = () => {
+    if (!current) return;
+    chunks.push(current);
+    current = "";
+  };
+
+  const appendUnit = (unit) => {
+    if (!unit) return;
+    if (unit.length > maxChars) {
+      for (let i = 0; i < unit.length; i += maxChars) {
+        const piece = unit.slice(i, i + maxChars);
+        if ((current + piece).length > maxChars) {
+          pushCurrent();
+        }
+        current += piece;
+        pushCurrent();
+      }
+      return;
+    }
+
+    if ((current + unit).length > maxChars && current) {
+      pushCurrent();
+    }
+    current += unit;
+  };
+
+  units.forEach((unit) => appendUnit(unit));
+  pushCurrent();
+  return chunks;
+}
+
+function splitMarkdownSegments(value) {
+  const source = normalizeNewline(value);
+  const segments = [];
+  const codeFencePattern = /```[\s\S]*?```/g;
+  let lastIndex = 0;
+  let match = codeFencePattern.exec(source);
+
+  while (match) {
+    if (match.index > lastIndex) {
+      segments.push({ type: "text", value: source.slice(lastIndex, match.index) });
+    }
+    segments.push({ type: "code", value: match[0] });
+    lastIndex = match.index + match[0].length;
+    match = codeFencePattern.exec(source);
+  }
+
+  if (lastIndex < source.length) {
+    segments.push({ type: "text", value: source.slice(lastIndex) });
+  }
+
+  if (segments.length === 0) {
+    return [{ type: "text", value: source }];
+  }
+
+  return segments;
+}
+
+function parseTranslatePayload(payload) {
+  if (!Array.isArray(payload) || !Array.isArray(payload[0])) return "";
+  return payload[0]
+    .map((item) => (Array.isArray(item) && item[0] ? String(item[0]) : ""))
+    .join("");
+}
+
+function warnTranslateFailure(from, to, error) {
+  const key = `${from}->${to}`;
+  if (translationWarnedPairs.has(key)) return;
+  translationWarnedPairs.add(key);
+  const message = error instanceof Error ? error.message : String(error);
+  console.warn(`[knowledge-md] auto-translate disabled for ${key}: ${message}`);
+}
+
+async function requestTranslate(text, from, to) {
+  const params = new URLSearchParams({
+    client: "gtx",
+    sl: from,
+    tl: to,
+    dt: "t",
+    q: text
+  });
+
+  const response = await fetch(`${TRANSLATE_ENDPOINT}?${params.toString()}`, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const translated = parseTranslatePayload(payload);
+  if (!translated.trim()) {
+    throw new Error("empty translation result");
+  }
+
+  return translated;
+}
+
+async function translatePlainText(value, from, to) {
+  const source = normalizeNewline(value).trim();
+  if (!source || from === to) return source;
+  if (!AUTO_TRANSLATE_ENABLED) return source;
+
+  const cacheKey = `${from}->${to}:${source}`;
+  if (translationCache.has(cacheKey)) {
+    return translationCache.get(cacheKey);
+  }
+
+  const chunks = splitTextForTranslate(source);
+  if (chunks.length === 0) return source;
+
+  const translatedChunks = [];
+  for (const chunk of chunks) {
+    try {
+      translatedChunks.push(await requestTranslate(chunk, from, to));
+    } catch (error) {
+      warnTranslateFailure(from, to, error);
+      translatedChunks.push(chunk);
+    }
+  }
+
+  const translated = translatedChunks.join("").trim();
+  const nextValue = translated || source;
+  translationCache.set(cacheKey, nextValue);
+  return nextValue;
+}
+
+async function translateMarkdown(value, from, to) {
+  const source = normalizeNewline(value).trim();
+  if (!source || from === to) return source;
+  if (!AUTO_TRANSLATE_ENABLED) return source;
+
+  const cacheKey = `md:${from}->${to}:${source}`;
+  if (translationCache.has(cacheKey)) {
+    return translationCache.get(cacheKey);
+  }
+
+  const segments = splitMarkdownSegments(source);
+  const translatedSegments = [];
+
+  for (const segment of segments) {
+    if (segment.type === "code") {
+      translatedSegments.push(segment.value);
+      continue;
+    }
+    translatedSegments.push(await translatePlainText(segment.value, from, to));
+  }
+
+  const translated = translatedSegments.join("").trim();
+  const nextValue = translated || source;
+  translationCache.set(cacheKey, nextValue);
+  return nextValue;
 }
 
 function readAssetVersion() {
@@ -240,7 +439,7 @@ function buildArticleHtml(cardId, version) {
 `;
 }
 
-function main() {
+async function main() {
   markdownSourceDirs.forEach((dir) => ensureDir(dir));
   ensureDir(path.dirname(outputModulePath));
   ensureDir(knowledgePageDir);
@@ -277,11 +476,82 @@ function main() {
     const { meta, body } = parseFrontMatter(rawText);
     const fileMtime = fs.statSync(absPath).mtime.toISOString().slice(0, 10);
     const splitBody = splitMarkdownByLocale(body);
-    const zhParagraphs = extractParagraphs(splitBody.zhPart);
-    const enParagraphs = splitBody.enPart ? extractParagraphs(splitBody.enPart) : [];
 
-    const inferredTitle = extractHeading(splitBody.zhPart) || basename;
-    const slugSource = meta.slug || basename;
+    const sourceLocaleFromMeta = normalizeLocale(
+      pickMeta(meta, ["lang", "locale", "language", "source_lang", "sourceLocale"])
+    );
+    const sourceLocale = sourceLocaleFromMeta || detectLocaleFromText(splitBody.primaryPart);
+    const hasManualEnSection = Boolean(splitBody.enPart);
+
+    let markdownZh = "";
+    let markdownEn = "";
+    if (hasManualEnSection) {
+      markdownZh = splitBody.primaryPart;
+      markdownEn = splitBody.enPart;
+    } else if (sourceLocale === "en") {
+      markdownEn = splitBody.primaryPart;
+      markdownZh = await translateMarkdown(markdownEn, "en", "zh");
+    } else {
+      markdownZh = splitBody.primaryPart;
+      markdownEn = await translateMarkdown(markdownZh, "zh", "en");
+    }
+
+    if (!markdownZh && markdownEn) markdownZh = await translateMarkdown(markdownEn, "en", "zh");
+    if (!markdownEn && markdownZh) markdownEn = await translateMarkdown(markdownZh, "zh", "en");
+    if (!markdownZh && !markdownEn) continue;
+
+    const zhParagraphs = extractParagraphs(markdownZh);
+    const enParagraphs = extractParagraphs(markdownEn);
+    const inferredTitleZh = extractHeading(markdownZh);
+    const inferredTitleEn = extractHeading(markdownEn);
+
+    const genericTitle = pickMeta(meta, ["title"]);
+    let titleZh = pickMeta(meta, ["title_zh", "titleZh"]);
+    let titleEn = pickMeta(meta, ["title_en", "titleEn"]);
+
+    if (!titleZh && sourceLocale !== "en") titleZh = genericTitle;
+    if (!titleEn && sourceLocale === "en") titleEn = genericTitle;
+    if (!titleZh) titleZh = inferredTitleZh;
+    if (!titleEn) titleEn = inferredTitleEn;
+    if (!titleZh && titleEn) titleZh = await translatePlainText(titleEn, "en", "zh");
+    if (!titleEn && titleZh) titleEn = await translatePlainText(titleZh, "zh", "en");
+    if (!titleZh) titleZh = basename;
+    if (!titleEn) titleEn = titleZh;
+
+    const genericSummary = pickMeta(meta, ["summary"]);
+    const hasSummaryZh = Boolean(pickMeta(meta, ["summary_zh", "summaryZh"]));
+    const hasSummaryEn = Boolean(pickMeta(meta, ["summary_en", "summaryEn"]));
+
+    let summaryZh = pickMeta(meta, ["summary_zh", "summaryZh"]);
+    let summaryEn = pickMeta(meta, ["summary_en", "summaryEn"]);
+
+    if (!summaryZh && sourceLocale !== "en") summaryZh = genericSummary;
+    if (!summaryEn && sourceLocale === "en") summaryEn = genericSummary;
+    if (!summaryZh) summaryZh = inferSummary(zhParagraphs, titleZh);
+    if (!summaryEn) summaryEn = inferSummary(enParagraphs, titleEn);
+
+    if (!hasSummaryEn && sourceLocale !== "en" && !hasManualEnSection) {
+      summaryEn = await translatePlainText(summaryZh, "zh", "en");
+    }
+    if (!hasSummaryZh && sourceLocale === "en" && !hasManualEnSection) {
+      summaryZh = await translatePlainText(summaryEn, "en", "zh");
+    }
+
+    if (!summaryZh && summaryEn) summaryZh = await translatePlainText(summaryEn, "en", "zh");
+    if (!summaryEn && summaryZh) summaryEn = await translatePlainText(summaryZh, "zh", "en");
+    if (!summaryZh) summaryZh = titleZh;
+    if (!summaryEn) summaryEn = titleEn;
+
+    const genericReading = pickMeta(meta, ["reading"]);
+    let readingZh = pickMeta(meta, ["reading_zh", "readingZh"]);
+    let readingEn = pickMeta(meta, ["reading_en", "readingEn"]);
+
+    if (!readingZh && sourceLocale !== "en") readingZh = genericReading;
+    if (!readingEn && sourceLocale === "en") readingEn = genericReading;
+    if (!readingZh) readingZh = "5 分钟阅读";
+    if (!readingEn) readingEn = "5 min read";
+
+    const slugSource = pickMeta(meta, ["slug"]) || basename;
     let slug = slugify(slugSource) || slugify(basename) || `md-${Date.now()}`;
     let slugSuffix = 2;
     while (usedSlugs.has(slug)) {
@@ -290,7 +560,7 @@ function main() {
     }
     usedSlugs.add(slug);
 
-    const baseId = String(meta.id || `kb-md-${slug}`).trim();
+    const baseId = String(pickMeta(meta, ["id"]) || `kb-md-${slug}`).trim();
     let id = baseId;
     let idSuffix = 2;
     while (usedIds.has(id)) {
@@ -299,14 +569,8 @@ function main() {
     }
     usedIds.add(id);
 
-    const titleZh = String(meta.title || inferredTitle).trim();
-    const titleEn = String(meta.title_en || meta.titleEn || titleZh).trim();
-    const summaryZh = String(meta.summary || inferSummary(zhParagraphs, titleZh)).trim();
-    const summaryEn = String(meta.summary_en || meta.summaryEn || inferSummary(enParagraphs, summaryZh)).trim();
-    const updated = normalizeDate(meta.updated, fileMtime);
-    const readingZh = String(meta.reading || "5 分钟阅读").trim();
-    const readingEn = String(meta.reading_en || meta.readingEn || "5 min read").trim();
-    const tags = parseTags(meta.tags);
+    const updated = normalizeDate(pickMeta(meta, ["updated"]), fileMtime);
+    const tags = parseTags(pickMeta(meta, ["tags", "tag"]));
     const pageName = `${GENERATED_PAGE_PREFIX}${slug}.html`;
     const pagePath = `./knowledge/${pageName}`;
 
@@ -321,8 +585,13 @@ function main() {
       summary: { zh: summaryZh, en: summaryEn },
       content: {
         zh: zhParagraphs.length > 0 ? zhParagraphs : [summaryZh],
-        en: enParagraphs.length > 0 ? enParagraphs : zhParagraphs.length > 0 ? zhParagraphs : [summaryEn]
-      }
+        en: enParagraphs.length > 0 ? enParagraphs : [summaryEn]
+      },
+      contentMarkdown: {
+        zh: markdownZh || summaryZh,
+        en: markdownEn || summaryEn
+      },
+      source: toPosix(path.relative(repoRoot, absPath))
     };
 
     cards.push(card);
@@ -375,4 +644,8 @@ export const generatedKnowledgeTagLabels = ${JSON.stringify(tagLabels, null, 2)}
   );
 }
 
-main();
+main().catch((error) => {
+  const message = error instanceof Error ? error.stack || error.message : String(error);
+  console.error(`[knowledge-md] generation failed: ${message}`);
+  process.exitCode = 1;
+});

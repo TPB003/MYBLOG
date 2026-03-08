@@ -37,6 +37,7 @@
 | `blog/assets/js` | 目录 | 脚本目录 |
 | `blog/assets/js/core` | 目录 | 核心层（状态、i18n、工具） |
 | `blog/assets/js/core/i18n.js` | 文件 | 中英双语字典与切换逻辑 |
+| `blog/assets/js/core/markdown.js` | 文件 | Markdown 渲染器：将知识全文按标题/列表/代码块等格式渲染 |
 | `blog/assets/js/core/store.js` | 文件 | 全局状态与本地存储键 |
 | `blog/assets/js/core/utils.js` | 文件 | 通用工具函数 |
 | `blog/assets/js/data` | 目录 | 数据层（内容数据） |
@@ -60,7 +61,7 @@
 | `blog/content/knowledge/从猫型节点与狗型节点，看人类协作的去中心化模型.md` | 文件 | 说明文档 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
-| `blog/knowledge` | 目录 | 目录 |
+| `blog/knowledge` | 目录 | 知识全文输出目录，同时支持直接放置 Markdown 源文件 |
 | `blog/knowledge/frontend-performance-check.html` | 文件 | 页面文件 |
 | `blog/knowledge/generated-从猫型节点与狗型节点-看人类协作的去中心化模型.html` | 文件 | 页面文件 |
 | `blog/knowledge/generated-从猫狗去看什么是去中心化.html` | 文件 | 页面文件 |

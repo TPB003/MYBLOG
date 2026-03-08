@@ -1,12 +1,13 @@
 import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
+import { renderMarkdownToHtml } from "../core/markdown.js";
 import {
   formatReadCount,
   getKnowledgeReads,
   initReadMetrics,
   onReadMetricsChange,
   recordKnowledgeRead
-} from "../features/read-metrics.js?v=20260308g";
+} from "../features/read-metrics.js?v=20260308h";
 
 const LOCALE_KEY = "tpblog_locale_v2";
 const THEME_KEY = "tpblog_theme_pref_v1";
@@ -19,7 +20,7 @@ const textMap = {
     reads: "阅读",
     backHome: "返回主页",
     backKnowledge: "返回知识库",
-    notFoundTitle: "未找到知识文章",
+    notFoundTitle: "未找到知识卡",
     notFoundBody: "当前页面对应的知识卡不存在，可能已被重命名或移除。",
     themeAuto: "自动",
     themeDay: "白天",
@@ -158,6 +159,20 @@ function renderReads(cardId) {
   readsNode.textContent = `${textPack.reads} ${count}`;
 }
 
+function resolveMarkdown(card, localeCode) {
+  const markdownPack = card.contentMarkdown;
+  if (markdownPack && typeof markdownPack === "object") {
+    return markdownPack[localeCode] || markdownPack.zh || markdownPack.en || "";
+  }
+
+  const paragraphs = card.content?.[localeCode] || card.content?.zh || [];
+  if (Array.isArray(paragraphs)) {
+    return paragraphs.join("\n\n");
+  }
+
+  return String(paragraphs || "");
+}
+
 function renderArticle() {
   const card = getCurrentCard();
   const textPack = textMap[locale];
@@ -182,7 +197,7 @@ function renderArticle() {
   const title = card.title[locale] || card.title.zh;
   const summary = card.summary[locale] || card.summary.zh;
   const reading = typeof card.reading === "string" ? card.reading : (card.reading?.[locale] || card.reading?.zh || "");
-  const paragraphs = card.content?.[locale] || card.content?.zh || [];
+  const markdown = resolveMarkdown(card, locale);
   const formattedDate = formatDate(card.updated, locale);
 
   if (kickerNode) kickerNode.textContent = textPack.kicker;
@@ -210,7 +225,7 @@ function renderArticle() {
   }
 
   if (contentNode) {
-    contentNode.innerHTML = paragraphs.map((line) => `<p>${escapeHTML(line)}</p>`).join("");
+    contentNode.innerHTML = renderMarkdownToHtml(markdown);
   }
 
   document.title = `${title} | TPBLOG`;

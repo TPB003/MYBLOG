@@ -85,6 +85,98 @@
   line-height: 1.9;
 }
 
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.28;
+}
+
+.article-content h1 {
+  font-size: clamp(1.35rem, 3.5vw, 1.9rem);
+}
+
+.article-content h2 {
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+}
+
+.article-content h3 {
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.38rem;
+  color: var(--text-soft);
+}
+
+.article-content li {
+  line-height: 1.8;
+}
+
+.article-content blockquote {
+  margin: 0;
+  padding: 0.72rem 0.84rem;
+  border-left: 2px solid var(--accent);
+  border-radius: 0.72rem;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+
+.article-content pre {
+  margin: 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, #0f172a 84%, var(--glass-bg));
+  padding: 0.78rem 0.88rem;
+}
+
+.article-content pre code {
+  color: #dbe8ff;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.article-content code {
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--glass-bg) 92%, transparent);
+  color: color-mix(in srgb, var(--accent) 78%, var(--text));
+  padding: 0.08rem 0.36rem;
+  font-size: 0.82em;
+}
+
+.article-content hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px dashed var(--line);
+}
+
+.article-content a {
+  color: color-mix(in srgb, var(--accent) 82%, #ffffff);
+  text-decoration: underline;
+  text-underline-offset: 0.16rem;
+  text-decoration-thickness: 1px;
+}
+
+.article-content img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  display: block;
+}
+
 .article-actions {
   display: flex;
   justify-content: space-between;
