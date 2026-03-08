@@ -72,6 +72,7 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
 | `blog/knowledge` | 目录 | 目录 |
 | `blog/knowledge/frontend-performance-check.html` | 文件 | 页面文件 |
+| `blog/knowledge/generated-从猫狗去看什么是去中心化.html` | 文件 | 页面文件 |
 | `blog/knowledge/knowledge-card-naming.html` | 文件 | 页面文件 |
 | `blog/knowledge/ssr-vs-ssg.html` | 文件 | 页面文件 |
 | `blog/knowledge/tech-stack-decision-checklist.html` | 文件 | 页面文件 |
