@@ -66,6 +66,7 @@
 | `blog/knowledge/tech-stack-decision-checklist.html` | 文件 | 页面文件 |
 | `blog/knowledge/weekly-retrospective-template.html` | 文件 | 页面文件 |
 | `blog/knowledge/writing-workflow-3-step.html` | 文件 | 页面文件 |
+| `blog/knowledge/从猫狗去看什么是去中心化.md` | 文件 | 说明文档 |
 | `blog/README.md` | 文件 | 博客端详细架构文档（由脚本维护结构说明块） |
 <!-- AUTO-GENERATED:BLOG-STRUCTURE END -->
 

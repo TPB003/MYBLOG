@@ -77,6 +77,7 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/knowledge/tech-stack-decision-checklist.html` | 文件 | 页面文件 |
 | `blog/knowledge/weekly-retrospective-template.html` | 文件 | 页面文件 |
 | `blog/knowledge/writing-workflow-3-step.html` | 文件 | 页面文件 |
+| `blog/knowledge/从猫狗去看什么是去中心化.md` | 文件 | 说明文档 |
 | `blog/README.md` | 文件 | 博客端详细架构文档（由脚本维护结构说明块） |
 | `deploy-blog-pages.ps1` | 文件 | PowerShell 一键部署脚本：提交并推送到 GitHub Pages |
 | `deploy-blog-pages.sh` | 文件 | Linux 一键部署脚本：提交并推送到 GitHub Pages |
