@@ -12,6 +12,7 @@ const AUTH_HASH_KEY = "tpblog_admin_password_hash_v1";
 const AUTH_SESSION_KEY = "tpblog_admin_session_v1";
 const AUTH_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 const DEFAULT_PASSWORD_HASH = "99866652be121723b1bb47b910656eb4f1a6c4d65f502107571f4eda38708fff"; // TPBLOG@2026
+const DEFAULT_PASSWORD_TEXT = "TPBLOG@2026";
 
 const POST_CATEGORIES = ["tech", "life", "notes"];
 const POST_TONES = ["accent-light", "accent-dark", "accent-orange"];
@@ -34,7 +35,9 @@ const copy = {
     authSub: "请输入管理员口令以进入控制台。",
     authPasswordLabel: "口令",
     authSubmit: "登录",
+    authResetDefault: "忘记密码，恢复默认",
     authFailed: "口令错误，请重试。",
+    authResetDone: "已恢复默认密码，请用 TPBLOG@2026 登录。",
     headerTitle: "管理员控制台",
     headerSub: "图形化控制首页模块与内容。",
     backHome: "返回主页",
@@ -117,7 +120,9 @@ const copy = {
     authSub: "Enter admin password to unlock this dashboard.",
     authPasswordLabel: "Password",
     authSubmit: "Sign In",
+    authResetDefault: "Reset to Default Password",
     authFailed: "Wrong password. Please try again.",
+    authResetDone: "Password reset to default. Sign in with TPBLOG@2026.",
     headerTitle: "Admin Console",
     headerSub: "Visually manage homepage modules and content.",
     backHome: "Back Home",
@@ -200,6 +205,7 @@ const el = {
   authGate: document.getElementById("authGate"),
   authForm: document.getElementById("authForm"),
   authPassword: document.getElementById("authPassword"),
+  authResetDefaultBtn: document.getElementById("authResetDefaultBtn"),
   authMessage: document.getElementById("authMessage"),
   adminMain: document.getElementById("adminMain"),
   localeToggle: document.getElementById("adminLocaleToggle"),
@@ -806,7 +812,16 @@ async function sha256Hex(input) {
 }
 
 async function verifyPassword(password) {
-  return (await sha256Hex(password)) === getPasswordHash();
+  const stored = getPasswordHash();
+  const hashed = await sha256Hex(password);
+  if (hashed === stored) return true;
+
+  // Compatibility path for browsers where SubtleCrypto is unavailable.
+  if (!window.crypto?.subtle && stored === DEFAULT_PASSWORD_HASH && password === DEFAULT_PASSWORD_TEXT) {
+    return true;
+  }
+
+  return false;
 }
 
 function readSession() {
@@ -862,6 +877,15 @@ function bindAuth() {
     status(el.authMessage, "");
     writeSession();
     unlockUI();
+  });
+
+  el.authResetDefaultBtn.addEventListener("click", () => {
+    if (!window.confirm(t("confirmResetPassword"))) return;
+    localStorage.removeItem(AUTH_HASH_KEY);
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    el.authPassword.value = "";
+    status(el.authMessage, t("authResetDone"), "success");
+    el.authPassword.focus();
   });
 
   el.logoutBtn.addEventListener("click", () => {
