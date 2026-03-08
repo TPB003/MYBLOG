@@ -11,11 +11,12 @@
 
 ## Markdown 内容流
 
-1. 在 `blog/content/knowledge/` 新建 `.md` 文件（可参考 `_template.md`）。
+1. 在 `blog/content/knowledge/` 或 `blog/knowledge/` 新建 `.md` 文件（可参考 `_template.md`）。
 2. 执行 `node ../scripts/generate-knowledge-from-md.mjs`（本地）或直接 push（CI 自动执行）。
 3. 脚本会自动生成：
 - `blog/assets/js/data/knowledge-generated.js`（卡片数据）
 - `blog/knowledge/generated-*.html`（全文页）
+4. 如果只写中文或英文正文，脚本会自动翻译补全另一种语言。
 
 ## 目录与文件作用（自动生成）
 

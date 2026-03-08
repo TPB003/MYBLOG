@@ -16,12 +16,27 @@ const knowledgePageDir = path.join(repoRoot, "blog", "knowledge");
 
 const GENERATED_PAGE_PREFIX = "generated-";
 const GENERATED_PAGE_MARKER = "AUTO-GENERATED:MD-KNOWLEDGE";
-const TRANSLATE_ENDPOINT = "https://translate.googleapis.com/translate_a/single";
+const GOOGLE_TRANSLATE_ENDPOINT = "https://translate.googleapis.com/translate_a/single";
 const TRANSLATE_CHUNK_LIMIT = 1200;
 const AUTO_TRANSLATE_ENABLED = process.env.TPBLOG_AUTO_TRANSLATE !== "0";
+const TRANSLATE_PROVIDER = String(process.env.TPBLOG_TRANSLATE_PROVIDER || "").trim().toLowerCase();
+const OPENAI_API_KEY = String(process.env.TPBLOG_OPENAI_API_KEY || process.env.OPENAI_API_KEY || "").trim();
+const OPENAI_MODEL = String(process.env.TPBLOG_OPENAI_MODEL || "gpt-4.1-mini").trim();
+const OPENAI_BASE_URL = String(
+  process.env.TPBLOG_OPENAI_BASE_URL || "https://api.openai.com/v1/chat/completions"
+).trim();
 
 const translationCache = new Map();
 const translationWarnedPairs = new Set();
+
+function resolveTranslateProvider() {
+  if (!AUTO_TRANSLATE_ENABLED) return "disabled";
+  if (TRANSLATE_PROVIDER) return TRANSLATE_PROVIDER;
+  if (OPENAI_API_KEY) return "openai";
+  return "google";
+}
+
+const ACTIVE_TRANSLATE_PROVIDER = resolveTranslateProvider();
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -269,14 +284,26 @@ function parseTranslatePayload(payload) {
 }
 
 function warnTranslateFailure(from, to, error) {
-  const key = `${from}->${to}`;
+  const key = `${ACTIVE_TRANSLATE_PROVIDER}:${from}->${to}`;
   if (translationWarnedPairs.has(key)) return;
   translationWarnedPairs.add(key);
   const message = error instanceof Error ? error.message : String(error);
-  console.warn(`[knowledge-md] auto-translate disabled for ${key}: ${message}`);
+  console.warn(`[knowledge-md] auto-translate fallback for ${key}: ${message}`);
 }
 
-async function requestTranslate(text, from, to) {
+function parseOpenAiMessageContent(value) {
+  if (typeof value === "string") return value;
+  if (!Array.isArray(value)) return "";
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") return "";
+      if (typeof item.text === "string") return item.text;
+      return "";
+    })
+    .join("");
+}
+
+async function requestGoogleTranslate(text, from, to) {
   const params = new URLSearchParams({
     client: "gtx",
     sl: from,
@@ -285,7 +312,7 @@ async function requestTranslate(text, from, to) {
     q: text
   });
 
-  const response = await fetch(`${TRANSLATE_ENDPOINT}?${params.toString()}`, {
+  const response = await fetch(`${GOOGLE_TRANSLATE_ENDPOINT}?${params.toString()}`, {
     method: "GET",
     cache: "no-store"
   });
@@ -301,6 +328,58 @@ async function requestTranslate(text, from, to) {
   }
 
   return translated;
+}
+
+async function requestOpenAiTranslate(text, from, to) {
+  if (!OPENAI_API_KEY) {
+    throw new Error("missing TPBLOG_OPENAI_API_KEY");
+  }
+
+  const response = await fetch(OPENAI_BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: OPENAI_MODEL,
+      temperature: 0,
+      messages: [
+        {
+          role: "system",
+          content: `Translate from ${from} to ${to}. Preserve Markdown syntax, links, and code fences. Return only translated text.`
+        },
+        {
+          role: "user",
+          content: text
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const choice = payload?.choices?.[0]?.message?.content;
+  const translated = parseOpenAiMessageContent(choice).trim();
+  if (!translated) {
+    throw new Error("empty openai translation result");
+  }
+  return translated;
+}
+
+async function requestTranslate(text, from, to) {
+  if (ACTIVE_TRANSLATE_PROVIDER === "openai") {
+    return requestOpenAiTranslate(text, from, to);
+  }
+
+  if (ACTIVE_TRANSLATE_PROVIDER !== "google") {
+    console.warn(`[knowledge-md] unknown translate provider "${ACTIVE_TRANSLATE_PROVIDER}", fallback to google`);
+  }
+
+  return requestGoogleTranslate(text, from, to);
 }
 
 async function translatePlainText(value, from, to) {
@@ -640,7 +719,7 @@ export const generatedKnowledgeTagLabels = ${JSON.stringify(tagLabels, null, 2)}
     .join(", ");
   const relativeModulePath = toPosix(path.relative(repoRoot, outputModulePath));
   console.log(
-    `[knowledge-md] generated ${cards.length} cards from ${relativeMarkdownDirs} -> ${relativeModulePath}`
+    `[knowledge-md] generated ${cards.length} cards from ${relativeMarkdownDirs} -> ${relativeModulePath} (translate: ${ACTIVE_TRANSLATE_PROVIDER})`
   );
 }
 

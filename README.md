@@ -14,13 +14,21 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 
 ## Markdown 自动生成知识卡
 
-1. 把 Markdown 文件放到 `blog/content/knowledge/` 目录（可复制 `_template.md`）。
+1. 把 Markdown 文件放到 `blog/content/knowledge/` 或 `blog/knowledge/` 目录（可复制 `_template.md`）。
 2. `git push` 后，GitHub Actions 会自动运行 `scripts/generate-knowledge-from-md.mjs`。
 3. 前端会自动展示新知识卡，并生成对应全文页。
+4. 若只写中文或英文，脚本会自动补全另一种语言（中英互译）。
 
 支持两种添加方式：
 - 本地文件夹：直接新增 `.md` 后提交推送。
-- GitHub 网页界面：在仓库网页里上传 `.md` 到 `blog/content/knowledge/` 后提交。
+- GitHub 网页界面：在仓库网页里上传 `.md` 到 `blog/content/knowledge/` 或 `blog/knowledge/` 后提交。
+
+可选：配置更高质量翻译（OpenAI）  
+在 GitHub 仓库 `Settings -> Secrets and variables -> Actions` 中配置：
+- `secret` `TPBLOG_OPENAI_API_KEY`
+- `variable` `TPBLOG_TRANSLATE_PROVIDER` = `openai`
+- `variable` `TPBLOG_OPENAI_MODEL`（可选，默认 `gpt-4.1-mini`）
+- `variable` `TPBLOG_OPENAI_BASE_URL`（可选，默认 `https://api.openai.com/v1/chat/completions`）
 
 ## 仓库结构（自动生成）
 
