@@ -288,6 +288,107 @@ export const generatedKnowledgeCards = [
     "source": "blog/content/knowledge/从猫型节点与狗型节点，看人类协作的去中心化模型.md"
   },
   {
+    "id": "kb-md-预测市场不是赌博",
+    "slug": "预测市场不是赌博",
+    "page": "./knowledge/generated-预测市场不是赌博.html",
+    "tags": [
+      "general"
+    ],
+    "updated": "2026-03-08",
+    "reading": {
+      "zh": "5 分钟阅读",
+      "en": "5 min read"
+    },
+    "title": {
+      "zh": "预测市场不是赌博（真正厉害的人用它掌控未来）",
+      "en": "Predicting the market is not gambling (really powerful people use it to control the future)"
+    },
+    "summary": {
+      "zh": "预测市场不是赌博（真正厉害的人用它掌控未来）",
+      "en": "Predicting the market is not gambling (really powerful people use it to control the future)"
+    },
+    "content": {
+      "zh": [
+        "预测市场不是赌博（真正厉害的人用它掌控未来）",
+        "钩子开场",
+        "你有没有过这种经历？专家说今年房价要涨，结果没动静；朋友说某只股票必赚，你买进去就套牢。别再信这些半吊子预测了——真正厉害的人早就靠预测市场把未来拿捏得死死的。",
+        "这不是玄学。2008年奥巴马竞选总统时，主流媒体还在讨论候选人支持率，预测市场已经提前5天锁定奥巴马必胜。准确率超过90%，比任何民调都靠谱。",
+        "痛点共鸣",
+        "我以前也觉得这玩意儿是赌博。“用金钱投票”听起来就不靠谱，直到我亲眼看到数据：当你还在刷财经新闻时，预测市场的参与者已经把所有分散的信息聚合成了一个无比精准的预测结果。",
+        "为什么我们总被预测误导？因为专家有偏见，调研太滞后，每个人看到的都是局部信息。就像盲人摸象，谁也不知道全貌。但预测市场能把所有人摸到的东西拼起来，还原出完整的大象。",
+        "价值承诺",
+        "今天我就给你扒一扒预测市场到底是什么。不用讲复杂的金融术语，就像跟朋友聊天一样，带你看懂这玩意儿怎么帮你预判未来。",
+        "核心内容",
+        "一、预测市场到底是什么？",
+        "简单说，预测市场就是一个“未来事件交易所”。比如有人打赌“下个月A股会不会突破4000点”，你可以下注“会”或“不会”。最终价格就代表了所有人对这件事发生概率的共识。",
+        "别再以为这是赌博。真正的玩家不是在赌运气，而是在“出售”自己知道的信息。你知道某公司要发布新产品，就可以在市场里买入“该公司股价会涨”的合约。如果信息是对的，你就能赚钱。",
+        "预测市场的价格不是瞎猜，而是把所有人知道的秘密都算进去了。",
+        "真实案例：2016年特朗普胜选前一周，主流媒体还在渲染希拉里领先，但预测市场已经悄悄把特朗普的胜率从30%拉到了55%。等媒体反应过来时，总统宝座已经被特朗普拿走了。",
+        "二、预测市场怎么玩？",
+        "要让预测市场发挥作用，得有四个关键要素：",
+        "一群愿意下注的人：得有各行各业的人参与，这样才能凑齐所有信息。 清晰的交易标的：不能模棱两可，比如“2025年GDP增长超5%”就是个好标的。 赚钱的动力：猜对了能赚，猜错了会亏。这样大家才愿意拿出真东西。 透明的规则：所有交易公开可查，谁也不能作弊。",
+        "厉害的不是人，是这个让大家说实话的机制。",
+        "三、预测市场能干啥？",
+        "预判选举结果：美国大选、英国脱欧，预测市场的准确率比民调高15%-20%。2020年拜登胜选，预测市场提前3天就给出了90%的胜率。 帮企业做决策：谷歌内部用预测市场预测新产品销量，准确率比市场部高30%。微软用它预测技术趋势，避免了好几次战略失误。 预判行业变化：疫情初期，预测市场就提前半个月反映出医疗物资会短缺。等政府反应过来时，口罩已经涨成了奢侈品。",
+        "普通人看新闻，聪明人看预测市场。",
+        "四、预测市场不是万能的",
+        "但有一说一，这东西也不是完美的：",
+        "\\- 有些地方不让玩：国内把它当成赌博，不让公开搞。所以你只能翻墙去国外平台玩。",
+        "\\- 会有内幕消息：如果有人提前知道了某公司要破产，就能在市场里砸盘，搞乱价格。",
+        "\\- 只能预测简单事：像“明年会不会爆发世界大战”这种复杂问题，预测市场也瞎猜。",
+        "没有能预测一切的神器，只有适合特定场景的工具。",
+        "五、预测市场的未来会咋样？",
+        "区块链来了：以后预测市场可能会搬到链上，这样谁也不能作弊，全世界的人都能参与。 监管会放松：越来越多国家意识到这东西有用，以后可能会像股票市场一样合法合规。 和AI结合：AI处理大数据，预测市场聚合人的智慧，两者结合说不定能预测95%以上的事情。",
+        "未来的预测市场，就像给你开了上帝视角，让你提前知道结局。",
+        "赋权结尾",
+        "看完这篇文章，你可以试试：",
+        "去Prediction Markets这种平台看看，感受一下普通人怎么预判未来 想想你身边有没有什么事情可以用预测市场来判断，比如你喜欢的球队会不会夺冠 以后别再听专家瞎忽悠，先看看预测市场怎么说",
+        "记住，普通人靠运气赌博，聪明人靠信息赚钱。预测市场就是把分散的信息变成真金白银的利器。下次再做重要决策前，不妨先看看市场怎么说。"
+      ],
+      "en": [
+        "Predicting the market is not gambling (really powerful people use it to control the future)",
+        "Hook opening",
+        "Have you ever had this experience? Experts say that house prices will rise this year, but there is no movement; a friend says that a certain stock is bound to make money, and if you buy it, you will be locked in. Don’t believe in these half-baked predictions anymore – really good people have already relied on prediction markets to predict the future.",
+        "This is not metaphysics. When Obama ran for president in 2008, the mainstream media were still discussing the candidate's support rate, and the prediction market had already locked in Obama's victory five days in advance. The accuracy rate exceeds 90%, which is more reliable than any poll.",
+        "Pain Point Resonance",
+        "I used to think this stuff was gambling. \"Vote with money\" sounded unreliable until I saw the data with my own eyes: when you are still reading financial news, the participants in the prediction market have aggregated all the scattered information into an extremely accurate prediction result.",
+        "Why are we always misled by predictions? Because experts are biased and research is too lagging, everyone sees only partial information. Like a blind man touching an elephant, no one knows the whole picture. But the prediction market can put together everything that everyone can touch and restore the complete elephant.",
+        "Value Commitment",
+        "Today I will give you a glimpse of what the prediction market is. No need to speak complicated financial terms, just like chatting with friends, I will show you how this thing can help you predict the future.",
+        "Core content",
+        "What exactly is the prediction market?",
+        "Simply put, a prediction market is an “exchange for future events.” For example, if someone bets on \"whether A shares will break through 4,000 points next month\", you can bet \"yes\" or \"no\". The final price represents everyone's consensus on the probability of this happening.",
+        "Stop thinking this is gambling. Real players are not betting on luck, but \"selling\" the information they know. If you know that a company is going to release a new product, you can buy a contract in the market that says \"the company's stock price will rise.\" If the information is right, you can make money.",
+        "Predicting market prices is not just guessing, it takes into account the secrets known to everyone.",
+        "Real case: One week before Trump won the election in 2016, the mainstream media was still exaggerating that Hillary was leading, but the prediction market had quietly increased Trump's winning rate from 30% to 55%. By the time the media reacted, Trump had already taken away the presidential throne.",
+        "How to play prediction market?",
+        "For prediction markets to work, there must be four key elements:",
+        "A group of people willing to bet: People from all walks of life must participate so that all the information can be gathered. Clear transaction target: It cannot be ambiguous. For example, \"GDP growth exceeding 5% in 2025\" is a good target. Motivation to make money: You can make money if you guess right, and you can lose money if you guess wrong. Only then will everyone be willing to come up with the real thing. Transparent Rules: All transactions are open to the public and no one can cheat.",
+        "The most powerful thing is not the people, but the mechanism that allows everyone to tell the truth. *",
+        "What can the prediction market do?",
+        "Predicting election results: For the US election and Brexit, the accuracy of prediction markets is 15%-20% higher than polls. For Biden's victory in 2020, the prediction market gave a 90% victory rate three days in advance. Helping companies make decisions: Google uses prediction markets internally to predict new product sales, with an accuracy rate that is 30% higher than that of the marketing department. Microsoft used it to predict technology trends and avoid several strategic mistakes. Predicting industry changes: In the early days of the epidemic, the forecast market reflected the shortage of medical supplies half a month in advance. By the time the government reacted, masks had become a luxury item.Ordinary people watch the news, smart people watch prediction markets.",
+        "The prediction market is not omnipotent",
+        "But one thing to say, this thing is not perfect:",
+        "\\- It is not allowed to be played in some places: In China, it is regarded as gambling and is not allowed to be played openly. So you can only go over the wall and play on foreign platforms.",
+        "\\- There will be insider information: If someone knows in advance that a company is going bankrupt, they can disrupt the market and mess up prices.",
+        "\\- Only simple things can be predicted: For complex issues like \"Will a world war break out next year?\", prediction markets also make wild guesses.",
+        "There is no magic tool that can predict everything, only tools suitable for specific scenarios.",
+        "What will the future of the prediction market be like?",
+        "Blockchain is coming: In the future, the prediction market may be moved to the chain, so that no one can cheat and people all over the world can participate. Regulations will be relaxed: More and more countries realize that this thing is useful, and it may become as legal and compliant as the stock market in the future. Combined with AI: AI processes big data, and the prediction market aggregates human wisdom. The combination of the two may be able to predict more than 95% of things.",
+        "The future prediction market is like giving you a God’s perspective, allowing you to know the outcome in advance.",
+        "Empowerment Ending",
+        "After reading this article, you can try:",
+        "Go to platforms like Prediction Markets and get a feel for how ordinary people predict the future. Think about whether there is anything around you that can be judged by prediction markets, such as whether your favorite team will win the championship. In the future, don’t listen to the experts’ nonsense, first look at what the prediction market has to say.",
+        "Remember, ordinary people gamble based on luck, smart people make money based on information. The prediction market is a powerful tool that turns scattered information into real money. Before making an important decision next time, you might as well see what the market has to say."
+      ]
+    },
+    "contentMarkdown": {
+      "zh": "# 预测市场不是赌博（真正厉害的人用它掌控未来）\n\n## 钩子开场\n\n你有没有过这种经历？专家说今年房价要涨，结果没动静；朋友说某只股票必赚，你买进去就套牢。别再信这些半吊子预测了——真正厉害的人早就靠预测市场把未来拿捏得死死的。\n\n这不是玄学。2008年奥巴马竞选总统时，主流媒体还在讨论候选人支持率，预测市场已经提前5天锁定奥巴马必胜。准确率超过90%，比任何民调都靠谱。\n\n## 痛点共鸣\n\n我以前也觉得这玩意儿是赌博。“用金钱投票”听起来就不靠谱，直到我亲眼看到数据：当你还在刷财经新闻时，预测市场的参与者已经把所有分散的信息聚合成了一个无比精准的预测结果。\n\n为什么我们总被预测误导？因为专家有偏见，调研太滞后，每个人看到的都是局部信息。就像盲人摸象，谁也不知道全貌。但预测市场能把所有人摸到的东西拼起来，还原出完整的大象。\n\n## 价值承诺\n\n今天我就给你扒一扒预测市场到底是什么。不用讲复杂的金融术语，就像跟朋友聊天一样，带你看懂这玩意儿怎么帮你预判未来。\n\n## 核心内容\n\n## 一、预测市场到底是什么？\n\n简单说，预测市场就是一个“未来事件交易所”。比如有人打赌“下个月A股会不会突破4000点”，你可以下注“会”或“不会”。最终价格就代表了所有人对这件事发生概率的共识。\n\n**别再以为这是赌博**。真正的玩家不是在赌运气，而是在“出售”自己知道的信息。你知道某公司要发布新产品，就可以在市场里买入“该公司股价会涨”的合约。如果信息是对的，你就能赚钱。\n\n*预测市场的价格不是瞎猜，而是把所有人知道的秘密都算进去了。*\n\n**真实案例**：2016年特朗普胜选前一周，主流媒体还在渲染希拉里领先，但预测市场已经悄悄把特朗普的胜率从30%拉到了55%。等媒体反应过来时，总统宝座已经被特朗普拿走了。\n\n## 二、预测市场怎么玩？\n\n要让预测市场发挥作用，得有四个关键要素：\n\n1. **一群愿意下注的人**：得有各行各业的人参与，这样才能凑齐所有信息。\n2. **清晰的交易标的**：不能模棱两可，比如“2025年GDP增长超5%”就是个好标的。\n3. **赚钱的动力**：猜对了能赚，猜错了会亏。这样大家才愿意拿出真东西。\n4. **透明的规则**：所有交易公开可查，谁也不能作弊。\n\n*厉害的不是人，是这个让大家说实话的机制。*\n\n## 三、预测市场能干啥？\n\n1. **预判选举结果**：美国大选、英国脱欧，预测市场的准确率比民调高15%-20%。2020年拜登胜选，预测市场提前3天就给出了90%的胜率。\n2. **帮企业做决策**：谷歌内部用预测市场预测新产品销量，准确率比市场部高30%。微软用它预测技术趋势，避免了好几次战略失误。\n3. **预判行业变化**：疫情初期，预测市场就提前半个月反映出医疗物资会短缺。等政府反应过来时，口罩已经涨成了奢侈品。\n\n*普通人看新闻，聪明人看预测市场。*\n\n## 四、预测市场不是万能的\n\n但有一说一，这东西也不是完美的：\n\n\\- **有些地方不让玩**：国内把它当成赌博，不让公开搞。所以你只能翻墙去国外平台玩。\n\n\\- **会有内幕消息**：如果有人提前知道了某公司要破产，就能在市场里砸盘，搞乱价格。\n\n\\- **只能预测简单事**：像“明年会不会爆发世界大战”这种复杂问题，预测市场也瞎猜。\n\n*没有能预测一切的神器，只有适合特定场景的工具。*\n\n## 五、预测市场的未来会咋样？\n\n1. **区块链来了**：以后预测市场可能会搬到链上，这样谁也不能作弊，全世界的人都能参与。\n2. **监管会放松**：越来越多国家意识到这东西有用，以后可能会像股票市场一样合法合规。\n3. **和AI结合**：AI处理大数据，预测市场聚合人的智慧，两者结合说不定能预测95%以上的事情。\n\n*未来的预测市场，就像给你开了上帝视角，让你提前知道结局。*\n\n## 赋权结尾\n\n看完这篇文章，你可以试试：\n\n1. 去Prediction Markets这种平台看看，感受一下普通人怎么预判未来\n2. 想想你身边有没有什么事情可以用预测市场来判断，比如你喜欢的球队会不会夺冠\n3. 以后别再听专家瞎忽悠，先看看预测市场怎么说\n\n记住，普通人靠运气赌博，聪明人靠信息赚钱。预测市场就是把分散的信息变成真金白银的利器。下次再做重要决策前，不妨先看看市场怎么说。",
+      "en": "# Predicting the market is not gambling (really powerful people use it to control the future)\n\n## Hook opening\n\nHave you ever had this experience? Experts say that house prices will rise this year, but there is no movement; a friend says that a certain stock is bound to make money, and if you buy it, you will be locked in. Don’t believe in these half-baked predictions anymore – really good people have already relied on prediction markets to predict the future.\n\nThis is not metaphysics. When Obama ran for president in 2008, the mainstream media were still discussing the candidate's support rate, and the prediction market had already locked in Obama's victory five days in advance. The accuracy rate exceeds 90%, which is more reliable than any poll.\n\n## Pain Point Resonance\n\nI used to think this stuff was gambling. \"Vote with money\" sounded unreliable until I saw the data with my own eyes: when you are still reading financial news, the participants in the prediction market have aggregated all the scattered information into an extremely accurate prediction result.\n\nWhy are we always misled by predictions? Because experts are biased and research is too lagging, everyone sees only partial information. Like a blind man touching an elephant, no one knows the whole picture. But the prediction market can put together everything that everyone can touch and restore the complete elephant.\n\n## Value Commitment\n\nToday I will give you a glimpse of what the prediction market is. No need to speak complicated financial terms, just like chatting with friends, I will show you how this thing can help you predict the future.\n\n## Core content\n\n## 1. What exactly is the prediction market?\n\nSimply put, a prediction market is an “exchange for future events.” For example, if someone bets on \"whether A shares will break through 4,000 points next month\", you can bet \"yes\" or \"no\". The final price represents everyone's consensus on the probability of this happening.\n\n**Stop thinking this is gambling**. Real players are not betting on luck, but \"selling\" the information they know. If you know that a company is going to release a new product, you can buy a contract in the market that says \"the company's stock price will rise.\" If the information is right, you can make money.\n\n*Predicting market prices is not just guessing, it takes into account the secrets known to everyone. *\n\n**Real case**: One week before Trump won the election in 2016, the mainstream media was still exaggerating that Hillary was leading, but the prediction market had quietly increased Trump's winning rate from 30% to 55%. By the time the media reacted, Trump had already taken away the presidential throne.\n\n## 2. How to play prediction market?\n\nFor prediction markets to work, there must be four key elements:\n\n1. **A group of people willing to bet**: People from all walks of life must participate so that all the information can be gathered.\n2. **Clear transaction target**: It cannot be ambiguous. For example, \"GDP growth exceeding 5% in 2025\" is a good target.\n3. **Motivation to make money**: You can make money if you guess right, and you can lose money if you guess wrong. Only then will everyone be willing to come up with the real thing.\n4. **Transparent Rules**: All transactions are open to the public and no one can cheat.\n\nThe most powerful thing is not the people, but the mechanism that allows everyone to tell the truth. *\n\n## 3. What can the prediction market do?\n\n1. **Predicting election results**: For the US election and Brexit, the accuracy of prediction markets is 15%-20% higher than polls. For Biden's victory in 2020, the prediction market gave a 90% victory rate three days in advance.\n2. **Helping companies make decisions**: Google uses prediction markets internally to predict new product sales, with an accuracy rate that is 30% higher than that of the marketing department. Microsoft used it to predict technology trends and avoid several strategic mistakes.\n3. **Predicting industry changes**: In the early days of the epidemic, the forecast market reflected the shortage of medical supplies half a month in advance. By the time the government reacted, masks had become a luxury item.*Ordinary people watch the news, smart people watch prediction markets. *\n\n## 4. The prediction market is not omnipotent\n\nBut one thing to say, this thing is not perfect:\n\n\\- **It is not allowed to be played in some places**: In China, it is regarded as gambling and is not allowed to be played openly. So you can only go over the wall and play on foreign platforms.\n\n\\- **There will be insider information**: If someone knows in advance that a company is going bankrupt, they can disrupt the market and mess up prices.\n\n\\- **Only simple things can be predicted**: For complex issues like \"Will a world war break out next year?\", prediction markets also make wild guesses.\n\n*There is no magic tool that can predict everything, only tools suitable for specific scenarios. *\n\n## 5. What will the future of the prediction market be like?\n\n1. **Blockchain is coming**: In the future, the prediction market may be moved to the chain, so that no one can cheat and people all over the world can participate.\n2. **Regulations will be relaxed**: More and more countries realize that this thing is useful, and it may become as legal and compliant as the stock market in the future.\n3. **Combined with AI**: AI processes big data, and the prediction market aggregates human wisdom. The combination of the two may be able to predict more than 95% of things.\n\n*The future prediction market is like giving you a God’s perspective, allowing you to know the outcome in advance. *\n\n## Empowerment Ending\n\nAfter reading this article, you can try:\n\n1. Go to platforms like Prediction Markets and get a feel for how ordinary people predict the future.\n2. Think about whether there is anything around you that can be judged by prediction markets, such as whether your favorite team will win the championship.\n3. In the future, don’t listen to the experts’ nonsense, first look at what the prediction market has to say.\n\nRemember, ordinary people gamble based on luck, smart people make money based on information. The prediction market is a powerful tool that turns scattered information into real money. Before making an important decision next time, you might as well see what the market has to say."
+    },
+    "source": "blog/content/knowledge/预测市场不是赌博.md"
+  },
+  {
     "id": "kb-md-从猫狗去看什么是去中心化",
     "slug": "从猫狗去看什么是去中心化",
     "page": "./knowledge/generated-从猫狗去看什么是去中心化.html",

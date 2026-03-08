@@ -70,12 +70,14 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/content/knowledge/_template.md` | 文件 | 知识卡 Markdown 模板（含 front matter 示例） |
 | `blog/content/knowledge/.gitkeep` | 文件 | 占位文件，确保目录可被 Git 跟踪 |
 | `blog/content/knowledge/从猫型节点与狗型节点，看人类协作的去中心化模型.md` | 文件 | 说明文档 |
+| `blog/content/knowledge/预测市场不是赌博.md` | 文件 | 说明文档 |
 | `blog/DEPLOY.md` | 文件 | 部署步骤文档 |
 | `blog/index.html` | 文件 | 页面入口（语义结构与区块容器） |
 | `blog/knowledge` | 目录 | 知识全文输出目录，同时支持直接放置 Markdown 源文件 |
 | `blog/knowledge/frontend-performance-check.html` | 文件 | 页面文件 |
 | `blog/knowledge/generated-从猫型节点与狗型节点-看人类协作的去中心化模型.html` | 文件 | 页面文件 |
 | `blog/knowledge/generated-从猫狗去看什么是去中心化.html` | 文件 | 页面文件 |
+| `blog/knowledge/generated-预测市场不是赌博.html` | 文件 | 页面文件 |
 | `blog/knowledge/knowledge-card-naming.html` | 文件 | 页面文件 |
 | `blog/knowledge/ssr-vs-ssg.html` | 文件 | 页面文件 |
 | `blog/knowledge/tech-stack-decision-checklist.html` | 文件 | 页面文件 |
