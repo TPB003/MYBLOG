@@ -72,7 +72,6 @@ TPBLOG 是一个「iOS 风格个人主页 + 知识库 + 文章系统 + 统计看
 | `blog/assets/js/features/effects.js` | 文件 | 视觉动效与交互效果（reveal/tilt/spotlight 等） |
 | `blog/assets/js/features/header.js` | 文件 | 脚本文件 |
 | `blog/assets/js/features/knowledge.js` | 文件 | 知识库搜索、标签筛选与卡片渲染 |
-| `blog/assets/js/features/landing.js` | 文件 | 脚本文件 |
 | `blog/assets/js/features/posts.js` | 文件 | 文章列表渲染与分类筛选 |
 | `blog/assets/js/features/read-metrics.js` | 文件 | 脚本文件 |
 | `blog/assets/js/features/static-sections.js` | 文件 | 静态区块渲染（Hero、话题、统计、书单） |
