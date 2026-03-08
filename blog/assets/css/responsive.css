@@ -1,4 +1,15 @@
 @media (max-width: 1120px) {
+  .launchpad {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-top: 1.4rem;
+  }
+
+  .launchpad-side {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     gap: 0.9rem;
@@ -34,6 +45,10 @@
 }
 
 @media (max-width: 820px) {
+  .launchpad-side {
+    grid-template-columns: 1fr;
+  }
+
   .hero-widgets {
     grid-template-columns: 1fr;
   }
@@ -53,10 +68,17 @@
   }
 
   .hero {
-    margin-top: 6.2rem;
-    padding-top: 1.36rem;
+    margin-top: 0.82rem;
+    padding-top: 1rem;
   }
 
+  .launchpad {
+    margin-top: 6.2rem;
+    padding-top: 1rem;
+    min-height: calc(100svh - 6.8rem);
+  }
+
+  .launchpad-main,
   .hero-panel,
   .widget-card {
     padding: 0.92rem;

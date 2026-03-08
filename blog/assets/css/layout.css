@@ -100,9 +100,14 @@
   min-width: 3.25rem;
 }
 
-.hero {
+.launchpad {
   margin-top: 6.65rem;
-  padding-top: 2.45rem;
+  padding-top: 2.4rem;
+}
+
+.hero {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   gap: 1rem;
