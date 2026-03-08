@@ -7,8 +7,8 @@
   <meta name="description" content="TPBLOG 的 iOS 风格个人主页，支持中英切换与自动日夜主题。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/main.css?v=20260308k">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/main.css?v=20260309b">
 </head>
 <body>
   <div class="aurora-layer" aria-hidden="true"></div>
@@ -33,63 +33,123 @@
 
   <main class="page-shell">
     <section id="landing" class="section launchpad reveal">
-      <article class="launchpad-main card glass-card interactive-tilt">
-        <div class="launchpad-profile">
-          <div class="launchpad-avatar" aria-hidden="true">TP</div>
-          <div class="launchpad-identity">
-            <p class="launchpad-handle">@TPB003</p>
-            <p class="launchpad-label">TPBLOG / iOS Personal Lab</p>
+      <div class="launchpad-shell">
+        <div class="landing-grid">
+          <article class="lz-card lz-tech interactive-tilt" data-lz-stagger="0">
+            <p class="lz-mono">{ }<br>TECH<br>STACK</p>
+            <div class="lz-stack-group">
+              <h3 data-i18n="landing.frontend">Frontend:</h3>
+              <div class="lz-badges">
+                <span>React</span>
+                <span>Next.js</span>
+                <span>Shadcn</span>
+                <span>SCSS</span>
+                <span>Tailwind</span>
+                <span>Framer Motion</span>
+                <span>Recoil</span>
+                <span>TanStack Query</span>
+              </div>
+            </div>
+            <div class="lz-stack-group">
+              <h3 data-i18n="landing.backend">Backend:</h3>
+              <div class="lz-badges">
+                <span>Node.js</span>
+                <span>Hono</span>
+                <span>Express</span>
+                <span>NPM</span>
+              </div>
+            </div>
+            <div class="lz-stack-group">
+              <h3 data-i18n="landing.services">Db & Services:</h3>
+              <div class="lz-badges">
+                <span>Cloudflare</span>
+                <span>Docker</span>
+                <span>Appwrite</span>
+                <span>Supabase</span>
+                <span>Prisma</span>
+                <span>Postman</span>
+                <span>Postgres</span>
+                <span>MongoDB</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="lz-center">
+            <article class="lz-card lz-profile interactive-tilt" data-lz-stagger="1">
+              <div class="lz-profile-top">
+                <div class="lz-profile-user">
+                  <div class="lz-avatar" aria-hidden="true">TP</div>
+                  <div>
+                    <p class="lz-name">TPBLOG.</p>
+                    <p class="lz-handle">@tpb003</p>
+                  </div>
+                </div>
+                <span id="landingPhase" class="lz-phase">DAY</span>
+              </div>
+              <h2 class="lz-build">
+                <span data-i18n="landing.buildPrefix">I build </span>
+                <strong id="landingBuildText">WebApps</strong><span class="lz-caret" aria-hidden="true"></span>
+              </h2>
+              <p class="lz-intro" data-i18n="landing.intro">Hello, I'm TP. I design focused products and long-term knowledge systems.</p>
+              <div class="lz-profile-bottom">
+                <p class="lz-quote" data-i18n="landing.miniQuote">"How do I keep shipping every week?"</p>
+                <div class="lz-status">
+                  <span class="lz-dot" aria-hidden="true"></span>
+                  <span data-i18n="landing.available">Available for work</span>
+                  <time id="landingStatusTime">--</time>
+                </div>
+              </div>
+            </article>
+
+            <article class="lz-card lz-daily interactive-tilt" data-lz-stagger="2">
+              <div class="lz-tool-rail" aria-label="Tools">
+                <span class="lz-tool">VS</span>
+                <span class="lz-tool">N</span>
+                <span class="lz-tool">A</span>
+                <span class="lz-tool">F</span>
+                <span class="lz-tool">C</span>
+              </div>
+              <div class="lz-daily-content">
+                <h3 class="lz-daily-title">DAILY<br><span data-i18n="landing.toolWord">Tool</span><br>STACK.</h3>
+                <div class="lz-wave" aria-hidden="true"></div>
+                <div class="lz-collage">
+                  <article class="lz-tile lz-tile-sky">
+                    <p data-i18n="landing.skyCaption">from NASA · 1999-09-28</p>
+                  </article>
+                  <article class="lz-tile lz-tile-album">
+                    <h4 data-i18n="landing.albumTitle">Fox on the Run</h4>
+                    <p>By: Sweet</p>
+                  </article>
+                  <article class="lz-tile lz-tile-quote">
+                    <p data-i18n="landing.narutoQuote">“I'm gonna be Hokage one day.”</p>
+                  </article>
+                </div>
+              </div>
+            </article>
           </div>
+
+          <aside class="lz-right">
+            <article class="lz-card lz-links interactive-tilt" data-lz-stagger="3">
+              <h3>LIN<br>KS.</h3>
+              <div class="lz-link-grid">
+                <a href="https://github.com/TPB003/MYBLOG" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X">X</a>
+                <a href="mailto:you@example.com" aria-label="Mail">M</a>
+                <a href="#knowledge" aria-label="Knowledge">KB</a>
+                <a href="#books" aria-label="Books">BK</a>
+                <a href="#home" aria-label="Intro">IN</a>
+              </div>
+            </article>
+            <article class="lz-card lz-project interactive-tilt" data-lz-stagger="4">
+              <div class="lz-rings" aria-hidden="true"></div>
+              <p class="lz-project-kicker">PROJECT</p>
+              <h4>TPBLOG<br>CORE</h4>
+              <p class="lz-project-meta" data-i18n="landing.projectMeta">In Build</p>
+            </article>
+          </aside>
         </div>
-        <p class="launchpad-kicker" data-i18n="landing.kicker">INSPIRED ENTRY</p>
-        <h1 class="launchpad-title" data-i18n="landing.title">I build calm digital systems.</h1>
-        <p class="launchpad-subtitle" data-i18n="landing.subtitle">Inspired by zzzzshawn.cloud, this top area merges profile, stack, and current focus.</p>
-
-        <blockquote class="launchpad-quote">
-          <p data-i18n="landing.quote">Build things people want, then keep refining with focus.</p>
-          <cite>Paul Graham · Adapted</cite>
-        </blockquote>
-
-        <div class="launchpad-chips">
-          <span class="glass-pill" data-i18n="landing.statusA">Available for collaboration</span>
-          <span class="glass-pill" data-i18n="landing.statusB">Based in China / Global Remote</span>
-          <span class="glass-pill" data-i18n="landing.statusC">Shipping weekly</span>
-        </div>
-
-        <div class="hero-actions launchpad-actions">
-          <a class="action-pill action-primary" href="#home" data-i18n="landing.enter">Enter Dashboard</a>
-          <a class="action-pill action-ghost" href="#knowledge" data-i18n="landing.knowledge">Open Knowledge Base</a>
-        </div>
-        <p class="launchpad-scroll" data-i18n="landing.scrollHint">Scroll down for the full site ↓</p>
-      </article>
-
-      <aside class="launchpad-side">
-        <article class="launchpad-panel card glass-card reveal">
-          <p class="widget-label" data-i18n="landing.techTitle">Tech Stack</p>
-          <ul class="launchpad-list">
-            <li>HTML / CSS / JavaScript</li>
-            <li>Node.js content pipeline</li>
-            <li>GitHub Pages + Actions</li>
-            <li>Bilingual i18n architecture</li>
-          </ul>
-        </article>
-        <article class="launchpad-panel card glass-card reveal">
-          <p class="widget-label" data-i18n="landing.dailyTitle">Daily Stack</p>
-          <ul class="launchpad-list">
-            <li data-i18n="landing.dailyA">Long-form writing + knowledge cards</li>
-            <li data-i18n="landing.dailyB">Code shipping and visual polish</li>
-            <li data-i18n="landing.dailyC">Reading and weekly review</li>
-          </ul>
-        </article>
-        <article class="launchpad-panel card glass-card reveal">
-          <p class="widget-label" data-i18n="landing.linksTitle">Links</p>
-          <div class="launchpad-links">
-            <a class="launchpad-link" href="https://github.com/TPB003/MYBLOG" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="launchpad-link" href="#books" data-i18n="landing.linkBooks">Reading List</a>
-            <a class="launchpad-link" href="#knowledge" data-i18n="landing.linkKnowledge">Knowledge</a>
-          </div>
-        </article>
-      </aside>
+      </div>
+      <p class="launchpad-scroll" data-i18n="landing.scrollHint">Scroll down for full content ↓</p>
     </section>
 
     <section id="home" class="section hero reveal">
@@ -209,6 +269,6 @@
     </div>
   </footer>
 
-  <script type="module" src="./assets/js/main.js?v=20260308k"></script>
+  <script type="module" src="./assets/js/main.js?v=20260309b"></script>
 </body>
 </html>

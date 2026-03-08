@@ -1,165 +1,635 @@
 .launchpad {
-  min-height: calc(100vh - 7.4rem);
+  min-height: calc(100vh - 7rem);
   display: grid;
-  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
-  gap: 1rem;
-  align-items: stretch;
-}
-
-.launchpad-main {
-  padding: 1.18rem;
-  display: grid;
-  gap: 0.78rem;
   align-content: start;
+  gap: 0.95rem;
+  position: relative;
+}
+
+.launchpad-shell {
+  position: relative;
+  --lz-mx: 50%;
+  --lz-my: 45%;
+  border-radius: 1.4rem;
+  border: 1px solid rgba(141, 164, 208, 0.18);
   background:
-    radial-gradient(120% 140% at 90% 10%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%),
-    radial-gradient(130% 140% at 8% 86%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 60%),
-    var(--glass-bg);
+    radial-gradient(120% 90% at 0% -10%, rgba(65, 105, 196, 0.18), transparent 58%),
+    radial-gradient(90% 110% at 100% 0%, rgba(54, 212, 255, 0.11), transparent 52%),
+    linear-gradient(180deg, #05070d 0%, #04060c 52%, #03050b 100%);
+  box-shadow:
+    0 0 0 1px rgba(125, 160, 214, 0.08) inset,
+    0 30px 60px rgba(2, 6, 16, 0.56);
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.launchpad-profile {
-  display: flex;
-  align-items: center;
-  gap: 0.72rem;
+.launchpad-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(194, 212, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(194, 212, 248, 0.06) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.46), transparent 84%);
+  pointer-events: none;
 }
 
-.launchpad-avatar {
-  width: 2.6rem;
-  height: 2.6rem;
+.launchpad-shell::after {
+  content: "";
+  position: absolute;
+  inset: -30% -35% auto auto;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line-strong));
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 64%, #fff), color-mix(in srgb, var(--accent-2) 52%, #fff));
-  color: #f9fcff;
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  background: radial-gradient(circle, rgba(127, 195, 255, 0.16), transparent 68%);
+  filter: blur(22px);
+  animation: lzHaloMove 9s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
-.launchpad-identity {
+.landing-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 0.08rem;
+  grid-template-columns: minmax(230px, 0.9fr) minmax(470px, 1.85fr) minmax(220px, 0.88fr);
+  gap: 0.9rem;
+  align-items: stretch;
+  padding: 1rem;
 }
 
-.launchpad-handle,
-.launchpad-label {
+.landing-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(280px 220px at var(--lz-mx) var(--lz-my), rgba(132, 189, 255, 0.16), transparent 74%);
+  transition: background-position 0.18s linear;
+}
+
+.landing-grid > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lz-card {
+  position: relative;
+  border: 1px solid rgba(232, 241, 255, 0.11);
+  border-radius: 1.1rem;
+  background:
+    linear-gradient(185deg, rgba(8, 12, 24, 0.94), rgba(6, 9, 20, 0.95)),
+    radial-gradient(130% 130% at 12% 8%, rgba(107, 165, 255, 0.17), transparent 54%);
+  box-shadow:
+    0 0 0 1px rgba(160, 191, 247, 0.08) inset,
+    0 18px 40px rgba(3, 8, 20, 0.5);
+  color: #f2f7ff;
+  opacity: 0;
+  transform: translateY(24px) scale(0.984);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.lz-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.09) 50%, transparent 80%);
+  transform: translateX(-115%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lz-card.is-live {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.lz-card[data-lz-stagger="0"] {
+  transition-delay: 0.04s;
+}
+
+.lz-card[data-lz-stagger="1"] {
+  transition-delay: 0.14s;
+}
+
+.lz-card[data-lz-stagger="2"] {
+  transition-delay: 0.24s;
+}
+
+.lz-card[data-lz-stagger="3"] {
+  transition-delay: 0.34s;
+}
+
+.lz-card[data-lz-stagger="4"] {
+  transition-delay: 0.44s;
+}
+
+.lz-card:hover {
+  border-color: rgba(166, 207, 255, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(170, 207, 255, 0.16) inset,
+    0 22px 46px rgba(4, 12, 30, 0.62);
+}
+
+.lz-card:hover::after {
+  animation: lzSweep 0.85s ease;
+}
+
+.lz-tech {
+  min-height: 42.2rem;
+  padding: 0.95rem 0.9rem;
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+}
+
+.lz-mono {
   margin: 0;
+  line-height: 0.93;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: clamp(2.2rem, 4.9vw, 3.35rem);
+  letter-spacing: 0.025em;
+  text-shadow: 0 2px 14px rgba(145, 194, 255, 0.16);
 }
 
-.launchpad-handle {
-  font-family: var(--font-display);
+.lz-stack-group h3 {
+  margin: 0 0 0.44rem;
+  color: #d9e2f6;
+  font-size: 0.79rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
 }
 
-.launchpad-label {
-  color: var(--text-soft);
-  font-size: 0.84rem;
-}
-
-.launchpad-kicker {
-  margin: 0.16rem 0 0;
-  font-family: var(--font-display);
-  font-size: 0.76rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--accent) 75%, var(--text-soft));
-}
-
-.launchpad-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4.8vw, 2.44rem);
-  line-height: 1.15;
-}
-
-.launchpad-subtitle {
-  margin: 0;
-  color: var(--text-soft);
-  line-height: 1.72;
-}
-
-.launchpad-quote {
-  margin: 0.18rem 0 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 0.72rem 0.76rem;
-  background: color-mix(in srgb, var(--card-solid) 72%, transparent);
-}
-
-.launchpad-quote p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.62;
-}
-
-.launchpad-quote cite {
-  margin-top: 0.44rem;
-  display: block;
-  color: var(--text-soft);
-  font-size: 0.78rem;
-  font-style: normal;
-}
-
-.launchpad-chips {
+.lz-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.48rem;
-}
-
-.launchpad-actions {
-  margin-top: 0.12rem;
-}
-
-.launchpad-scroll {
-  margin: 0.1rem 0 0;
-  color: color-mix(in srgb, var(--text-soft) 88%, var(--accent));
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  animation: launchpadNudge 2.2s ease-in-out infinite;
-}
-
-.launchpad-side {
-  display: grid;
-  grid-template-rows: 1fr 1fr auto;
-  gap: 0.78rem;
-}
-
-.launchpad-panel {
-  padding: 0.92rem;
-}
-
-.launchpad-list {
-  margin: 0.58rem 0 0;
-  padding-left: 0.98rem;
-  display: grid;
   gap: 0.34rem;
-  color: var(--text-soft);
+}
+
+.lz-badges span {
+  border-radius: 999px;
+  border: 1px solid rgba(236, 241, 255, 0.16);
+  background: rgba(255, 255, 255, 0.045);
+  padding: 0.2rem 0.56rem;
+  font-size: 0.74rem;
+  color: #b8c5e0;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.lz-badges span:hover {
+  transform: translateY(-1px);
+  color: #ecf5ff;
+  border-color: rgba(163, 209, 255, 0.52);
+}
+
+.lz-center {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.9rem;
+}
+
+.lz-profile {
+  padding: 0.92rem;
+  display: grid;
+  gap: 0.68rem;
+}
+
+.lz-profile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.lz-profile-user {
+  display: flex;
+  align-items: center;
+  gap: 0.58rem;
+}
+
+.lz-avatar {
+  width: 2.72rem;
+  height: 2.72rem;
+  border-radius: 0.95rem;
+  display: grid;
+  place-items: center;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-weight: 700;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.28), transparent 44%),
+    linear-gradient(140deg, #3b466a, #161d33);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(1, 4, 12, 0.5);
+}
+
+.lz-name,
+.lz-handle {
+  margin: 0;
+}
+
+.lz-name {
+  font-size: 1.07rem;
+  font-weight: 700;
+}
+
+.lz-handle {
+  color: #8a97b6;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: 0.86rem;
+}
+
+.lz-phase {
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: 0.82rem;
+  color: #f4f8ff;
+  opacity: 0.94;
+}
+
+.lz-build {
+  margin: 0.1rem 0 0;
+  font-size: clamp(1.28rem, 2.65vw, 2.06rem);
+  line-height: 1.08;
+  font-weight: 700;
+}
+
+.lz-build strong {
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-weight: 700;
+  text-shadow: 0 2px 16px rgba(162, 201, 255, 0.22);
+}
+
+.lz-caret {
+  margin-left: 0.08rem;
+  display: inline-block;
+  width: 0.62ch;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  animation: lzCaretBlink 1s step-start infinite;
+}
+
+.lz-caret::before {
+  content: "_";
+}
+
+.lz-intro {
+  margin: 0;
+  color: #cad5eb;
   line-height: 1.58;
 }
 
-.launchpad-links {
-  margin-top: 0.58rem;
+.lz-profile-bottom {
+  margin-top: 0.36rem;
   display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  gap: 0.46rem;
 }
 
-.launchpad-link {
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, var(--glass-bg) 84%, transparent);
-  padding: 0.3rem 0.66rem;
-  text-decoration: none;
+.lz-quote {
+  margin: 0;
+  color: #92a0bf;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
   font-size: 0.8rem;
 }
 
-.launchpad-link:hover {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--line-strong));
+.lz-status {
+  display: grid;
+  gap: 0.12rem;
+  color: #b6c4e2;
+  font-size: 0.76rem;
 }
 
-@keyframes launchpadNudge {
+.lz-status span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+}
+
+.lz-status time {
+  color: #8291b1;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+}
+
+.lz-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #21d354;
+  box-shadow: 0 0 0 rgba(33, 211, 84, 0.6);
+  animation: lzDotPulse 2s infinite;
+}
+
+.lz-daily {
+  padding: 0.92rem;
+  display: grid;
+  grid-template-columns: 3.7rem minmax(0, 1fr);
+  gap: 0.8rem;
+}
+
+.lz-tool-rail {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.45rem 0.34rem;
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.lz-tool {
+  width: 2.22rem;
+  height: 2.22rem;
+  border-radius: 0.82rem;
+  border: 1px solid rgba(245, 247, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  color: #eef5ff;
+  font-size: 0.86rem;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-weight: 700;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.lz-tool:nth-child(1) {
+  background: linear-gradient(140deg, rgba(57, 148, 255, 0.34), rgba(70, 93, 255, 0.3));
+}
+
+.lz-tool:nth-child(2) {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.16), rgba(182, 199, 243, 0.12));
+}
+
+.lz-tool:nth-child(3) {
+  background: linear-gradient(140deg, rgba(255, 179, 90, 0.34), rgba(255, 122, 74, 0.2));
+}
+
+.lz-tool:nth-child(4) {
+  background: linear-gradient(140deg, rgba(124, 255, 180, 0.3), rgba(35, 168, 95, 0.26));
+}
+
+.lz-tool:nth-child(5) {
+  background: linear-gradient(140deg, rgba(245, 164, 255, 0.32), rgba(188, 118, 247, 0.2));
+}
+
+.lz-tool:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.lz-tool.is-ping {
+  border-color: rgba(184, 223, 255, 0.72);
+  box-shadow: 0 0 0 2px rgba(136, 199, 255, 0.16) inset, 0 0 0.72rem rgba(125, 193, 255, 0.35);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.lz-daily-content {
+  display: grid;
+  gap: 0.58rem;
+}
+
+.lz-daily-title {
+  margin: 0;
+  line-height: 0.91;
+  font-size: clamp(1.25rem, 3.85vw, 2.36rem);
+  font-weight: 700;
+}
+
+.lz-daily-title span {
+  font-weight: 500;
+}
+
+.lz-wave {
+  height: 3.65rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    radial-gradient(66% 78% at 20% 20%, rgba(72, 154, 255, 0.84), rgba(72, 154, 255, 0)),
+    radial-gradient(80% 90% at 85% 50%, rgba(30, 102, 255, 0.86), rgba(30, 102, 255, 0)),
+    linear-gradient(160deg, rgba(16, 85, 196, 0.97), rgba(18, 54, 120, 0.97));
+  position: relative;
+  overflow: hidden;
+}
+
+.lz-wave::before {
+  content: "";
+  position: absolute;
+  inset: auto -30% -54% -30%;
+  height: 96%;
+  background: radial-gradient(70% 100% at 45% 0%, rgba(130, 198, 255, 0.36), transparent 72%);
+  animation: lzWaveDrift 4.7s ease-in-out infinite alternate;
+}
+
+.lz-wave::after {
+  content: "";
+  position: absolute;
+  inset: -30% -15%;
+  background: radial-gradient(circle, rgba(230, 243, 255, 0.2), transparent 55%);
+  animation: lzWaveGlow 3.6s ease-in-out infinite alternate;
+}
+
+.lz-collage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  gap: 0.56rem;
+}
+
+.lz-tile {
+  border-radius: 0.86rem;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  overflow: hidden;
+  position: relative;
+  padding: 0.62rem;
+}
+
+.lz-tile-sky {
+  min-height: 8.9rem;
+  background:
+    radial-gradient(circle at 18% 22%, #ffd95d 0 0.16rem, transparent 0.25rem),
+    radial-gradient(circle at 75% 35%, #ffe77b 0 0.13rem, transparent 0.23rem),
+    radial-gradient(circle at 48% 66%, #fff8ca 0 0.09rem, transparent 0.18rem),
+    radial-gradient(circle at 34% 54%, #b8c6ff 0 0.1rem, transparent 0.2rem),
+    radial-gradient(circle at 84% 78%, #fff7bb 0 0.1rem, transparent 0.18rem),
+    linear-gradient(150deg, #010a35, #091e70 42%, #04134f);
+}
+
+.lz-tile-sky::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0 0.08rem, transparent 0.2rem) 0 0 / 2rem 2rem;
+  animation: lzStarShift 12s linear infinite;
+}
+
+.lz-tile-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 54% 58%, rgba(255, 231, 124, 0.9) 0 0.15rem, rgba(255, 231, 124, 0) 0.28rem);
+  animation: lzStarBlink 1.6s ease-in-out infinite;
+}
+
+.lz-tile-sky p {
+  margin: 0;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.35rem;
+  color: rgba(228, 237, 255, 0.82);
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: 0.7rem;
+  z-index: 1;
+}
+
+.lz-tile-album {
+  min-height: 8.9rem;
+  background:
+    linear-gradient(130deg, rgba(255, 35, 29, 0.75), rgba(255, 176, 35, 0.64)),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 0.32rem, transparent 0.32rem 0.64rem);
+}
+
+.lz-tile-album h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1.34rem;
+  line-height: 0.95;
+}
+
+.lz-tile-album p {
+  margin: 0;
+  color: rgba(255, 243, 214, 0.86);
+  font-size: 0.76rem;
+}
+
+.lz-tile-quote {
+  min-height: 8.9rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 238, 170, 0.24), transparent 38%),
+    linear-gradient(150deg, #233a62, #152843 58%, #0f1d34);
+}
+
+.lz-tile-quote p {
+  margin: 0;
+  max-width: 13ch;
+  color: #f4f8ff;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.38;
+}
+
+.lz-right {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.9rem;
+}
+
+.lz-links {
+  min-height: 10.7rem;
+  padding: 0.88rem;
+}
+
+.lz-links h3 {
+  margin: 0 0 0.56rem;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: clamp(1.66rem, 3.2vw, 2.84rem);
+  line-height: 0.84;
+}
+
+.lz-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.52rem;
+}
+
+.lz-link-grid a {
+  border-radius: 0.86rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  min-height: 2.9rem;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: #f0f5ff;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.lz-link-grid a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(147, 196, 255, 0.72);
+  background: rgba(112, 165, 255, 0.15);
+}
+
+.lz-project {
+  position: relative;
+  overflow: hidden;
+  min-height: 18.9rem;
+  padding: 0.92rem;
+  display: grid;
+  align-content: start;
+  gap: 0.22rem;
+  background:
+    radial-gradient(120% 120% at 20% 0%, rgba(220, 167, 255, 0.8), rgba(176, 125, 255, 0.84)),
+    linear-gradient(150deg, #dcb9ff, #af7fff);
+  color: #1f1530;
+}
+
+.lz-rings {
+  position: absolute;
+  inset: -34% -16% auto -16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.33);
+  box-shadow:
+    0 0 0 2.2rem rgba(255, 255, 255, 0.2),
+    0 0 0 4.4rem rgba(255, 255, 255, 0.13);
+  animation: lzRingSpin 13s linear infinite;
+}
+
+.lz-project-kicker {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  letter-spacing: 0.08em;
+}
+
+.lz-project h4 {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  font-family: "Space Mono", "Cascadia Mono", monospace;
+  font-size: clamp(1.7rem, 4vw, 2.56rem);
+  line-height: 0.86;
+}
+
+.lz-project-meta {
+  margin-top: auto;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.launchpad-scroll {
+  margin: 0;
+  text-align: center;
+  color: color-mix(in srgb, var(--text-soft) 88%, var(--accent));
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  animation: lzNudge 2.2s ease-in-out infinite;
+}
+
+@keyframes lzNudge {
   0%, 100% {
     transform: translateY(0);
     opacity: 0.95;
@@ -167,6 +637,99 @@
   50% {
     transform: translateY(4px);
     opacity: 0.78;
+  }
+}
+
+@keyframes lzDotPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(33, 211, 84, 0.66);
+  }
+  75% {
+    box-shadow: 0 0 0 0.45rem rgba(33, 211, 84, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(33, 211, 84, 0);
+  }
+}
+
+@keyframes lzStarShift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(2.2rem, -1.7rem, 0);
+  }
+}
+
+@keyframes lzWaveDrift {
+  from {
+    transform: translateX(-6%);
+  }
+  to {
+    transform: translateX(6%);
+  }
+}
+
+@keyframes lzWaveGlow {
+  from {
+    opacity: 0.35;
+    transform: translate3d(-6%, 0, 0);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate3d(6%, 0, 0);
+  }
+}
+
+@keyframes lzStarBlink {
+  0%, 100% {
+    opacity: 0.24;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes lzRingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lzHaloMove {
+  from {
+    transform: translate3d(8%, -4%, 0);
+  }
+  to {
+    transform: translate3d(-6%, 6%, 0);
+  }
+}
+
+@keyframes lzSweep {
+  from {
+    transform: translateX(-115%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(115%);
+    opacity: 0;
+  }
+}
+
+@keyframes lzCaretBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
   }
 }
 
