@@ -1,4 +1,5 @@
-import { posts } from "../data/content.js";
+﻿import { posts } from "../data/content.js";
+import { books } from "../data/books-index.js";
 import { knowledgeCards } from "../data/knowledge-index.js";
 import { STORAGE_KEYS } from "../core/store.js";
 import { safeParseJSON } from "../core/utils.js";
@@ -9,11 +10,13 @@ const COUNT_API_BASE = "https://api.countapi.xyz";
 const TOTAL_KEY = "knowledge_reads_total_v2";
 const KNOWLEDGE_PREFIX = "knowledge_read_";
 const POST_PREFIX = "post_read_";
+const BOOK_PREFIX = "book_read_";
 
 const state = {
   total: 0,
   knowledge: {},
-  posts: {}
+  posts: {},
+  books: {}
 };
 
 let initialized = false;
@@ -41,10 +44,15 @@ function postKey(postId) {
   return `${POST_PREFIX}${postId}`;
 }
 
+function bookKey(bookId) {
+  return `${BOOK_PREFIX}${bookId}`;
+}
+
 function ensureBaseState() {
   state.total = 0;
   state.knowledge = {};
   state.posts = {};
+  state.books = {};
 }
 
 function ensureCatalogState() {
@@ -64,6 +72,14 @@ function ensureCatalogState() {
     }
   });
 
+  books.forEach((book) => {
+    if (!book?.id) return;
+    if (!Object.prototype.hasOwnProperty.call(state.books, book.id)) {
+      state.books[book.id] = 0;
+      changed = true;
+    }
+  });
+
   return changed;
 }
 
@@ -72,7 +88,8 @@ function emit() {
     listener({
       total: state.total,
       knowledge: { ...state.knowledge },
-      posts: { ...state.posts }
+      posts: { ...state.posts },
+      books: { ...state.books }
     });
   });
 }
@@ -85,6 +102,7 @@ function saveLocalSnapshot() {
         total: state.total,
         knowledge: state.knowledge,
         posts: state.posts,
+        books: state.books,
         updatedAt: Date.now()
       })
     );
@@ -128,6 +146,19 @@ function applySnapshot(snapshot, options = {}) {
     const normalized = Math.max(0, Math.floor(nextValue));
     if (normalized > state.posts[post.id]) {
       state.posts[post.id] = normalized;
+      changed = true;
+    }
+  });
+
+  books.forEach((book) => {
+    if (!book?.id) return;
+    const raw = snapshot.books && snapshot.books[book.id];
+    const nextValue = Number(raw);
+    if (!Number.isFinite(nextValue)) return;
+
+    const normalized = Math.max(0, Math.floor(nextValue));
+    if (normalized > state.books[book.id]) {
+      state.books[book.id] = normalized;
       changed = true;
     }
   });
@@ -192,10 +223,14 @@ export async function refreshReadMetrics() {
   posts.forEach((post) => {
     requests.push(fetchRemoteCount(postKey(post.id)));
   });
+  books.forEach((book) => {
+    if (!book?.id) return;
+    requests.push(fetchRemoteCount(bookKey(book.id)));
+  });
 
   const results = await Promise.all(requests);
   const [totalValue, ...allValues] = results;
-  const snapshot = { total: totalValue, knowledge: {}, posts: {} };
+  const snapshot = { total: totalValue, knowledge: {}, posts: {}, books: {} };
 
   knowledgeCards.forEach((card, index) => {
     snapshot.knowledge[card.id] = allValues[index];
@@ -204,6 +239,12 @@ export async function refreshReadMetrics() {
   const postStartIndex = knowledgeCards.length;
   posts.forEach((post, index) => {
     snapshot.posts[post.id] = allValues[postStartIndex + index];
+  });
+
+  const bookStartIndex = knowledgeCards.length + posts.length;
+  books.forEach((book, index) => {
+    if (!book?.id) return;
+    snapshot.books[book.id] = allValues[bookStartIndex + index];
   });
 
   applySnapshot(snapshot);
@@ -219,6 +260,10 @@ export function getKnowledgeReads(cardId) {
 
 export function getPostReads(postId) {
   return state.posts[postId] || 0;
+}
+
+export function getBookReads(bookId) {
+  return state.books[bookId] || 0;
 }
 
 export function formatReadCount(value, locale) {
@@ -266,6 +311,24 @@ export function recordPostRead(postId) {
   });
 }
 
+export function recordBookRead(bookId) {
+  if (!bookId || !Object.prototype.hasOwnProperty.call(state.books, bookId)) return;
+
+  state.books[bookId] += 1;
+  state.total += 1;
+  saveLocalSnapshot();
+  emit();
+
+  Promise.all([hitRemoteCount(bookKey(bookId)), hitRemoteCount(TOTAL_KEY)]).then(([bookValue, totalValue]) => {
+    applySnapshot({
+      total: totalValue,
+      books: {
+        [bookId]: bookValue
+      }
+    });
+  });
+}
+
 export function initReadMetrics(options = {}) {
   if (initialized) return;
   initialized = true;
@@ -289,3 +352,4 @@ export function syncReadMetricCatalog() {
     emit();
   }
 }
+

@@ -190,6 +190,37 @@
   font-size: 0.84rem;
 }
 
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.82rem;
+}
+
+.now-card {
+  padding: 0.92rem;
+  display: grid;
+  gap: 0.44rem;
+}
+
+.now-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--accent) 74%, var(--text-soft));
+}
+
+.now-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-family: var(--font-display);
+}
+
+.now-card p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.64;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -612,19 +643,90 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
-  padding: 0.9rem;
-  min-height: 170px;
+  padding: 0.7rem;
+  min-height: 230px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.62rem;
+}
+
+.book-cover {
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: 0.78rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.book-cover.placeholder {
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: color-mix(in srgb, var(--accent) 82%, var(--text));
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.book-body {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.book-author {
+  margin: 0;
+  font-size: 0.74rem;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text-soft));
+  letter-spacing: 0.03em;
 }
 
 .book-card h4 {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
+  line-height: 1.44;
 }
 
 .book-card p {
-  margin: 0.56rem 0 0;
+  margin: 0;
   color: var(--text-soft);
-  line-height: 1.68;
+  line-height: 1.62;
+}
+
+.book-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: var(--text-soft);
+}
+
+.book-open {
+  margin-left: auto;
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: color-mix(in srgb, var(--accent) 82%, var(--text));
+  padding: 0.22rem 0.56rem;
+  font-size: 0.72rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.book-open:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
 }
 
 .post-modal {

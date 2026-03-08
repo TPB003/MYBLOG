@@ -45,3 +45,4 @@ export function isLocale(value) {
 export function toLocaleCode(locale) {
   return locale === "zh" ? "zh-CN" : "en-US";
 }
+

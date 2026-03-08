@@ -87,6 +87,9 @@ fi
 echo ">> generating knowledge cards from markdown"
 node scripts/generate-knowledge-from-md.mjs
 
+echo ">> generating books from markdown"
+node scripts/generate-books-from-md.mjs
+
 run_git add blog .github/workflows/deploy-pages.yml
 
 if git diff --cached --quiet; then

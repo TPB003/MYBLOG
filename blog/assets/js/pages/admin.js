@@ -9,8 +9,10 @@
 
 const LOCALE_KEY = "tpblog_locale_v2";
 const AUTH_HASH_KEY = "tpblog_admin_password_hash_v1";
+const AUTH_CREDENTIALS_KEY = "tpblog_admin_credentials_v2";
 const AUTH_SESSION_KEY = "tpblog_admin_session_v1";
 const AUTH_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+const DEFAULT_ADMIN_USERNAME = "tpblog";
 const DEFAULT_PASSWORD_HASH = "99866652be121723b1bb47b910656eb4f1a6c4d65f502107571f4eda38708fff"; // TPBLOG@2026
 const DEFAULT_PASSWORD_TEXT = "TPBLOG@2026";
 const ADMIN_ENTRY_HASH = "#tp-9031";
@@ -22,7 +24,6 @@ const POST_SIZES = ["large", "medium", "small", "wide"];
 const SECTION_FIELDS = [
   { key: "home", zh: "主页", en: "Home" },
   { key: "intro", zh: "介绍", en: "Intro" },
-  { key: "posts", zh: "文章", en: "Posts" },
   { key: "knowledge", zh: "知识库", en: "Knowledge" },
   { key: "stats", zh: "统计", en: "Stats" },
   { key: "books", zh: "书单", en: "Books" },
@@ -33,12 +34,13 @@ const copy = {
   zh: {
     metaTitle: "TPBLOG | 管理控制台",
     authTitle: "管理员登录",
-    authSub: "请输入管理员口令以进入控制台。",
+    authSub: "请输入管理员用户名与口令以进入控制台。",
+    authUsernameLabel: "用户名",
     authPasswordLabel: "口令",
     authSubmit: "登录",
     authResetDefault: "忘记密码，恢复默认",
-    authFailed: "口令错误，请重试。",
-    authResetDone: "已恢复默认密码，请用 TPBLOG@2026 登录。",
+    authFailed: "用户名或口令错误，请重试。",
+    authResetDone: "已恢复默认账号：{username} / TPBLOG@2026",
     headerTitle: "管理员控制台",
     headerSub: "图形化控制首页模块与内容。",
     backHome: "返回主页",
@@ -118,12 +120,13 @@ const copy = {
   en: {
     metaTitle: "TPBLOG | Admin Console",
     authTitle: "Admin Login",
-    authSub: "Enter admin password to unlock this dashboard.",
+    authSub: "Enter admin username and password to unlock this dashboard.",
+    authUsernameLabel: "Username",
     authPasswordLabel: "Password",
     authSubmit: "Sign In",
     authResetDefault: "Reset to Default Password",
-    authFailed: "Wrong password. Please try again.",
-    authResetDone: "Password reset to default. Sign in with TPBLOG@2026.",
+    authFailed: "Wrong username or password. Please try again.",
+    authResetDone: "Default credentials restored: {username} / TPBLOG@2026",
     headerTitle: "Admin Console",
     headerSub: "Visually manage homepage modules and content.",
     backHome: "Back Home",
@@ -205,6 +208,7 @@ const copy = {
 const el = {
   authGate: document.getElementById("authGate"),
   authForm: document.getElementById("authForm"),
+  authUsername: document.getElementById("authUsername"),
   authPassword: document.getElementById("authPassword"),
   authResetDefaultBtn: document.getElementById("authResetDefaultBtn"),
   authMessage: document.getElementById("authMessage"),
@@ -384,10 +388,19 @@ function normalizeData(data) {
     next.knowledgeTagLabels[key] = normalizeTextPair(labels[key], key);
   });
 
-  next.books = Array.isArray(source.books) ? source.books.map((book) => {
+  next.books = Array.isArray(source.books) ? source.books.map((book, index) => {
     const b = book && typeof book === "object" ? deepClone(book) : {};
+    b.id = String(b.id || `book-${Date.now()}-${index}`);
+    b.slug = String(b.slug || b.id);
+    b.page = String(b.page || `./books/generated-${b.slug}.html`);
+    b.cover = String(b.cover || "");
+    b.updated = String(b.updated || new Date().toISOString().slice(0, 10));
+    b.reading = normalizeTextPair(b.reading, "8 min read");
+    b.author = normalizeTextPair(b.author, "");
     b.title = normalizeTextPair(b.title, "Book");
     b.summary = normalizeTextPair(b.summary, "");
+    b.content = normalizeLinesPair(b.content);
+    b.contentMarkdown = normalizeTextPair(b.contentMarkdown, "");
     return b;
   }) : [];
 
@@ -576,6 +589,23 @@ function renderBooks() {
   el.booksList.innerHTML = state.data.books.map((book, index) => `
     <article class="entity-card">
       <div class="entity-head"><strong>Book #${index + 1}</strong><button class="admin-btn danger" type="button" data-action="remove-book" data-index="${index}">${escapeHTML(t("remove"))}</button></div>
+      <div class="entity-grid">
+        <label class="input-field"><span>ID</span><input data-entity="books" data-index="${index}" data-field="id" value="${escapeHTML(book.id || "")}"></label>
+        <label class="input-field"><span>Slug</span><input data-entity="books" data-index="${index}" data-field="slug" value="${escapeHTML(book.slug || "")}"></label>
+        <label class="input-field"><span>Updated</span><input type="date" data-entity="books" data-index="${index}" data-field="updated" value="${escapeHTML(book.updated || "")}"></label>
+      </div>
+      <div class="entity-grid two-col">
+        <label class="input-field"><span>Page</span><input data-entity="books" data-index="${index}" data-field="page" value="${escapeHTML(book.page || "")}"></label>
+        <label class="input-field"><span>Cover URL</span><input data-entity="books" data-index="${index}" data-field="cover" value="${escapeHTML(book.cover || "")}"></label>
+      </div>
+      <div class="entity-grid two-col">
+        <label class="input-field"><span>Author ZH</span><input data-entity="books" data-index="${index}" data-field="author.zh" value="${escapeHTML(book.author?.zh || "")}"></label>
+        <label class="input-field"><span>Author EN</span><input data-entity="books" data-index="${index}" data-field="author.en" value="${escapeHTML(book.author?.en || "")}"></label>
+      </div>
+      <div class="entity-grid two-col">
+        <label class="input-field"><span>Reading ZH</span><input data-entity="books" data-index="${index}" data-field="reading.zh" value="${escapeHTML(book.reading?.zh || "")}"></label>
+        <label class="input-field"><span>Reading EN</span><input data-entity="books" data-index="${index}" data-field="reading.en" value="${escapeHTML(book.reading?.en || "")}"></label>
+      </div>
       <div class="entity-grid two-col">
         <label class="input-field"><span>Title ZH</span><input data-entity="books" data-index="${index}" data-field="title.zh" value="${escapeHTML(book.title.zh)}"></label>
         <label class="input-field"><span>Title EN</span><input data-entity="books" data-index="${index}" data-field="title.en" value="${escapeHTML(book.title.en)}"></label>
@@ -583,6 +613,10 @@ function renderBooks() {
       <div class="entity-grid two-col">
         <label class="input-field"><span>Summary ZH</span><textarea data-entity="books" data-index="${index}" data-field="summary.zh">${escapeHTML(book.summary.zh)}</textarea></label>
         <label class="input-field"><span>Summary EN</span><textarea data-entity="books" data-index="${index}" data-field="summary.en">${escapeHTML(book.summary.en)}</textarea></label>
+      </div>
+      <div class="entity-grid two-col">
+        <label class="input-field"><span>Content ZH (line split)</span><textarea data-entity="books" data-index="${index}" data-field="content.zh" data-type="lines">${escapeHTML(arrayToLines(book.content?.zh || []))}</textarea></label>
+        <label class="input-field"><span>Content EN (line split)</span><textarea data-entity="books" data-index="${index}" data-field="content.en" data-type="lines">${escapeHTML(arrayToLines(book.content?.en || []))}</textarea></label>
       </div>
     </article>
   `).join("");
@@ -800,7 +834,67 @@ function bindActions() {
 }
 
 function getPasswordHash() {
-  try { return localStorage.getItem(AUTH_HASH_KEY) || DEFAULT_PASSWORD_HASH; } catch { return DEFAULT_PASSWORD_HASH; }
+  return getAuthConfig().passwordHash;
+}
+
+function normalizeUsername(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function getDefaultAuthConfig() {
+  return {
+    username: DEFAULT_ADMIN_USERNAME,
+    passwordHash: DEFAULT_PASSWORD_HASH
+  };
+}
+
+function getAuthConfig() {
+  const fallback = getDefaultAuthConfig();
+  try {
+    const raw = localStorage.getItem(AUTH_CREDENTIALS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const username = normalizeUsername(parsed?.username || fallback.username);
+      const passwordHash = String(parsed?.passwordHash || "").trim() || fallback.passwordHash;
+      return { username, passwordHash };
+    }
+  } catch {
+    // fallback to legacy key below
+  }
+
+  try {
+    const legacyHash = String(localStorage.getItem(AUTH_HASH_KEY) || "").trim();
+    return {
+      username: fallback.username,
+      passwordHash: legacyHash || fallback.passwordHash
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function saveAuthConfig(config) {
+  const fallback = getDefaultAuthConfig();
+  const next = {
+    username: normalizeUsername(config?.username || fallback.username) || fallback.username,
+    passwordHash: String(config?.passwordHash || fallback.passwordHash).trim() || fallback.passwordHash
+  };
+
+  try {
+    localStorage.setItem(AUTH_CREDENTIALS_KEY, JSON.stringify(next));
+    // Keep legacy key for compatibility with older builds.
+    localStorage.setItem(AUTH_HASH_KEY, next.passwordHash);
+  } catch {
+    // ignore storage write failure
+  }
+
+  return next;
+}
+
+function resetAuthConfigToDefault() {
+  const fallback = getDefaultAuthConfig();
+  saveAuthConfig(fallback);
+  clearSession();
 }
 
 async function sha256Hex(input) {
@@ -825,6 +919,15 @@ async function verifyPassword(password) {
   return false;
 }
 
+async function verifyCredentials(username, password) {
+  const authConfig = getAuthConfig();
+  const inputUsername = normalizeUsername(username);
+  if (!inputUsername || inputUsername !== authConfig.username) {
+    return false;
+  }
+  return verifyPassword(password);
+}
+
 function readSession() {
   try {
     const raw = localStorage.getItem(AUTH_SESSION_KEY);
@@ -834,14 +937,25 @@ function readSession() {
       localStorage.removeItem(AUTH_SESSION_KEY);
       return false;
     }
+    const sessionUser = normalizeUsername(parsed.username);
+    const currentUser = getAuthConfig().username;
+    if (!sessionUser || sessionUser !== currentUser) {
+      localStorage.removeItem(AUTH_SESSION_KEY);
+      return false;
+    }
     return true;
   } catch {
     return false;
   }
 }
 
-function writeSession() {
-  try { localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({ expiresAt: Date.now() + AUTH_SESSION_TTL_MS })); } catch {}
+function writeSession(username) {
+  try {
+    localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({
+      username: normalizeUsername(username),
+      expiresAt: Date.now() + AUTH_SESSION_TTL_MS
+    }));
+  } catch {}
 }
 
 function clearSession() {
@@ -869,30 +983,32 @@ function unlockUI() {
 function bindAuth() {
   el.authForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const input = el.authPassword.value || "";
-    if (!input || !(await verifyPassword(input))) {
+    const username = el.authUsername.value || "";
+    const password = el.authPassword.value || "";
+    if (!username || !password || !(await verifyCredentials(username, password))) {
       status(el.authMessage, t("authFailed"), "error");
       return;
     }
+    el.authUsername.value = "";
     el.authPassword.value = "";
     status(el.authMessage, "");
-    writeSession();
+    writeSession(username);
     unlockUI();
   });
 
   el.authResetDefaultBtn.addEventListener("click", () => {
     if (!window.confirm(t("confirmResetPassword"))) return;
-    localStorage.removeItem(AUTH_HASH_KEY);
-    localStorage.removeItem(AUTH_SESSION_KEY);
+    resetAuthConfigToDefault();
+    el.authUsername.value = DEFAULT_ADMIN_USERNAME;
     el.authPassword.value = "";
-    status(el.authMessage, t("authResetDone"), "success");
-    el.authPassword.focus();
+    status(el.authMessage, t("authResetDone", { username: DEFAULT_ADMIN_USERNAME }), "success");
+    el.authUsername.focus();
   });
 
   el.logoutBtn.addEventListener("click", () => {
     clearSession();
     lockUI();
-    el.authPassword.focus();
+    el.authUsername.focus();
   });
 }
 
@@ -919,7 +1035,12 @@ function bindSecurity() {
       return;
     }
 
-    localStorage.setItem(AUTH_HASH_KEY, await sha256Hex(next));
+    const authConfig = getAuthConfig();
+    saveAuthConfig({
+      username: authConfig.username,
+      passwordHash: await sha256Hex(next)
+    });
+    clearSession();
     el.securityCurrent.value = "";
     el.securityNew.value = "";
     el.securityConfirm.value = "";
@@ -938,7 +1059,7 @@ function bindSecurity() {
     }
     if (!window.confirm(t("confirmResetPassword"))) return;
 
-    localStorage.removeItem(AUTH_HASH_KEY);
+    resetAuthConfigToDefault();
     el.securityCurrent.value = "";
     el.securityNew.value = "";
     el.securityConfirm.value = "";
@@ -967,6 +1088,11 @@ function init() {
     return;
   }
 
+  const authConfig = saveAuthConfig(getAuthConfig());
+  if (el.authUsername) {
+    el.authUsername.value = authConfig.username;
+  }
+
   applyStaticCopy();
   bindAuth();
   bindLocaleToggle();
@@ -980,8 +1106,9 @@ function init() {
     unlockUI();
   } else {
     lockUI();
-    el.authPassword.focus();
+    el.authUsername.focus();
   }
 }
 
 init();
+

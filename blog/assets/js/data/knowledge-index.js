@@ -1,4 +1,4 @@
-import { knowledgeCards as manualKnowledgeCards, knowledgeTagLabels as manualKnowledgeTagLabels } from "./content.js";
+﻿import { knowledgeCards as manualKnowledgeCards, knowledgeTagLabels as manualKnowledgeTagLabels } from "./content.js";
 import { generatedKnowledgeCards, generatedKnowledgeTagLabels } from "./knowledge-generated.js";
 
 function dedupeById(cards) {
@@ -19,3 +19,4 @@ export const knowledgeTagLabels = {
   ...manualKnowledgeTagLabels,
   ...generatedKnowledgeTagLabels
 };
+

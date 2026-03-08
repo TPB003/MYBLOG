@@ -1,4 +1,4 @@
-import { getLocale, t } from "../core/i18n.js";
+﻿import { getLocale, t } from "../core/i18n.js";
 import { STORAGE_KEYS } from "../core/store.js";
 import { toLocaleCode } from "../core/utils.js";
 
@@ -156,3 +156,4 @@ export function initTheme(button) {
     render: renderTheme
   };
 }
+

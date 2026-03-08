@@ -63,6 +63,12 @@ if ($LASTEXITCODE -ne 0) {
   throw "failed to generate knowledge cards from markdown"
 }
 
+Write-Host ">> generating books from markdown"
+& node scripts/generate-books-from-md.mjs
+if ($LASTEXITCODE -ne 0) {
+  throw "failed to generate books from markdown"
+}
+
 Run-Git -GitArgs @("add", "blog", ".github/workflows/deploy-pages.yml")
 
 $staged = (& git diff --cached --name-only | Out-String).Trim()

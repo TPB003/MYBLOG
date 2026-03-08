@@ -1,4 +1,5 @@
-import { books, posts, profile, statsBars } from "../data/content.js";
+﻿import { posts, profile, statsBars } from "../data/content.js";
+import { books } from "../data/books-index.js";
 import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 
 export const ADMIN_CONFIG_STORAGE_KEY = "tpblog_admin_config_v1";
@@ -7,7 +8,6 @@ const ADMIN_CONFIG_CHANGE_EVENT = "tpblog-admin-config-changed";
 const SECTION_DEFS = {
   home: { selector: "#home", navHref: "#home" },
   intro: { selector: ".intro" },
-  posts: { selector: "#posts", navHref: "#posts" },
   knowledge: { selector: "#knowledge", navHref: "#knowledge" },
   stats: { selector: "#stats", navHref: "#stats" },
   books: { selector: "#books", navHref: "#books" },
@@ -17,7 +17,6 @@ const SECTION_DEFS = {
 const DEFAULT_VISIBILITY = Object.freeze({
   home: true,
   intro: true,
-  posts: true,
   knowledge: true,
   stats: true,
   books: true,

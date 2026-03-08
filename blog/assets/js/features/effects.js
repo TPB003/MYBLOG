@@ -76,3 +76,4 @@ export function animateCounter(node, target, locale = "zh") {
 
   requestAnimationFrame(frame);
 }
+

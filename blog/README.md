@@ -29,6 +29,7 @@
 | `blog/assets/css` | 目录 | 样式目录 |
 | `blog/assets/css/admin.css` | 文件 | 管理员页面样式：控制台布局、表单与交互按钮 |
 | `blog/assets/css/base.css` | 文件 | 基础样式：重置、全局、通用类 |
+| `blog/assets/css/book-article.css` | 文件 | 样式文件 |
 | `blog/assets/css/effects.css` | 文件 | 动画与动效样式：轨道、扫描、倾斜、过渡 |
 | `blog/assets/css/knowledge-article.css` | 文件 | 样式文件 |
 | `blog/assets/css/layout.css` | 文件 | 布局样式：导航、页面骨架、footer |
@@ -44,11 +45,14 @@
 | `blog/assets/js/core/store.js` | 文件 | 全局状态与本地存储键 |
 | `blog/assets/js/core/utils.js` | 文件 | 通用工具函数 |
 | `blog/assets/js/data` | 目录 | 数据层（内容数据） |
+| `blog/assets/js/data/books-generated.js` | 文件 | 脚本文件 |
+| `blog/assets/js/data/books-index.js` | 文件 | 脚本文件 |
 | `blog/assets/js/data/content.js` | 文件 | 文章/知识卡/统计/书单等结构化数据 |
 | `blog/assets/js/data/knowledge-generated.js` | 文件 | 自动生成的数据文件：由 Markdown 构建出的知识卡与标签 |
 | `blog/assets/js/data/knowledge-index.js` | 文件 | 知识卡聚合入口：合并手写数据与 Markdown 生成数据 |
 | `blog/assets/js/features` | 目录 | 功能层（按业务模块拆分） |
 | `blog/assets/js/features/effects.js` | 文件 | 视觉动效与交互效果（reveal/tilt/spotlight 等） |
+| `blog/assets/js/features/header.js` | 文件 | 脚本文件 |
 | `blog/assets/js/features/knowledge.js` | 文件 | 知识库搜索、标签筛选与卡片渲染 |
 | `blog/assets/js/features/posts.js` | 文件 | 文章列表渲染与分类筛选 |
 | `blog/assets/js/features/read-metrics.js` | 文件 | 脚本文件 |
@@ -57,8 +61,22 @@
 | `blog/assets/js/main.js` | 文件 | 前端启动入口：初始化语言、模块渲染、动效绑定 |
 | `blog/assets/js/pages` | 目录 | 目录 |
 | `blog/assets/js/pages/admin.js` | 文件 | 管理员页面脚本：模块开关、JSON 编辑、导入导出与即时应用 |
+| `blog/assets/js/pages/book-article.js` | 文件 | 脚本文件 |
 | `blog/assets/js/pages/knowledge-article.js` | 文件 | 脚本文件 |
+| `blog/books` | 目录 | 目录 |
+| `blog/books/.gitkeep` | 文件 | 文件 |
+| `blog/books/generated-almanack-of-naval.html` | 文件 | 页面文件 |
+| `blog/books/generated-clean-architecture.html` | 文件 | 页面文件 |
+| `blog/books/generated-designing-design.html` | 文件 | 页面文件 |
+| `blog/books/generated-pyramid-principle.html` | 文件 | 页面文件 |
 | `blog/content` | 目录 | Markdown 内容源目录（用于自动生成知识卡） |
+| `blog/content/books` | 目录 | 目录 |
+| `blog/content/books/_template.md` | 文件 | 说明文档 |
+| `blog/content/books/.gitkeep` | 文件 | 文件 |
+| `blog/content/books/almanack-of-naval.md` | 文件 | 说明文档 |
+| `blog/content/books/clean-architecture.md` | 文件 | 说明文档 |
+| `blog/content/books/designing-design.md` | 文件 | 说明文档 |
+| `blog/content/books/pyramid-principle.md` | 文件 | 说明文档 |
 | `blog/content/knowledge` | 目录 | 知识卡 Markdown 目录（新增 .md 后自动生成） |
 | `blog/content/knowledge/_template.md` | 文件 | 知识卡 Markdown 模板（含 front matter 示例） |
 | `blog/content/knowledge/.gitkeep` | 文件 | 占位文件，确保目录可被 Git 跟踪 |

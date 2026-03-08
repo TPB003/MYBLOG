@@ -1,0 +1,200 @@
+.article-shell {
+  width: min(980px, calc(100% - 2rem));
+  margin: 7rem auto 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.article-head {
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(1.12);
+}
+
+.article-kicker {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text-soft));
+}
+
+.article-title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+.article-summary {
+  margin: 0.62rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.72;
+}
+
+.article-meta {
+  margin-top: 0.82rem;
+  display: flex;
+  gap: 0.46rem;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: var(--text-soft);
+  padding: 0.24rem 0.58rem;
+  font-size: 0.76rem;
+}
+
+.article-card {
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(1.1);
+  display: grid;
+  gap: 0.86rem;
+}
+
+.article-cover {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--glass-bg) 88%, transparent);
+}
+
+.article-cover img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.article-content {
+  display: grid;
+  gap: 0.88rem;
+}
+
+.article-content p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.9;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.28;
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.38rem;
+  color: var(--text-soft);
+}
+
+.article-content blockquote {
+  margin: 0;
+  padding: 0.72rem 0.84rem;
+  border-left: 2px solid var(--accent);
+  border-radius: 0.72rem;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+
+.article-content pre {
+  margin: 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, #0f172a 84%, var(--glass-bg));
+  padding: 0.78rem 0.88rem;
+}
+
+.article-content pre code {
+  color: #dbe8ff;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.article-content code {
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--glass-bg) 92%, transparent);
+  color: color-mix(in srgb, var(--accent) 78%, var(--text));
+  padding: 0.08rem 0.36rem;
+  font-size: 0.82em;
+}
+
+.article-content a {
+  color: color-mix(in srgb, var(--accent) 82%, #ffffff);
+  text-decoration: underline;
+  text-underline-offset: 0.16rem;
+  text-decoration-thickness: 1px;
+}
+
+.article-content img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  display: block;
+}
+
+.article-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.article-link {
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-bg) 90%, transparent);
+  color: color-mix(in srgb, var(--accent) 82%, var(--text));
+  padding: 0.32rem 0.72rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.article-link.primary {
+  color: #f8fbff;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.article-empty {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  color: var(--text-soft);
+}
+
+@media (max-width: 760px) {
+  .article-shell {
+    width: calc(100% - 1rem);
+    margin-top: 6rem;
+  }
+
+  .article-head,
+  .article-card {
+    padding: 0.9rem;
+  }
+}

@@ -1,8 +1,8 @@
-import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
+﻿import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
 import { store } from "../core/store.js";
 import { getLocale, t } from "../core/i18n.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
-import { formatReadCount, getKnowledgeReads, onReadMetricsChange } from "./read-metrics.js?v=20260308j";
+import { formatReadCount, getKnowledgeReads, onReadMetricsChange } from "./read-metrics.js?v=20260308k";
 
 const searchInput = document.getElementById("knowledgeSearch");
 const tagsWrap = document.getElementById("knowledgeTags");
@@ -145,3 +145,4 @@ export function initKnowledge() {
     render: renderKnowledge
   };
 }
+

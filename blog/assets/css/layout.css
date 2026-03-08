@@ -6,6 +6,14 @@
   backdrop-filter: blur(14px) saturate(1.2);
   background: linear-gradient(to bottom, color-mix(in srgb, var(--glass-strong) 86%, transparent), transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  transition: transform 0.32s ease, opacity 0.32s ease;
+  will-change: transform;
+}
+
+.site-header.header-hidden {
+  transform: translateY(calc(-100% - 0.9rem));
+  opacity: 0.28;
+  pointer-events: none;
 }
 
 .header-inner {

@@ -1,4 +1,4 @@
-import { escapeHTML } from "./utils.js";
+﻿import { escapeHTML } from "./utils.js";
 
 function sanitizeUrl(url) {
   const value = String(url || "").trim();
@@ -180,3 +180,4 @@ export function renderMarkdownToHtml(markdown) {
 
   return blocks.join("\n");
 }
+

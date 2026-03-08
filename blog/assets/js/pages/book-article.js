@@ -1,12 +1,12 @@
-﻿import { knowledgeCards, knowledgeTagLabels } from "../data/knowledge-index.js";
+import { books } from "../data/books-index.js";
 import { escapeHTML, formatDate } from "../core/utils.js";
 import { renderMarkdownToHtml } from "../core/markdown.js";
 import {
   formatReadCount,
-  getKnowledgeReads,
+  getBookReads,
   initReadMetrics,
   onReadMetricsChange,
-  recordKnowledgeRead
+  recordBookRead
 } from "../features/read-metrics.js?v=20260308k";
 
 const LOCALE_KEY = "tpblog_locale_v2";
@@ -15,31 +15,33 @@ const THEME_PREFS = ["auto", "day", "night"];
 
 const textMap = {
   zh: {
-    kicker: "KNOWLEDGE ARTICLE",
-    updated: "鏇存柊浜?,
-    reads: "闃呰",
-    backHome: "杩斿洖涓婚〉",
-    backKnowledge: "杩斿洖鐭ヨ瘑搴?,
-    notFoundTitle: "鏈壘鍒扮煡璇嗗崱",
-    notFoundBody: "褰撳墠椤甸潰瀵瑰簲鐨勭煡璇嗗崱涓嶅瓨鍦紝鍙兘宸茶閲嶅懡鍚嶆垨绉婚櫎銆?,
-    themeAuto: "鑷姩",
-    themeDay: "鐧藉ぉ",
-    themeNight: "榛戝",
+    kicker: "\u9605\u8BFB\u5168\u6587",
+    author: "\u4F5C\u8005",
+    updated: "\u66F4\u65B0",
+    reads: "\u9605\u8BFB",
+    backHome: "\u8FD4\u56DE\u4E3B\u9875",
+    backBooks: "\u8FD4\u56DE\u4E66\u5355",
+    notFoundTitle: "\u672A\u627E\u5230\u8BE5\u4E66\u7C4D",
+    notFoundBody: "\u5F53\u524D\u9875\u9762\u5BF9\u5E94\u7684\u4E66\u7C4D\u4E0D\u5B58\u5728\u6216\u5DF2\u88AB\u79FB\u9664\u3002",
+    themeAuto: "\u81EA\u52A8",
+    themeDay: "\u767D\u5929",
+    themeNight: "\u591C\u95F4",
     localeToggle: "EN",
-    localeAria: "鍒囨崲鍒拌嫳鏂?
+    localeAria: "\u5207\u6362\u5230\u82F1\u6587"
   },
   en: {
-    kicker: "KNOWLEDGE ARTICLE",
+    kicker: "BOOK NOTE",
+    author: "Author",
     updated: "Updated",
     reads: "Reads",
     backHome: "Back Home",
-    backKnowledge: "Knowledge Index",
-    notFoundTitle: "Knowledge Entry Not Found",
-    notFoundBody: "This page does not map to a valid knowledge card.",
+    backBooks: "Back to Books",
+    notFoundTitle: "Book Not Found",
+    notFoundBody: "This page does not map to a valid book entry.",
     themeAuto: "AUTO",
     themeDay: "DAY",
     themeNight: "NIGHT",
-    localeToggle: "涓?,
+    localeToggle: "\u4E2D",
     localeAria: "Switch to Chinese"
   }
 };
@@ -51,14 +53,15 @@ const themeToggle = document.getElementById("themeToggle");
 const kickerNode = document.getElementById("articleKicker");
 const titleNode = document.getElementById("articleTitle");
 const summaryNode = document.getElementById("articleSummary");
+const authorNode = document.getElementById("articleAuthor");
 const updatedNode = document.getElementById("articleUpdated");
 const readingNode = document.getElementById("articleReading");
 const readsNode = document.getElementById("articleReads");
-const tagsNode = document.getElementById("articleTags");
+const coverNode = document.getElementById("articleCover");
 const contentNode = document.getElementById("articleContent");
-const backHomeNodes = document.querySelectorAll("[data-back-home]");
-const backKnowledgeNodes = document.querySelectorAll("[data-back-knowledge]");
 const fallbackNode = document.getElementById("articleFallback");
+const backHomeNodes = document.querySelectorAll("[data-back-home]");
+const backBookNodes = document.querySelectorAll("[data-back-books]");
 
 let locale = "zh";
 let themePreference = "auto";
@@ -136,9 +139,9 @@ function toggleTheme() {
   renderThemeButton();
 }
 
-function getCurrentCard() {
-  const cardId = body.dataset.cardId || "";
-  return knowledgeCards.find((card) => card.id === cardId) || null;
+function getCurrentBook() {
+  const bookId = body.dataset.bookId || "";
+  return books.find((book) => book.id === bookId) || null;
 }
 
 function renderFallback() {
@@ -150,22 +153,20 @@ function renderFallback() {
   contentNode.innerHTML = "";
 }
 
-function renderReads(cardId) {
-  const card = knowledgeCards.find((item) => item.id === cardId);
-  if (!card || !readsNode) return;
-
+function renderReads(bookId) {
+  if (!readsNode) return;
   const textPack = textMap[locale];
-  const count = formatReadCount(getKnowledgeReads(card.id), locale);
+  const count = formatReadCount(getBookReads(bookId), locale);
   readsNode.textContent = `${textPack.reads} ${count}`;
 }
 
-function resolveMarkdown(card, localeCode) {
-  const markdownPack = card.contentMarkdown;
+function resolveMarkdown(book, localeCode) {
+  const markdownPack = book.contentMarkdown;
   if (markdownPack && typeof markdownPack === "object") {
     return markdownPack[localeCode] || markdownPack.zh || markdownPack.en || "";
   }
 
-  const paragraphs = card.content?.[localeCode] || card.content?.zh || [];
+  const paragraphs = book.content?.[localeCode] || book.content?.zh || [];
   if (Array.isArray(paragraphs)) {
     return paragraphs.join("\n\n");
   }
@@ -173,8 +174,8 @@ function resolveMarkdown(card, localeCode) {
   return String(paragraphs || "");
 }
 
-function renderArticle() {
-  const card = getCurrentCard();
+function renderBook() {
+  const book = getCurrentBook();
   const textPack = textMap[locale];
 
   root.lang = locale === "zh" ? "zh-CN" : "en";
@@ -184,7 +185,7 @@ function renderArticle() {
     localeToggle.setAttribute("aria-label", textPack.localeAria);
   }
 
-  if (!card) {
+  if (!book) {
     renderFallback();
     document.title = `TPBLOG | ${textPack.notFoundTitle}`;
     return;
@@ -194,39 +195,52 @@ function renderArticle() {
     fallbackNode.hidden = true;
   }
 
-  const title = card.title[locale] || card.title.zh;
-  const summary = card.summary[locale] || card.summary.zh;
-  const reading = typeof card.reading === "string" ? card.reading : (card.reading?.[locale] || card.reading?.zh || "");
-  const markdown = resolveMarkdown(card, locale);
-  const formattedDate = formatDate(card.updated, locale);
+  const title = book.title?.[locale] || book.title?.zh || "Untitled";
+  const summary = book.summary?.[locale] || book.summary?.zh || "";
+  const author = book.author?.[locale] || book.author?.zh || "";
+  const reading = typeof book.reading === "string"
+    ? book.reading
+    : (book.reading?.[locale] || book.reading?.zh || "");
+  const markdown = resolveMarkdown(book, locale);
 
   if (kickerNode) kickerNode.textContent = textPack.kicker;
   if (titleNode) titleNode.textContent = title;
   if (summaryNode) summaryNode.textContent = summary;
-  if (updatedNode) updatedNode.textContent = `${textPack.updated} ${formattedDate}`;
+  if (authorNode) {
+    authorNode.textContent = author
+      ? `${textPack.author} ${author}`
+      : "";
+  }
+  if (updatedNode) {
+    updatedNode.textContent = book.updated
+      ? `${textPack.updated} ${formatDate(book.updated, locale)}`
+      : "";
+  }
   if (readingNode) readingNode.textContent = reading;
-  renderReads(card.id);
+  renderReads(book.id);
 
-  backHomeNodes.forEach((node) => {
-    node.textContent = textPack.backHome;
-  });
-  backKnowledgeNodes.forEach((node) => {
-    node.textContent = textPack.backKnowledge;
-  });
-
-  if (tagsNode) {
-    tagsNode.innerHTML = card.tags
-      .map((tag) => {
-        const labelPack = knowledgeTagLabels[tag];
-        const value = labelPack ? (labelPack[locale] || labelPack.zh) : tag;
-        return `<span class="article-tag">${escapeHTML(value)}</span>`;
-      })
-      .join("");
+  if (coverNode) {
+    const cover = String(book.cover || "").trim();
+    if (cover) {
+      coverNode.hidden = false;
+      coverNode.innerHTML = `<img src="${escapeHTML(cover)}" alt="${escapeHTML(title)}" loading="lazy">`;
+    } else {
+      coverNode.hidden = true;
+      coverNode.innerHTML = "";
+    }
   }
 
   if (contentNode) {
     contentNode.innerHTML = renderMarkdownToHtml(markdown);
   }
+
+  backHomeNodes.forEach((node) => {
+    node.textContent = textPack.backHome;
+  });
+
+  backBookNodes.forEach((node) => {
+    node.textContent = textPack.backBooks;
+  });
 
   document.title = `${title} | TPBLOG`;
 }
@@ -237,7 +251,7 @@ function initLocaleToggle() {
     locale = locale === "zh" ? "en" : "zh";
     saveLocale(locale);
     renderThemeButton();
-    renderArticle();
+    renderBook();
   });
 }
 
@@ -256,17 +270,17 @@ function init() {
 
   applyTheme();
   renderThemeButton();
-  renderArticle();
+  renderBook();
 
-  const card = getCurrentCard();
-  if (card) {
-    recordKnowledgeRead(card.id);
+  const book = getCurrentBook();
+  if (book) {
+    recordBookRead(book.id);
   }
 
   onReadMetricsChange(() => {
-    const current = getCurrentCard();
-    if (!current) return;
-    renderReads(current.id);
+    const currentBook = getCurrentBook();
+    if (!currentBook) return;
+    renderReads(currentBook.id);
   });
 
   window.setInterval(() => {
@@ -277,4 +291,3 @@ function init() {
 }
 
 init();
-

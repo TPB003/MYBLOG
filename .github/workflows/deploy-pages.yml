@@ -7,6 +7,7 @@ on:
       - master
     paths:
       - blog/**
+      - scripts/generate-books-from-md.mjs
       - scripts/generate-knowledge-from-md.mjs
       - .github/workflows/deploy-pages.yml
   workflow_dispatch:
@@ -43,6 +44,14 @@ jobs:
           TPBLOG_OPENAI_MODEL: ${{ vars.TPBLOG_OPENAI_MODEL }}
           TPBLOG_OPENAI_BASE_URL: ${{ vars.TPBLOG_OPENAI_BASE_URL }}
         run: node scripts/generate-knowledge-from-md.mjs
+
+      - name: Generate books from markdown
+        env:
+          TPBLOG_TRANSLATE_PROVIDER: ${{ vars.TPBLOG_TRANSLATE_PROVIDER }}
+          TPBLOG_OPENAI_API_KEY: ${{ secrets.TPBLOG_OPENAI_API_KEY }}
+          TPBLOG_OPENAI_MODEL: ${{ vars.TPBLOG_OPENAI_MODEL }}
+          TPBLOG_OPENAI_BASE_URL: ${{ vars.TPBLOG_OPENAI_BASE_URL }}
+        run: node scripts/generate-books-from-md.mjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
