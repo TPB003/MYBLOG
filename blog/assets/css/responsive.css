@@ -5,12 +5,12 @@
   }
 
   .launchpad-shell {
-    border-radius: 1.1rem;
+    border-radius: 0;
   }
 
   .landing-grid {
     grid-template-columns: 1fr;
-    padding: 0.8rem;
+    padding: 0;
   }
 
   .lz-tech,
@@ -111,12 +111,12 @@
   }
 
   .launchpad-shell {
-    border-radius: 0.96rem;
+    border-radius: 0;
   }
 
   .landing-grid {
     gap: 0.72rem;
-    padding: 0.66rem;
+    padding: 0;
   }
 
   .lz-card {
