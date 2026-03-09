@@ -5,12 +5,15 @@ const statusTimeNode = document.getElementById("landingStatusTime");
 const buildNode = document.getElementById("landingBuildText");
 const launchpadShell = document.querySelector(".launchpad-shell");
 const landingCards = Array.from(document.querySelectorAll(".lz-card"));
+const draggableCards = Array.from(document.querySelectorAll(".lz-card[data-lz-draggable='true']"));
 const toolNodes = Array.from(document.querySelectorAll(".lz-tool"));
 
 const buildTerms = {
   zh: ["Web \u5e94\u7528", "\u77e5\u8bc6\u7cfb\u7edf", "\u521b\u4f5c\u5de5\u5177"],
   en: ["WebApps", "Knowledge Systems", "Creator Tools"]
 };
+
+const dragStates = new WeakMap();
 
 let started = false;
 let clockTimer = null;
@@ -21,6 +24,10 @@ let charIndex = 0;
 let deleting = false;
 let holdTicks = 0;
 let cardsRevealed = false;
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
 
 function formatTimestamp(locale) {
   const localeCode = locale === "zh" ? "zh-CN" : "en-US";
@@ -111,12 +118,97 @@ function bindLaunchpadGlow() {
   });
 }
 
+function setCardDragTransform(card, x, y) {
+  const maxX = 72;
+  const maxY = 56;
+  const safeX = clamp(x, -maxX, maxX);
+  const safeY = clamp(y, -maxY, maxY);
+  const rotate = (safeX / maxX) * 2.2;
+
+  card.style.setProperty("--drag-x", `${safeX.toFixed(1)}px`);
+  card.style.setProperty("--drag-y", `${safeY.toFixed(1)}px`);
+  card.style.setProperty("--drag-r", `${rotate.toFixed(2)}deg`);
+}
+
+function bindCardDrag() {
+  if (!draggableCards.length || !window.matchMedia("(pointer: fine)").matches) {
+    return;
+  }
+
+  draggableCards.forEach((card) => {
+    if (card.dataset.dragBound === "true") return;
+    card.dataset.dragBound = "true";
+
+    const state = {
+      pointerId: null,
+      startClientX: 0,
+      startClientY: 0,
+      moved: false
+    };
+
+    dragStates.set(card, state);
+
+    card.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+
+      state.pointerId = event.pointerId;
+      state.startClientX = event.clientX;
+      state.startClientY = event.clientY;
+      state.moved = false;
+
+      card.classList.add("is-dragging");
+      card.setPointerCapture(event.pointerId);
+    });
+
+    card.addEventListener("pointermove", (event) => {
+      if (state.pointerId !== event.pointerId) return;
+
+      const dx = event.clientX - state.startClientX;
+      const dy = event.clientY - state.startClientY;
+
+      if (!state.moved && Math.abs(dx) + Math.abs(dy) > 6) {
+        state.moved = true;
+      }
+
+      setCardDragTransform(card, dx, dy);
+    });
+
+    function release(event) {
+      if (state.pointerId !== event.pointerId) return;
+
+      state.pointerId = null;
+      card.classList.remove("is-dragging");
+      setCardDragTransform(card, 0, 0);
+      if (card.hasPointerCapture(event.pointerId)) {
+        card.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    card.addEventListener("pointerup", release);
+    card.addEventListener("pointercancel", release);
+
+    card.addEventListener(
+      "click",
+      (event) => {
+        const currentState = dragStates.get(card);
+        if (currentState?.moved) {
+          event.preventDefault();
+          event.stopPropagation();
+          currentState.moved = false;
+        }
+      },
+      true
+    );
+  });
+}
+
 function start() {
   if (started) return;
   started = true;
 
   revealCards();
   bindLaunchpadGlow();
+  bindCardDrag();
   renderClock();
   tickTyping();
   pulseTools();

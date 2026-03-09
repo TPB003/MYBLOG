@@ -74,6 +74,9 @@
 }
 
 .lz-card {
+  --drag-x: 0px;
+  --drag-y: 0px;
+  --drag-r: 0deg;
   position: relative;
   border: 1px solid rgba(232, 241, 255, 0.11);
   border-radius: 1.1rem;
@@ -85,10 +88,10 @@
     0 18px 40px rgba(3, 8, 20, 0.5);
   color: #f2f7ff;
   opacity: 0;
-  transform: translateY(24px) scale(0.984);
+  transform: translate3d(var(--drag-x), var(--drag-y), 0) rotate(var(--drag-r)) translateY(24px) scale(0.984);
   transition:
     opacity 0.55s ease,
-    transform 0.55s ease,
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
@@ -106,7 +109,28 @@
 
 .lz-card.is-live {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translate3d(var(--drag-x), var(--drag-y), 0) rotate(var(--drag-r)) translateY(0) scale(1);
+}
+
+.lz-card[data-lz-draggable="true"] {
+  cursor: grab;
+  user-select: none;
+}
+
+.lz-card[data-lz-draggable="true"].is-dragging {
+  cursor: grabbing;
+  z-index: 6;
+  transition:
+    opacity 0.55s ease,
+    transform 0.04s linear,
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+@media (pointer: coarse) {
+  .lz-card[data-lz-draggable="true"] {
+    cursor: default;
+  }
 }
 
 .lz-card[data-lz-stagger="0"] {
@@ -141,7 +165,7 @@
 }
 
 .lz-tech {
-  min-height: 42.2rem;
+  min-height: 41.2rem;
   padding: 0.95rem 0.9rem;
   display: grid;
   align-content: start;
@@ -150,11 +174,30 @@
 
 .lz-mono {
   margin: 0;
+  position: relative;
+  padding-bottom: 0.72rem;
   line-height: 0.93;
   font-family: "Space Mono", "Cascadia Mono", monospace;
-  font-size: clamp(2.2rem, 4.9vw, 3.35rem);
+  font-size: clamp(2.02rem, 4.4vw, 3.08rem);
   letter-spacing: 0.025em;
   text-shadow: 0 2px 14px rgba(145, 194, 255, 0.16);
+}
+
+.lz-mono::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.08rem;
+  width: 0;
+  height: 0.26rem;
+  border-radius: 999px;
+  background: rgba(247, 251, 255, 0.96);
+  transition: width 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lz-tech:hover .lz-mono::after,
+.lz-tech.is-dragging .lz-mono::after {
+  width: min(10.2rem, 88%);
 }
 
 .lz-stack-group h3 {

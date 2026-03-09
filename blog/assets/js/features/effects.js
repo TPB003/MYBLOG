@@ -38,7 +38,7 @@ export function initSpotlight() {
 export function bindTiltCards() {
   if (!window.matchMedia("(pointer: fine)").matches) return;
 
-  document.querySelectorAll(".interactive-tilt").forEach((card) => {
+  document.querySelectorAll(".interactive-tilt:not([data-no-tilt='true'])").forEach((card) => {
     if (card.dataset.tiltBound === "true") return;
     card.dataset.tiltBound = "true";
 
