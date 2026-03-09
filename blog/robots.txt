@@ -1,3 +1,2 @@
 ﻿User-agent: *
-Disallow: /MYBLOG/admin.html
-Disallow: /MYBLOG/control-center-9q4t.html
+Allow: /

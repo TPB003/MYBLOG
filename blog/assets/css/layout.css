@@ -16,6 +16,11 @@
   pointer-events: none;
 }
 
+.site-header.header-prehome {
+  backdrop-filter: blur(8px) saturate(1.05);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--glass-strong) 72%, transparent), transparent);
+}
+
 .header-inner {
   width: min(1220px, 100%);
   margin: 0 auto;
@@ -101,8 +106,8 @@
 }
 
 .launchpad {
-  margin-top: 6.65rem;
-  padding-top: 2.4rem;
+  margin-top: 1.15rem;
+  padding-top: 1.2rem;
 }
 
 .hero {

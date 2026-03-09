@@ -45,10 +45,11 @@ function formatTimestamp(locale) {
 function renderClock() {
   const locale = getLocale();
   const hour = new Date().getHours();
-  const isNight = hour >= 18 || hour < 6;
+  const activeTheme = document.documentElement.dataset.theme;
+  const isNight = activeTheme === "night" || (activeTheme !== "day" && (hour >= 18 || hour < 6));
 
   if (phaseNode) {
-    phaseNode.textContent = locale === "zh" ? (isNight ? "\u591c" : "\u663c") : (isNight ? "NIGHT" : "DAY");
+    phaseNode.textContent = isNight ? "\u591c" : "\u767d";
   }
 
   if (statusTimeNode) {

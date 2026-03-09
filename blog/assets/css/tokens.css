@@ -25,6 +25,22 @@
   --accent-2: #00a6ff;
   --accent-warm: #ff8f57;
   --pill-bg: rgba(255, 255, 255, 0.65);
+
+  --lz-card-bg-1: rgba(12, 25, 58, 0.9);
+  --lz-card-bg-2: rgba(7, 16, 40, 0.94);
+  --lz-card-glow: rgba(116, 174, 255, 0.22);
+  --lz-card-text: #f3f8ff;
+  --lz-card-soft: #b7c6e4;
+  --lz-card-border: rgba(171, 201, 250, 0.2);
+  --lz-card-border-strong: rgba(172, 208, 255, 0.46);
+  --lz-card-inset: rgba(170, 205, 255, 0.14);
+  --lz-project-text: #211438;
+  --lz-project-bg:
+    radial-gradient(120% 120% at 20% 0%, rgba(223, 177, 255, 0.82), rgba(180, 130, 255, 0.86)),
+    linear-gradient(150deg, #dec0ff, #af7fff);
+  --lz-ring-1: rgba(255, 255, 255, 0.34);
+  --lz-ring-2: rgba(255, 255, 255, 0.21);
+  --lz-ring-3: rgba(255, 255, 255, 0.14);
 }
 
 :root[data-theme="day"] {
@@ -41,6 +57,22 @@
   --accent-2: #00a6ff;
   --accent-warm: #ff8f57;
   --pill-bg: rgba(255, 255, 255, 0.65);
+
+  --lz-card-bg-1: rgba(12, 25, 58, 0.9);
+  --lz-card-bg-2: rgba(7, 16, 40, 0.94);
+  --lz-card-glow: rgba(116, 174, 255, 0.22);
+  --lz-card-text: #f3f8ff;
+  --lz-card-soft: #b7c6e4;
+  --lz-card-border: rgba(171, 201, 250, 0.2);
+  --lz-card-border-strong: rgba(172, 208, 255, 0.46);
+  --lz-card-inset: rgba(170, 205, 255, 0.14);
+  --lz-project-text: #211438;
+  --lz-project-bg:
+    radial-gradient(120% 120% at 20% 0%, rgba(223, 177, 255, 0.82), rgba(180, 130, 255, 0.86)),
+    linear-gradient(150deg, #dec0ff, #af7fff);
+  --lz-ring-1: rgba(255, 255, 255, 0.34);
+  --lz-ring-2: rgba(255, 255, 255, 0.21);
+  --lz-ring-3: rgba(255, 255, 255, 0.14);
 }
 
 :root[data-theme="night"] {
@@ -57,4 +89,20 @@
   --accent-2: #42d7ff;
   --accent-warm: #ff9d6f;
   --pill-bg: rgba(19, 32, 58, 0.66);
+
+  --lz-card-bg-1: rgba(7, 10, 22, 0.95);
+  --lz-card-bg-2: rgba(4, 6, 16, 0.97);
+  --lz-card-glow: rgba(90, 143, 248, 0.18);
+  --lz-card-text: #f3f7ff;
+  --lz-card-soft: #9eadd0;
+  --lz-card-border: rgba(154, 179, 233, 0.2);
+  --lz-card-border-strong: rgba(171, 198, 255, 0.42);
+  --lz-card-inset: rgba(145, 178, 242, 0.1);
+  --lz-project-text: #1f1530;
+  --lz-project-bg:
+    radial-gradient(120% 120% at 20% 0%, rgba(214, 162, 255, 0.84), rgba(166, 115, 245, 0.9)),
+    linear-gradient(150deg, #d2acff, #a573ef);
+  --lz-ring-1: rgba(255, 255, 255, 0.3);
+  --lz-ring-2: rgba(255, 255, 255, 0.18);
+  --lz-ring-3: rgba(255, 255, 255, 0.12);
 }
